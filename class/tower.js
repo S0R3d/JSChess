@@ -1,6 +1,4 @@
 class Tower {
-    img
-    side = 'white'
     constructor(img, side) {
         this.img = img;
         this.side = side;
@@ -12,10 +10,4 @@ class Tower {
     get getImg() {
         return this.img;
     }
-
-    move() {
-
-    }
-
-    
 }
