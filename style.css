@@ -1,0 +1,28 @@
+body { 
+    display: block;
+    margin: auto;
+    width: 850px;
+    height: 850px;
+    margin-top:10px;
+}
+
+#board {
+    height: 800px;
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+  
+.row {
+    display: flex;
+    width: 800px;
+    height: 100px;
+}
+  
+.square {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin: 0px;
+}
