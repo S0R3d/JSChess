@@ -27,3 +27,32 @@ body {
     display: inline-block;
     margin: 0px;
 }
+
+.img {
+    display: flex;
+    height: 100px;
+    width: 100px;
+    margin: unset;
+}
+.img img {
+    display: flex;
+    margin-left: 3px;
+}
+
+#invert-color { 
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+#w-border { border: 1px solid #fff; }
+#b-border { border: 1px solid #000; }
+
+/*
+.test {
+    display: flex;
+    margin: auto;
+    margin-top: 10px;
+    height: 100px;
+    width: 100px;
+}
+*/
