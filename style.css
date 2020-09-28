@@ -12,6 +12,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     margin: auto;
+    border: 1px solid #000;
 }
   
 .row {
