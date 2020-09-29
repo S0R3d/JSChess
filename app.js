@@ -58,7 +58,8 @@ const loadPieces = (useLabels) => {
 
     let rows = document.getElementsByClassName('row')
 
-    for (let i = 0; i < DIM; i++) {
+    //caricamento black
+    for (let i = 0; i < 2; i++) {
         let row = rows[i]
 
         let squares = row.children;
@@ -66,12 +67,32 @@ const loadPieces = (useLabels) => {
             square = squares[j]
             let img_div = document.createElement('div')
             img_div.className = 'img'
-            let img = document.createElement('img')
-            img.src = 'img/b-bishop.svg'
-            img.alt = 'black-bishop'
-            img.style.height = '100px'
-            //img.id = square.style.backgroundColor == 'rgb(0, 0, 0)' ? 'invert-color': ''
+
+            let img = document.createElement('object')
+            img.data = 'img/b-bishop copy.svg'
+            img.type = 'image/svg+xml'
+            img.height = '100px'
+            img.width = '100px'
             img_div.appendChild(img)
+            square.appendChild(img_div)
+        }
+    }
+    //caricamento white
+    for (let i = DIM-2; i < DIM; i++) {
+        let row = rows[i]
+
+        let squares = row.children;
+        for (let j = 0; j < DIM; j++) {
+            let square = squares[j]
+            let img_div = document.createElement('div')
+            img_div.className = 'img'
+
+            let obj = document.createElement('object')
+            obj.data = 'img/w-bishop copy.svg'
+            obj.type = 'image/svg+xml'
+            obj.height = '100px'
+            obj.width = '100px'
+            img_div.appendChild(obj)
             square.appendChild(img_div)
         }
     }

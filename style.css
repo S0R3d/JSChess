@@ -32,10 +32,12 @@ body {
     width: 100px;
     margin: unset;
 }
+/*
 .img img {
     display: flex;
     margin-left: 3px;
 }
+*/
 
 #invert-color { 
     -webkit-filter: invert(100%);
