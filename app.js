@@ -51,8 +51,10 @@ const pieces = {
     wQ: 'img/w-queen.svg',
     wK: 'img/w-king.svg',
     wP: 'img/w-pawn.svg'
-
 }
+
+/* const b_pieces = JSON.parse('data/black.json')
+const w_pieces = JSON.parse('data/white.json') */
 
 const loadPieces = (useLabels) => {
 

@@ -1,0 +1,32 @@
+[
+    {
+        "name": "tower",
+        "type": "black",
+        "src": "'img/b-tower.svg'"
+    },
+    {
+        "name": "knight",
+        "type": "black",
+        "src": "'img/b-knight.svg'"
+    },
+    {
+        "name": "bishop",
+        "type": "black",
+        "src": "'img/b-bishop.svg'"
+    },
+    {
+        "name": "queen",
+        "type": "black",
+        "src": "'img/b-queen.svg'"
+    },
+    {
+        "name": "king",
+        "type": "black",
+        "src": "'img/b-king.svg'"
+    },
+    {
+        "name": "pawn",
+        "type": "black",
+        "src": "'img/b-pawn.svg'"
+    }
+]
