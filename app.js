@@ -37,21 +37,26 @@ const loadBoard = (useLabels) => {
     //---
 }
 
-const pieces = {
-    bT: 'img/b-tower.svg',
-    bN: 'img/b-knight.svg',
-    bB: 'img/b-bishop.svg',
-    bQ: 'img/b-queen.svg',
-    bK: 'img/b-king.svg',
-    bP: 'img/b-pawn.svg',
-
-    wT: 'img/w-tower.svg',
-    wN: 'img/w-knight.svg',
-    wB: 'img/w-bishop.svg',
-    wQ: 'img/w-queen.svg',
-    wK: 'img/w-king.svg',
-    wP: 'img/w-pawn.svg'
-}
+const reset_pieces = [
+    'img/b-tower.svg',
+    'img/b-knight.svg',
+    'img/b-bishop.svg',
+    'img/b-queen.svg',
+    'img/b-king.svg',
+    'img/b-bishop.svg',
+    'img/b-knight.svg',
+    'img/b-tower.svg',
+    'img/b-pawn.svg',
+    'img/w-tower.svg',
+    'img/w-knight.svg',
+    'img/w-bishop.svg',
+    'img/w-king.svg',
+    'img/w-queen.svg',
+    'img/w-bishop.svg',
+    'img/w-knight.svg',
+    'img/w-tower.svg',
+    'img/w-pawn.svg'
+]
 
 /* const b_pieces = JSON.parse('data/black.json')
 const w_pieces = JSON.parse('data/white.json') */
@@ -69,13 +74,12 @@ const loadPieces = (useLabels) => {
             square = squares[j]
             let img_div = document.createElement('div')
             img_div.className = 'img'
-
-            let img = document.createElement('object')
-            img.data = 'img/b-bishop copy.svg'
-            img.type = 'image/svg+xml'
-            img.height = '100px'
-            img.width = '100px'
-            img_div.appendChild(img)
+            let obj = document.createElement('object')
+            obj.data = i === 1 ? reset_pieces[8] : reset_pieces[j]
+            obj.type = 'image/svg+xml'
+            obj.height = '100px'
+            obj.width = '100px'
+            img_div.appendChild(obj)
             square.appendChild(img_div)
         }
     }
@@ -88,9 +92,8 @@ const loadPieces = (useLabels) => {
             let square = squares[j]
             let img_div = document.createElement('div')
             img_div.className = 'img'
-
             let obj = document.createElement('object')
-            obj.data = 'img/w-bishop copy.svg'
+            obj.data = i === DIM-1 ? reset_pieces[j+9] : reset_pieces[8+9]
             obj.type = 'image/svg+xml'
             obj.height = '100px'
             obj.width = '100px'

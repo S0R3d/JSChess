@@ -8,8 +8,13 @@
 
 > ~~Provate ad aggiungere un bordo all'immagine svg in xml~~
 
-> Inserire tutti i pezzi al loro posto
->> Come si possono inserire ?
+> ~~Inserire tutti i pezzi al loro posto~~
+>> ~~Come si possono inserire ?~~
 
 > ~~Usare l'invert-color al posto dell'immagine bianca per i pezzi ? NO~~
+
+> Svilupare sistema mossa con controllo muovi-mangia
+>> Si può muovere ?
+>> Muovi in casella libera
+>> Mangia in casella piena
 
