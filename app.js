@@ -70,7 +70,7 @@ const loadPieces = (useLabels) => {
             img.src = 'img/b-bishop.svg'
             img.alt = 'black-bishop'
             img.style.height = '100px'
-            img.id = square.style.backgroundColor == 'rgb(0, 0, 0)' ? 'invert-color': ''
+            //img.id = square.style.backgroundColor == 'rgb(0, 0, 0)' ? 'invert-color': ''
             img_div.appendChild(img)
             square.appendChild(img_div)
         }

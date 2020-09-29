@@ -1,8 +1,6 @@
 body { 
     display: block;
     margin: auto;
-    width: 850px;
-    height: 850px;
     margin-top:10px;
 }
 
@@ -47,7 +45,7 @@ body {
 #w-border { border: 1px solid #fff; }
 #b-border { border: 1px solid #000; }
 
-/*
+
 .test {
     display: flex;
     margin: auto;
@@ -55,4 +53,3 @@ body {
     height: 100px;
     width: 100px;
 }
-*/
