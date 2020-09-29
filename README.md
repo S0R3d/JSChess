@@ -18,3 +18,5 @@
 >> Muovi in casella libera
 >> Mangia in casella piena
 
+> Display overlay per dettagli del pezzo su cui si è col mouse
+
