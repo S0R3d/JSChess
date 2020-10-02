@@ -72,6 +72,7 @@ const resetPieces = (useLabels) => {
             let img_div = document.createElement('div')
             img_div.className = 'img'
             let obj = document.createElement('object')
+            obj.id = 'svg-obj'
             obj.data = i === 1 ? reset_pieces[8] : reset_pieces[j]
             obj.type = 'image/svg+xml'
             obj.height = '100px'
@@ -90,6 +91,7 @@ const resetPieces = (useLabels) => {
             let img_div = document.createElement('div')
             img_div.className = 'img'
             let obj = document.createElement('object')
+            obj.id = 'svg-obj'
             obj.data = i === DIM-1 ? reset_pieces[j+9] : reset_pieces[8+9]
             obj.type = 'image/svg+xml'
             obj.height = '100px'
@@ -100,7 +102,70 @@ const resetPieces = (useLabels) => {
     }
 }
 
-//dettagli pezzo
-window.addEventListener('mouseover', e => {
-    console.log(e.target);
+//run onload page
+window.addEventListener('load', (e) => {
+    console.log('load');
+    loadBoard(), resetPieces()
 })
+
+//View Object
+board.addEventListener('mouseover', (e) => {
+    let x,y
+    let container = document.createElement('div')
+    container.className = 'container'
+    let box = document.createElement('div')
+    box.className = 'box'
+    container.appendChild(box)
+    //document.body.appendChild(container)
+
+    /*
+    while(true) {
+        let app = e.target.parentElement
+        if(app.classList[0] ===  "row") {
+            x = app.classList[1]
+            break
+        } else {
+            app = app.parentElement
+            continue
+        }
+    }
+
+    while(true) {
+        let app = e.target.parentElement
+        if(app.classList[0] ===  "square") {
+            x = app.classList[1]
+            break
+        } else {
+            app = app.parentElement
+            continue
+        }
+    }
+    */
+
+    //console.log(x,y);
+    //box.innerHTML = "Black Tower in : "+x+","+y   
+
+     /*//view object and square
+    if (e.target.id !== "board")
+        console.log(e.target)*/
+
+    //view ONLY object
+    if (e.target.id !== "board" && e.target.classList[0] !== "square") {
+        console.log(e.target)
+        //document.getElementById('container').style.display = 'initial'
+    }
+
+    /*
+    document.getElementById('svg-obj').addEventListener('mouseleave', (e) => {
+        document.getElementById('container').style.display = 'none'
+        document.body.removeChild(container)
+    })
+    */
+
+})
+
+/*
+document.getElementById('svg-obj').addEventListener('mouseleave', (e) => {
+    document.body.removeChild(container)
+})
+*/

@@ -48,10 +48,26 @@ body {
 #b-border { border: 1px solid #000; }
 
 
-.test {
-    display: flex;
-    margin: auto;
-    margin-top: 10px;
-    height: 100px;
-    width: 100px;
+/*--- CSS for view object ---*/
+div#container {
+    display: none;
+    background-color: red;
+    position: fixed;
+    width: 200px;
+    height: 150px;
+    right: 10px;
+    bottom: 5px;
+
 }
+object#svg-obj:hover + div#container {
+    display: block;
+}
+
+div.box {
+    background-color: blue;
+}
+
+div.box h1 {
+    color: yellow;
+}
+

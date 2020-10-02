@@ -19,4 +19,6 @@
 >> Mangia in casella piena
 
 > Display overlay per dettagli del pezzo su cui si è col mouse
+>> ~~Creare il container~~
+>> Mostrare quando :hover su obj e poi rimuovere
 
