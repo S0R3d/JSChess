@@ -4,6 +4,8 @@
 
 # TO DO
 
+> # Fare tutto in HTML e CSS, dopo ottimizzare con JS
+
 > Implementare il codice di modifica delle classi di 'square' durante il caricamento della 'board'
 
 > ~~Provate ad aggiungere un bordo all'immagine svg in xml~~
