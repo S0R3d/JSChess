@@ -5,6 +5,7 @@
 # TO DO
 
 > # Fare tutto in HTML e CSS, dopo ottimizzare con JS
+>> # Imprelemetare le jquerry
 
 > Implementare il codice di modifica delle classi di 'square' durante il caricamento della 'board'
 
