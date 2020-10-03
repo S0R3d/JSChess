@@ -95,7 +95,7 @@ div#container.status {
     top: 10px;
 }
 
-div.status:hover + div#container { display: block; }
+div.status:hover + div#container.status { display: block; }
 
 div#container.status h1 { margin-top: 30px; }
 
@@ -122,11 +122,6 @@ div#container.pieces {
     bottom: 5px;
 }
 
-div.hover:hover + div#container {
-    display: block;
-}
+div.hover:hover + div#container.pieces { display: block; }
 
 div#container.pieces h1 { margin-top: 16px; }
-
-
-
