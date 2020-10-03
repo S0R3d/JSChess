@@ -2,23 +2,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
     <link rel="stylesheet" href="style.css">
     <title>Chess</title>
 </head>
 <body>
-    <div id="board"></div>
-
-    <div id="container">
-        <div class="box">
-            <h1>
-                Black Tower
-            </h1>
-            <h2>
-                x, y positions
-            </h2>
+    <div id="board">
+        <div class="row 1">
+            <div class="square 1">
+                <div class="img">
+                    <object data="img/b-tower.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 2">
+                <div class="img">
+                    <object data="img/b-knight.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 3">
+                <div class="img">
+                    <object data="img/b-bishop.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 4">
+                <div class="img">
+                    <object data="img/b-queen.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 5">
+                <div class="img">
+                    <object data="img/b-king.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 6">
+                <div class="img">
+                    <object data="img/b-bishop.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 7">
+                <div class="img">
+                    <object data="img/b-knight.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 8">
+                <div class="img">
+                    <object data="img/b-tower.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+        </div>
+        <div class="row 2">
+            <div class="square 1">
+                <div class="img">
+                    <object data="img/b-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 2">
+                <div class="img">
+                    <object data="img/b-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 3">
+                <div class="img">
+                    <object data="img/b-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 4">
+                <div class="img">
+                    <object data="img/b-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 5">
+                <div class="img">
+                    <object data="img/b-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 6">
+                <div class="img">
+                    <object data="img/b-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 7">
+                <div class="img">
+                    <object data="img/b-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 8">
+                <div class="img">
+                    <object data="img/b-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+        </div>
+        <div class="row 3">
+            <div class="square 1"></div>
+            <div class="square 2"></div>
+            <div class="square 3"></div>
+            <div class="square 4"></div>
+            <div class="square 5"></div>
+            <div class="square 6"></div>
+            <div class="square 7"></div>
+            <div class="square 8"></div>
+        </div>
+        <div class="row 4">
+            <div class="square 1"></div>
+            <div class="square 2"></div>
+            <div class="square 3"></div>
+            <div class="square 4"></div>
+            <div class="square 5"></div>
+            <div class="square 6"></div>
+            <div class="square 7"></div>
+            <div class="square 8"></div>
+        </div>
+        <div class="row 5">
+            <div class="square 1"></div>
+            <div class="square 2"></div>
+            <div class="square 3"></div>
+            <div class="square 4"></div>
+            <div class="square 5"></div>
+            <div class="square 6"></div>
+            <div class="square 7"></div>
+            <div class="square 8"></div>
+        </div>
+        <div class="row 6">
+            <div class="square 1"></div>
+            <div class="square 2"></div>
+            <div class="square 3"></div>
+            <div class="square 4"></div>
+            <div class="square 5"></div>
+            <div class="square 6"></div>
+            <div class="square 7"></div>
+            <div class="square 8"></div>
+        </div>
+        <div class="row 7">
+            <div class="square 1">
+                <div class="img">
+                    <object data="img/w-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 2">
+                <div class="img">
+                    <object data="img/w-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 3">
+                <div class="img">
+                    <object data="img/w-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 4">
+                <div class="img">
+                    <object data="img/w-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 5">
+                <div class="img">
+                    <object data="img/w-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 6">
+                <div class="img">
+                    <object data="img/w-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 7">
+                <div class="img">
+                    <object data="img/w-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 8">
+                <div class="img">
+                    <object data="img/w-pawn.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+        </div>
+        <div class="row 8">
+            <div class="square 1">
+                <div class="img">
+                    <object data="img/w-tower.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 2">
+                <div class="img">
+                    <object data="img/w-knight.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 3">
+                <div class="img">
+                    <object data="img/w-bishop.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 4">
+                <div class="img">
+                    <object data="img/w-king.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 5">
+                <div class="img">
+                    <object data="img/w-queen.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 6">
+                <div class="img">
+                    <object data="img/w-knight.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 7">
+                <div class="img">
+                    <object data="img/w-bishop.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
+            <div class="square 8">
+                <div class="img">
+                    <object data="img/w-tower.svg" type="image/svg+xml" height="100px" width="100px"></object>
+                </div></div>
         </div>
     </div>
+
+    <div class="status"><h2>View Status</h2></div>
+    <div id="container" class="status">
+        <h1>
+            Player #1 : z
+         </h1>
+        <h1>
+            Player #2 : k
+        </h1>
+    </div>
+    
+    <div class="hover"><h2>Hover Me</h2></div>
+    <div id="container" class="pieces">
+        <h1>
+            Black Tower
+         </h1>
+        <h2>
+            x, y positions
+        </h2>
+    </div>
+
 </body>
-<script src="app.js"></script>
+<!--<script src="app.js"></script>-->
 </html>
