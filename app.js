@@ -37,26 +37,7 @@ const loadBoard = (useLabels) => {
     //---
 }
 
-const reset_pieces = [
-    'img/b-tower.svg',
-    'img/b-knight.svg',
-    'img/b-bishop.svg',
-    'img/b-queen.svg',
-    'img/b-king.svg',
-    'img/b-bishop.svg',
-    'img/b-knight.svg',
-    'img/b-tower.svg',
-    'img/b-pawn.svg',
-    'img/w-tower.svg',
-    'img/w-knight.svg',
-    'img/w-bishop.svg',
-    'img/w-king.svg',
-    'img/w-queen.svg',
-    'img/w-bishop.svg',
-    'img/w-knight.svg',
-    'img/w-tower.svg',
-    'img/w-pawn.svg'
-]
+const reset_pieces = ['img/b-tower.svg','img/b-knight.svg','img/b-bishop.svg','img/b-queen.svg','img/b-king.svg','img/b-bishop.svg','img/b-knight.svg','img/b-tower.svg','img/b-pawn.svg','img/w-tower.svg','img/w-knight.svg','img/w-bishop.svg','img/w-king.svg','img/w-queen.svg','img/w-bishop.svg','img/w-knight.svg','img/w-tower.svg','img/w-pawn.svg']
 
 const resetPieces = (useLabels) => {
 
@@ -106,12 +87,46 @@ $(() => {
     loadBoard()
     resetPieces()
 
+    //pieces
     let $pieces = $('#container.pieces')
     $('object').mouseenter((e) => {
+
+        //add data
+        let parentSquare = e.target.parentElement.parentElement
+        let parentRow = parentSquare.parentElement
+
+        let square = parentSquare.classList[1]
+        let row = parentRow.classList[1]
+
+        let data_url = e.target.data
+        let data = data_url.substring(26, data_url.length-4)
+
+        let color = data.substring(0,1)
+        color = color == 'b' ? 'black' : 'white'
+
+        let type = data.substring(2,data.length)
+
+        $('#container.pieces h1').html(color+' '+type)
+        $('#container.pieces h2').html('x: '+square+', y: '+row)
+        
+        //display
         $pieces.css('display', 'block')
-        console.log(e.target);
     })
     $('object').mouseleave((e) => {
         $pieces.css('display', 'none')
+    })
+
+    //status
+    //83 -> s
+    let $status = $('#container.status')
+    let prec = -1
+    this.addEventListener('keyup', (e) => {
+        if(e.keyCode == 83 && prec == 83) {
+            $status.css('display', 'none')
+            prec = -1
+        } else if(e.keyCode == 83)  {
+            $status.css('display', 'block')
+            prec = e.keyCode
+        }
     })
 })
