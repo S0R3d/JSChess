@@ -70,8 +70,8 @@ body > #board > .row > .square:hover + #container.pieces { display: block; }
     text-align: center;
 }
 
-#container h1 { color: red; }
-#container h2 { color: blue }
+#container h1 { color: black; }
+#container h2 { color: black }
 
 /*! --- CSS for view status --- */
 .hover1 {
@@ -102,7 +102,7 @@ body > #board > .row > .square:hover + #container.pieces { display: block; }
 
 .hover1:hover + #container.status { display: block; }
 
-.status h1 { margin-top: 30px; }
+.status h1 { margin-top: 28px; }
 
 /*! --- CSS for view object --- */
 .hover2 {
@@ -129,4 +129,4 @@ body > #board > .row > .square:hover + #container.pieces { display: block; }
 
 .hover2:hover + #container.pieces { display: block; }
 
-.pieces h1 { margin-top: 16px; }
+.pieces h1 { margin-top: 30px; }

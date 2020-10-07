@@ -83,9 +83,16 @@ const resetPieces = (useLabels) => {
     }
 }
 
-$(() => {
+$(window).on('load', () => {
     loadBoard()
     resetPieces()
+})
+
+$(() => {
+    /*
+    loadBoard()
+    resetPieces()
+    */
 
     //pieces
     let $pieces = $('#container.pieces')
@@ -128,5 +135,12 @@ $(() => {
             $status.css('display', 'block')
             prec = e.keyCode
         }
+    })
+
+    $('path').on('click', (e) => {
+        console.log('click');
+    })
+    $('path').bind('click', (e) => {
+        console.log('click');
     })
 })
