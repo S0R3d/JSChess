@@ -5,10 +5,10 @@
 # TO DO
 
 > ~~## Creare 'board' con HTML,CSS~~
-> ## Ottimizzare 'board' con JS
->> ## Imprelemetare le jquerry
+> ~~## Ottimizzare 'board' con JS~~
+>> ~~## Imprelemetare le jquerry~~
 
-> Implementare il codice di modifica delle classi di 'square' durante il caricamento della 'board'
+> ~~Implementare il codice di modifica delle classi di 'square' durante il caricamento della 'board'~~
 
 > ~~Provate ad aggiungere un bordo all'immagine svg in xml~~
 
@@ -22,7 +22,7 @@
 >> Muovi in casella libera
 >> Mangia in casella piena
 
-> Display overlay per dettagli del pezzo su cui si è col mouse
+> ~~Display overlay per dettagli del pezzo su cui si è col mouse~~
 >> ~~Creare il container~~
->> Mostrare quando :hover su obj e poi rimuovere
+>> ~~Mostrare quando :hover su obj e poi rimuovere~~
 
