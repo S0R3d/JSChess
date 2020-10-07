@@ -102,70 +102,16 @@ const resetPieces = (useLabels) => {
     }
 }
 
-//run onload page
-window.addEventListener('load', (e) => {
-    console.log('load');
-    loadBoard(), resetPieces()
-})
+$(() => {
+    loadBoard()
+    resetPieces()
 
-//View Object
-board.addEventListener('mouseover', (e) => {
-    let x,y
-    let container = document.createElement('div')
-    container.className = 'container'
-    let box = document.createElement('div')
-    box.className = 'box'
-    container.appendChild(box)
-    //document.body.appendChild(container)
-
-    /*
-    while(true) {
-        let app = e.target.parentElement
-        if(app.classList[0] ===  "row") {
-            x = app.classList[1]
-            break
-        } else {
-            app = app.parentElement
-            continue
-        }
-    }
-
-    while(true) {
-        let app = e.target.parentElement
-        if(app.classList[0] ===  "square") {
-            x = app.classList[1]
-            break
-        } else {
-            app = app.parentElement
-            continue
-        }
-    }
-    */
-
-    //console.log(x,y);
-    //box.innerHTML = "Black Tower in : "+x+","+y   
-
-     /*//view object and square
-    if (e.target.id !== "board")
-        console.log(e.target)*/
-
-    //view ONLY object
-    if (e.target.id !== "board" && e.target.classList[0] !== "square") {
-        console.log(e.target)
-        //document.getElementById('container').style.display = 'initial'
-    }
-
-    /*
-    document.getElementById('svg-obj').addEventListener('mouseleave', (e) => {
-        document.getElementById('container').style.display = 'none'
-        document.body.removeChild(container)
+    let $pieces = $('#container.pieces')
+    $('object').mouseenter((e) => {
+        $pieces.css('display', 'block')
+        console.log(e.target);
     })
-    */
-
+    $('object').mouseleave((e) => {
+        $pieces.css('display', 'none')
+    })
 })
-
-/*
-document.getElementById('svg-obj').addEventListener('mouseleave', (e) => {
-    document.body.removeChild(container)
-})
-*/
