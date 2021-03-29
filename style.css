@@ -84,6 +84,7 @@ body > #board > .row > .square:hover + #container.pieces { display: block; }
     margin-left: 10px;
 
     background-color: #fff;
+    opacity: 0.5;
     border: 2px solid #000;
     border-radius: 10px;
     text-align: center;

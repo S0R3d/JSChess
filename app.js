@@ -34,7 +34,6 @@ const loadBoard = (useLabels) => {
             }
         }
     }
-    //---
 }
 
 const reset_pieces = ['img/b-tower.svg','img/b-knight.svg','img/b-bishop.svg','img/b-queen.svg','img/b-king.svg','img/b-bishop.svg','img/b-knight.svg','img/b-tower.svg','img/b-pawn.svg','img/w-tower.svg','img/w-knight.svg','img/w-bishop.svg','img/w-king.svg','img/w-queen.svg','img/w-bishop.svg','img/w-knight.svg','img/w-tower.svg','img/w-pawn.svg']
@@ -89,10 +88,6 @@ $(window).on('load', () => {
 })
 
 $(() => {
-    /*
-    loadBoard()
-    resetPieces()
-    */
 
     //pieces
     let $pieces = $('#container.pieces')
