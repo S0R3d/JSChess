@@ -42,7 +42,7 @@ const resetPieces = (useLabels) => {
 
     let rows = document.getElementsByClassName('row')
 
-    //caricamento black
+    //load black
     for (let i = 0; i < 2; i++) {
         let row = rows[i]
 
@@ -61,7 +61,7 @@ const resetPieces = (useLabels) => {
             square.appendChild(img_div)
         }
     }
-    //caricamento white
+    //load white
     for (let i = DIM-2; i < DIM; i++) {
         let row = rows[i]
 
@@ -87,8 +87,39 @@ $(window).on('load', () => {
     resetPieces()
 })
 
-$(() => {
+const resetCoord = () => {
+    cont = 0
+    row = 0
+    col = 'z'
+}
 
+const selected = (row, col) => {
+    $toMove = $(`.row.${row} > .square.${col}`)
+    $toMove.attr('style', 'background-color: yellow')
+}
+const deselected = (row, col) => {
+    $toMove = $(`.row.${row} > .square.${col}`)
+    /* $toMove.attr('style', 'background-color: yellow')
+    square.style.backgroundColor = row%2 === 0 ? '#fff' : '#000' */
+    if (row%2 === 0) {
+        toMove.attr('style', 'background-color: #fff')
+    } else {
+        toMove.attr('style', 'background-color: #000')
+    }
+}
+
+//
+const move = (row, col) => {
+    console.log('move');
+    $toMove = $(`.row.${row} > .square.${col}`)
+
+    //which piece
+    const url = 'http://127.0.0.1:5500/img/'
+    let img_src = $toMove[0].children[0].children[0].data
+    console.log(img_src.slice(url.length,$toMove.length-5))
+}
+
+$(() => {
     //pieces
     let $pieces = $('#container.pieces')
     $('object').mouseenter((e) => {
@@ -113,6 +144,9 @@ $(() => {
         
         //display
         $pieces.css('display', 'block')
+
+        
+
     })
     $('object').mouseleave((e) => {
         $pieces.css('display', 'none')
@@ -137,5 +171,50 @@ $(() => {
     })
     $('path').bind('click', (e) => {
         console.log('click');
+    })
+
+    let cont = 0;
+    let row = 0 //riga
+    let col = 'z' //colonna
+    console.log('row '+row)
+    console.log('col '+col)
+
+    //to move, click first letter then number
+    this.addEventListener('keypress', (e) => {
+        console.log(e.key);
+        console.log(cont);
+        const col_range = ['a','b','c','d','e','f','g','h']
+        const row_range = ['1','2','3','4','5','6','7','8']
+        const app = e.key
+
+        if(col == 'z' && col_range.includes(app)) {
+            col = app
+            cont++
+            console.log('row '+row)
+            console.log('col '+col)
+        }
+        else if(row == 0 && row_range.includes(app)) {
+            row = app
+            cont++
+            console.log('row '+row)
+            console.log('col '+col)
+        }
+        else if(app == 's') {} else console.log('f*');
+
+        if(cont == 2) {
+            //square yellow
+            selected(row, col)
+            if( confirm('Selected: '+col+row)) {
+                try {
+                    $(`.row.${row} > .square.${col}`)[0].children[0].children[0].data
+                    move(row, col)
+                } catch (error) {}
+                deselected(row, col)
+                resetCoord
+            } else {
+                deselected(row, col)
+                resetCoord 
+            }
+        }
     })
 })
