@@ -25,6 +25,7 @@
     /* background-color: rgba(15, 209, 216, 0.705); */
     border: 2.5px solid #000;
     border-radius: 5px;
+    margin: 2px 0px 0px 4px;
 }
 
 .nav-icon span {
@@ -116,8 +117,9 @@ span:hover, ul li span a:hover {
 /* CSS Board */
 
 #board {
-    height: 800px;
-    width: 800px;
+    height: 700px;
+    width: 700px;
+    /* 700/8 = 87.5 per square*/
     display: flex;
     flex-wrap: wrap;
 
@@ -127,8 +129,42 @@ span:hover, ul li span a:hover {
     border: 1px solid #000;
 }
 
+.alert {
+    display: none;
+
+    font-size: large;
+    color: red;
+}
+
+@media screen and (max-width: 854px) {
+    #board {
+        display: none;
+    }
+    .alert {
+        display: block;
+    }
+}
+@media screen and (max-height: 702px) {
+    #board {
+        display: none;
+    }
+    .alert {
+        display: block;
+    }
+}
+
 .row {
-    width: 800px;
+    width: 700px;
+}
+
+.col-sm {
+    width: 87.25px;
+    height: 87.25px;
+}
+
+.col-sm img {
+    /* padding-top: 8px; */
+    width: 100%;
 }
 
 /*! --- CSS view--- */
@@ -181,7 +217,7 @@ span:hover, ul li span a:hover {
 
 .status h1 { margin-top: 28px; }
 
-/*! --- CSS view object --- */
+/*! --- CSS  view object --- */
 .hover2 {
     display: flex;
     width: 80px;
