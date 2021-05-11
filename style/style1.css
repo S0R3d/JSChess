@@ -1,0 +1,209 @@
+/* Variable */
+:root {
+    --nav-width: 135px;
+    --pos-top: 1;
+    --pos-left: 1;
+    --pos-bottom: 0;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* CSS Navbar */
+.nav-icon {
+    display: block;
+
+    position: fixed;
+    top: var(--pos-top);
+    left: var(--pos-left);
+    width: var(--nav-width);
+
+    font-size: 2rem;
+    text-align: center;
+    /* background-color: rgba(15, 209, 216, 0.705); */
+    border: 2.5px solid #000;
+    border-radius: 5px;
+}
+
+.nav-icon span {
+    font-size: 2rem;
+    /* transition: all .30s ease-in-out;
+    opacity: 0; */
+}
+
+/* .nav-icon:hover span {
+    opacity: 1;
+} */
+
+.nav-toggler {
+    display: none;
+
+    position: fixed;
+    top: var(--pos-top);
+    left: var(--pos-left);
+    width: var(--nav-width);
+
+    font-size: 2.5rem;
+    text-align: center;
+    /* background-color: rgba(14, 179, 22, 0.671); */
+    border: 2.5px solid #000;
+    border-radius: 5px;
+}
+
+.nav-toggler span {
+    font-size: 2rem;
+    /* transition: all .30s ease-in-out;
+    opacity: 0; */
+}
+
+/* .nav-toggler:hover span {
+    opacity: 1;
+} */
+
+header {
+    display: none;
+
+    position: fixed;
+    top: 49;
+    left: var(--pos-left);
+    bottom: var(--pos-bottom);
+    width: var(--nav-width);
+
+    /* background-color: rgba(20, 14, 107, 0.596); */
+    border: 2.5px solid #000;
+    border-radius: 5px;
+}
+
+.header {
+    display: none;
+
+    position: fixed;
+    top: 49;
+    left: var(--pos-left);
+    bottom: var(--pos-bottom);
+
+    display: flex;
+    flex-direction: column;
+
+    /* background-color: rgba(160, 31, 31, 0.781); */
+}
+
+.header::-webkit-scrollbar {
+    display: none;
+}
+
+ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+li span {
+    font-size: 2rem;
+}
+
+ul li span, ul li span a {
+    text-decoration: none;
+    color: #000;
+}
+
+span:hover, ul li span a:hover {
+    /* color: rgb(255, 0, 0); */
+    cursor: pointer;
+}
+
+/* CSS Board */
+
+#board {
+    height: 800px;
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+
+    margin-left: 150px;
+    margin-top: 2px;
+
+    border: 1px solid #000;
+}
+
+.row {
+    width: 800px;
+}
+
+/*! --- CSS view--- */
+#container {
+    display: none;
+    position: fixed;
+    width: 200px;
+    height: 150px;
+    right: 10px;
+    bottom: 5px;
+
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#container h1 { color: black; }
+#container h2 { color: black }
+
+/*! --- CSS view status --- */
+.hover1 {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    position: fixed;
+    left: 5px;
+    margin: auto;
+    margin-left: 10px;
+
+    background-color: #fff;
+    opacity: 0.5;
+    border: 2px solid #000;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.hover1 h2 { margin-top: 15px; }
+
+.status {
+    display: none;
+    position: fixed;
+    width: 200px;
+    height: 150px;
+    left: 10px;
+    top: 10px;
+}
+
+.hover1:hover + #container.status { display: block; }
+
+.status h1 { margin-top: 28px; }
+
+/*! --- CSS view object --- */
+.hover2 {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    position: fixed;
+    left: 110px;
+
+    background-color: greenyellow;
+    border: 2px solid #000;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.pieces {
+    display: none;
+    position: fixed;
+    width: 200px;
+    height: 150px;
+    right: 10px;
+    bottom: 5px;
+}
+
+.hover2:hover + #container.pieces { display: block; }
+
+.pieces h1 { margin-top: 30px; }

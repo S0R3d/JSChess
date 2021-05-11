@@ -55,8 +55,8 @@ const resetPieces = (useLabels) => {
             obj.id = 'svg-obj'
             obj.data = i === 1 ? reset_pieces[8] : reset_pieces[j]
             obj.type = 'image/svg+xml'
-            obj.height = '100px'
-            obj.width = '100px'
+            obj.height = '99px'
+            obj.width = '99px'
             img_div.appendChild(obj)
             square.appendChild(img_div)
         }
@@ -74,8 +74,8 @@ const resetPieces = (useLabels) => {
             obj.id = 'svg-obj'
             obj.data = i === DIM-1 ? reset_pieces[j+9] : reset_pieces[8+9]
             obj.type = 'image/svg+xml'
-            obj.height = '100px'
-            obj.width = '100px'
+            obj.height = '99px'
+            obj.width = '99px'
             img_div.appendChild(obj)
             square.appendChild(img_div)
         }
