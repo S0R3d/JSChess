@@ -1,5 +1,4 @@
 
-
 $(window).on('load', () => {
     loadBoard()
     resetPieces()

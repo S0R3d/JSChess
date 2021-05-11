@@ -1,28 +1,20 @@
 # JSChess
-## Write a chess game in JS
+## TO DO
 
+> Completare passaggio da app.js -> app1.js
 
-# TO DO
+  >> Sistemare 'show pieces' quando 'hover'
 
-> ~~## Creare 'board' con HTML,CSS~~
-> ~~## Ottimizzare 'board' con JS~~
->> ~~## Imprelemetare le jquerry~~
+> Modificare posizione 'div' status
 
-> ~~Implementare il codice di modifica delle classi di 'square' durante il caricamento della 'board'~~
+> Aggiungere un overlay text per dire a chi sta la mossa
 
-> ~~Provate ad aggiungere un bordo all'immagine svg in xml~~
+> Completare sistema movimento/mangia
 
-> ~~Inserire tutti i pezzi al loro posto~~
->> ~~Come si possono inserire ?~~
+  >> 
 
-> ~~Usare l'invert-color al posto dell'immagine bianca per i pezzi ? NO~~
+  >> mostro mosse possibili
 
-> Svilupare sistema mossa con controllo muovi-mangia
->> Si può muovere ?
->> Muovi in casella libera
->> Mangia in casella piena
+  >> controllo che si selezioni una mossa possibile
 
-> ~~Display overlay per dettagli del pezzo su cui si è col mouse~~
->> ~~Creare il container~~
->> ~~Mostrare quando :hover su obj e poi rimuovere~~
-
+  >> controllo se in fondo alla scacchiera

@@ -44,29 +44,28 @@ function loadBoard() {
 }
 
 function addCoordinate(params) {
-    // // --- si puo implementare durante il caricamento soprastante
-    // let rows = document.querySelectorAll('.row')
+    const rows = document.querySelectorAll('.row')
 
-    // for (let i = 0; i < DIM; i++) {
-    //     let row = rows[i]
-    //     if (row.style.flexDirection == 'row-reverse') {
-    //         let square = row.lastElementChild
-    //         for (let j = 0; j < DIM; j++) {
-    //             square.classList = 'square ' + String.fromCharCode(97 + j)
-    //             square = square.previousElementSibling;
-    //         }
-    //     } else { 
-    //         let squares = row.children
-    //         for (let j = 0; j < DIM; j++) {
-    //             let square = squares[j]
-    //             square.className = 'square ' + String.fromCharCode(97 + j)
-    //         }
-    //     }
-    // }
+    for (let i = 0; i < DIM; i++) {
+        let row = rows[i]
+        if (row.style.flexDirection == 'row-reverse') {
+            let col = row.lastElementChild
+            for (let j = 0; j < DIM; j++) {
+                col.classList.add(String.fromCharCode(97 + j))
+                col = col.previousElementSibling;
+            }
+        } else { 
+            let cols = row.children
+            for (let j = 0; j < DIM; j++) {
+                let col = cols[j]
+                col.classList.add(String.fromCharCode(97 + j))
+            }
+        }
+    }
 }
 
 function loadPiece() {
-    let imgs = document.querySelectorAll('img')
+    const imgs = document.querySelectorAll('img')
 
     for (let i = 0; i < DIM; i++) {
         let bSrc = bPieces[i]
@@ -88,23 +87,69 @@ function loadPiece() {
         imgs[i+8].src = bSrc
         imgs[i+56-8].src = wSrc
     }
-
 }
 
 function move() {
-    console.log('move');
+    $('img').on('click', (obj) => {
+        const $this = obj.target
+        console.log($this);
+
+        let colParent = $this.parentElement
+        console.log(colParent);
+
+        let rowParent = $this.parentElement.parentElement
+        console.log(rowParent);
+
+        // ricordo per rimettere il colore giusto
+        let precBGColor = colParent.style.backgroundColor
+        colParent.style.backgroundColor = 'yellow'
+
+        
+        //controllo coodiante
+
+        let [colBase, ...col] = colParent.classList
+        let [rowBase, ...row] = colParent.parentElement.classList
+
+        // mostro mosse possibili
+
+        // controllo pezzi davanti o se in fondo alla scacchiera
+
+        // mangia?
+
+
+    })
+}
+
+function showStatus(params) {
+    // 83 -> s
+    let $status = $('#container.status')
+    let log = -1
+    this.addEventListener('keyup', (e) => {
+        if(e.keyCode == 83 && log == 83) {
+            $status.css('display', 'none')
+            log = -1
+        } else if(e.keyCode == 83)  {
+            $status.css('display', 'block')
+            log = e.keyCode
+        }
+    })
 }
 
 function debug() {
-    console.log(document.querySelectorAll('.row'))
-    console.log(document.querySelectorAll('.col-sm'))
-    console.log(document.querySelectorAll('img'))
+    console.log(document.querySelectorAll('.row'));
 }
+
+// Check README.me
 $(() => {
     loadBoard()
     loadPiece()
+    addCoordinate()
+
+    
     move()
 
+
+    showStatus()
 
     debug()
 })
