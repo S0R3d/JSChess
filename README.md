@@ -18,3 +18,9 @@
   >> controllo che si selezioni una mossa possibile
 
   >> controllo se in fondo alla scacchiera
+
+  > Cambiare function con arrow function
+   : function name (){} -> const name = () => {}
+
+> Creare la board con display: grid, senza row con solo square(col)
+  >> https://www.youtube.com/watch?v=mNH28rRzM8w
