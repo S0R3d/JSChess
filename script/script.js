@@ -32,12 +32,10 @@ const loadBoard = () => {
         row.className = 'row ' + i
         row.style.flexDirection = i%2 === 0 ? '' : 'row-reverse'
         for (let j = 0; j < DIM; j++) {
-            let col = document.createElement('div')
-            col.className = 'col-sm'
-            col.style.backgroundColor = j%2 === 0 ? '#fff' : '#000'
-            let img = document.createElement('img')
-            col.appendChild(img)
-            row.appendChild(col)
+            let square = document.createElement('div')
+            square.className = 'col-sm'
+            square.style.backgroundColor = j%2 === 0 ? '#fff' : '#000'
+            row.appendChild(square)
         }
         $board.appendChild(row)
     }
@@ -49,24 +47,32 @@ const addCoordinate = (params) => {
     for (let i = 0; i < DIM; i++) {
         let row = rows[i]
         if (row.style.flexDirection == 'row-reverse') {
-            let col = row.lastElementChild
+            let square = row.lastElementChild
             for (let j = 0; j < DIM; j++) {
-                col.classList.add(String.fromCharCode(97 + j))
-                col = col.previousElementSibling;
+                square.classList.add(String.fromCharCode(97 + j))
+                square = square.previousElementSibling;
             }
         } else { 
-            let cols = row.children
+            let squares = row.children
             for (let j = 0; j < DIM; j++) {
-                let col = cols[j]
-                col.classList.add(String.fromCharCode(97 + j))
+                let square = squares[j]
+                square.classList.add(String.fromCharCode(97 + j))
             }
         }
     }
 }
 
-const loadPiece = () => {
-    const imgs = document.querySelectorAll('img')
+const loadPieces = () => {
+    const squares = document.querySelectorAll('.col-sm')
+    for (let i = 0; i < squares.length; i++) {
+        let square = squares[i]
+        let img = document.createElement('img')
+        img.row = square.parentElement.classList[1]
+        img.col = square.classList[1]
+        square.appendChild(img)
+    }
 
+    const imgs = document.querySelectorAll('img')
     for (let i = 0; i < DIM; i++) {
         let bSrc = bPieces[i]
         let wSrc = wPieces[i]
@@ -89,35 +95,28 @@ const loadPiece = () => {
     }
 }
 
-const move = () => {
-    $('img').on('click', (obj) => {
-        const $this = obj.target
-        console.log($this);
+const move = (piece, coord) => {
+    console.log(coord);
 
-        let colParent = $this.parentElement
-        console.log(colParent);
+    // ricorda colore, seleiziona casella (square) e metti giallo
+    const squarePiece = piece.parentElement
+    let precBackgroundColor = squarePiece.style.backgroundColor
+    squarePiece.style.backgroundColor = 'yellow'
 
-        let rowParent = $this.parentElement.parentElement
-        console.log(rowParent);
-
-        // ricordo per rimettere il colore giusto
-        let precBGColor = colParent.style.backgroundColor
-        colParent.style.backgroundColor = 'yellow'
-
+    // che pezzo è?
+    let whichPiece = piece.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+    let [color, type] = [whichPiece[0], whichPiece.slice(1, whichPiece.length)]
+    console.log(color)
+    console.log(type)
+    // mostro mosse possibili
         
-        //controllo coodiante
+    //controllo coodiante
 
-        let [colBase, ...col] = colParent.classList
-        let [rowBase, ...row] = colParent.parentElement.classList
+    // controllo pezzi davanti o se in fondo alla scacchiera
 
-        // mostro mosse possibili
+    // puo mangiare?
 
-        // controllo pezzi davanti o se in fondo alla scacchiera
-
-        // mangia?
-
-
-    })
+    // alla fine del movimento rimettere il colore corretto nella casella (square)
 }
 
 const showStatus = (params) => {
@@ -136,18 +135,30 @@ const showStatus = (params) => {
 }
 
 const debug = () => {
-    console.log(document.querySelectorAll('.row'));
+    // console.log(document.querySelectorAll('.row'));
 }
 
 // Check README.me
 $(() => {
     loadBoard()
-    loadPiece()
     addCoordinate()
-    
-    move()
+    loadPieces()
 
-    showStatus()
+    // check coordinate when u click some pieces
+    let coordinatePieceClicked = {
+        row: 0,
+        col: 0,
+    }
 
+    $('img').on('click', (obj) => {
+        console.log(obj.target);
+        coordinatePieceClicked.row = obj.target.row
+        coordinatePieceClicked.col = obj.target.col
+
+        move(obj.target, coordinatePieceClicked)
+    })
+
+
+    // showStatus()
     debug()
 })
