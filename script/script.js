@@ -26,7 +26,7 @@ const wPieces = [
     '/img/w-pawn.svg',
 ]
 
-function loadBoard() {
+const loadBoard = () => {
     for (let i = DIM; i > 0; i--) {
         let row = document.createElement('div')
         row.className = 'row ' + i
@@ -43,7 +43,7 @@ function loadBoard() {
     }
 }
 
-function addCoordinate(params) {
+const addCoordinate = (params) => {
     const rows = document.querySelectorAll('.row')
 
     for (let i = 0; i < DIM; i++) {
@@ -64,7 +64,7 @@ function addCoordinate(params) {
     }
 }
 
-function loadPiece() {
+const loadPiece = () => {
     const imgs = document.querySelectorAll('img')
 
     for (let i = 0; i < DIM; i++) {
@@ -89,7 +89,7 @@ function loadPiece() {
     }
 }
 
-function move() {
+const move = () => {
     $('img').on('click', (obj) => {
         const $this = obj.target
         console.log($this);
@@ -120,7 +120,7 @@ function move() {
     })
 }
 
-function showStatus(params) {
+const showStatus = (params) => {
     // 83 -> s
     let $status = $('#container.status')
     let log = -1
@@ -135,7 +135,7 @@ function showStatus(params) {
     })
 }
 
-function debug() {
+const debug = () => {
     console.log(document.querySelectorAll('.row'));
 }
 
@@ -144,10 +144,8 @@ $(() => {
     loadBoard()
     loadPiece()
     addCoordinate()
-
     
     move()
-
 
     showStatus()
 
