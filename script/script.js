@@ -95,27 +95,104 @@ const loadPieces = () => {
     }
 }
 
-const move = (piece, coord) => {
-    console.log(coord);
+const checkMove = (piece, coord, color, type) => {
+    if (color === 'b') {
+        // black site - dall'alto verso il basso per i pedoni
+        // row8 -> row1
+        switch (type) {
+            case 'pawn':
+                console.log('bpawn')
+                break;
+            case 'tower':
+                console.log('btower')
+                break;
+            case 'knight':
+                console.log('bknight')
+                break;
+            case 'bishop':
+                console.log('bbishop')
+                break;
+            case 'king':
+                console.log('bking')
+                break;
+            case 'queen':
+                console.log('bqueen')
+                break;
+            default:
+                break;
+        }
+        return true
+    } else if (color === 'w') {
+        // white site - dal basso verso l'alto per i pedoni
+        // row1 -> row8
+        switch (type) {
+            case 'pawn':
+                console.log('wpawn')
+                break;
+            case 'tower':
+                console.log('wtower')
+                break;
+            case 'knight':
+                console.log('wknight')
+                break;
+            case 'bishop':
+                console.log('wbishop')
+                break;
+            case 'king':
+                console.log('wking')
+                break;
+            case 'queen':
+                console.log('wqueen')
+                break;
+            default:
+                break;
+        }
+        return true
+    } else return false
+}
 
-    // ricorda colore, seleiziona casella (square) e metti giallo
-    const squarePiece = piece.parentElement
-    let precBackgroundColor = squarePiece.style.backgroundColor
-    squarePiece.style.backgroundColor = 'yellow'
+const move = () => {
+    let coordinate = {
+        row: 0,
+        col: 0,
+    }
 
-    // che pezzo è?
-    let whichPiece = piece.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-    let [color, type] = [whichPiece[0], whichPiece.slice(1, whichPiece.length)]
-    console.log(color)
-    console.log(type)
-    // mostro mosse possibili
-        
-    //controllo coodiante
+    $('img').on('click', (obj) => {
+        const piece = obj.target
+        console.log(piece);
+        coordinate.row = piece.row
+        coordinate.col = piece.col
 
-    // controllo pezzi davanti o se in fondo alla scacchiera
+        // move(obj.target, coordinate)
 
+        console.log(coordinate.row+','+coordinate.col);
+
+        // ricorda colore, seleiziona casella (square) e metti giallo
+        const squarePiece = piece.parentElement
+        let precBackgroundColor = squarePiece.style.backgroundColor
+        squarePiece.style.backgroundColor = 'yellow'
+
+        // che pezzo è?
+        let whichPiece = piece.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        let [color, type] = [whichPiece[0], whichPiece.slice(1, whichPiece.length)]
+        console.log(color)
+        console.log(type)
+
+        // mostro mosse possibili
+        //controllo coodiante
+        const flag = checkMove(piece, coordinate, color, type)
+        if (flag) {
+            // continue, next click su una posizione in cui il pezzo si puo muovere
+            
+        } else {
+            squarePiece.style.backgroundColor = precBackgroundColor
+            return
+        }
+    })    
+
+    // controllo interazione con altri pezzi
+    // è un pedone infondo alla scacchiera?
     // puo mangiare?
-
     // alla fine del movimento rimettere il colore corretto nella casella (square)
 }
 
@@ -144,19 +221,20 @@ $(() => {
     addCoordinate()
     loadPieces()
 
+    move()
     // check coordinate when u click some pieces
-    let coordinatePieceClicked = {
-        row: 0,
-        col: 0,
-    }
+    // let coordinatePieceClicked = {
+    //     row: 0,
+    //     col: 0,
+    // }
 
-    $('img').on('click', (obj) => {
-        console.log(obj.target);
-        coordinatePieceClicked.row = obj.target.row
-        coordinatePieceClicked.col = obj.target.col
+    // $('img').on('click', (obj) => {
+    //     console.log(obj.target);
+    //     coordinatePieceClicked.row = obj.target.row
+    //     coordinatePieceClicked.col = obj.target.col
 
-        move(obj.target, coordinatePieceClicked)
-    })
+    //     move(obj.target, coordinatePieceClicked)
+    // })
 
 
     // showStatus()
