@@ -27,3 +27,5 @@
   <!-- >> non usare row-reverse ma :nth-child(2n) nel css -->
 
 <!-- > "ERRORE": a1 (casella in basso a sinistra) deve essere bianca -> tutti i colori sono invertiti -->
+
+> Creare una Map per identificare dove sono posiizionati i pezzi ?
