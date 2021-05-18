@@ -2,9 +2,22 @@
  * cSpell: disable
  */
 
-import Pawn from "./Pawn.js";
+import {Pawn, Tower, Knight, Bishop, Queen, King} from "./Pieces.js"
 
-console.log(new Pawn());
+let pawn = new Pawn('pawn','b','/img/b-pawn.svg')
+let tower = new Tower('tower','w','/img/w-tower.svg')
+let knight = new Knight('kight','b','/img/b-knight.svg')
+let bishop = new Bishop('bishop','w','/img/w-bishop.svg')
+let queen = new Queen('queen','b','/img/b-queen.svg')
+let king = new King('king','w','/img/w-king.svg')
+
+console.log(pawn)
+console.log(tower)
+console.log(knight)
+console.log(bishop)
+console.log(queen)
+console.log(king)
+
 
 const DIM = 8
 const $board = $('#board')[0]
@@ -50,7 +63,6 @@ const loadBoard = () => {
 
 const addCoordinate = (params) => {
     const rows = document.querySelectorAll('.row')
-
     for (let i = 0; i < DIM; i++) {
         let row = rows[i]
         if (row.style.flexDirection == 'row-reverse') {
@@ -70,35 +82,43 @@ const addCoordinate = (params) => {
 }
 
 const loadPieces = () => {
+    // const squares = document.querySelectorAll('.col-sm')
+    // for (let i = 0; i < squares.length; i++) {
+    //     let square = squares[i]
+    //     let img = document.createElement('img')
+    //     img.row = square.parentElement.classList[1]
+    //     img.col = square.classList[1]
+    //     square.appendChild(img)
+    // }
+
+    // const imgs = document.querySelectorAll('img')
+    // // Load other Piecess
+    // for (let i = 0; i < DIM; i++) {
+    //     let bSrc = bPieces[i]
+    //     let wSrc = wPieces[i]
+
+    //     let img = imgs[i]
+    //     img.src = bSrc
+    //     img.style = 'padding-top: 8px;'
+
+    //     let img1 = imgs[i+56]
+    //     img1.src = wSrc
+    //     img1.style = 'padding-top: 8px;'
+    // }
+
+    // // Load pawn
+    // for (let i = 0; i < DIM; i++) {
+    //     let bSrc = bPieces[8]
+    //     let wSrc = wPieces[8]
+
+    //     imgs[i+8].src = bSrc
+    //     imgs[i+56-8].src = wSrc
+    // }
+
     const squares = document.querySelectorAll('.col-sm')
     for (let i = 0; i < squares.length; i++) {
         let square = squares[i]
-        let img = document.createElement('img')
-        img.row = square.parentElement.classList[1]
-        img.col = square.classList[1]
-        square.appendChild(img)
-    }
-
-    const imgs = document.querySelectorAll('img')
-    for (let i = 0; i < DIM; i++) {
-        let bSrc = bPieces[i]
-        let wSrc = wPieces[i]
-
-        let img = imgs[i]
-        img.src = bSrc
-        img.style = 'padding-top: 8px;'
-
-        let img1 = imgs[i+56]
-        img1.src = wSrc
-        img1.style = 'padding-top: 8px;'
-    }
-
-    for (let i = 0; i < DIM; i++) {
-        let bSrc = bPieces[8]
-        let wSrc = wPieces[8]
-
-        imgs[i+8].src = bSrc
-        imgs[i+56-8].src = wSrc
+        
     }
 }
 
