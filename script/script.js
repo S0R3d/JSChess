@@ -1,4 +1,5 @@
-/* GLOBAL var */
+/* cSpell: disable */
+
 const DIM = 8
 const $board = $('#board')[0]
 
