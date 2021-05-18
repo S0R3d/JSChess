@@ -2,12 +2,10 @@
  * cSpell: disable
  */
 
-class Pawn extends Piece {
-  constructor(name, type, img) {
-    Piece.call(name, type, img);
-  }
+import Piece from "./Piece.js";
 
-  constructor(name, type) {
-    Piece.call(name, type)
+export default class Pawn extends Piece {
+  constructor(name, type, img) {
+    super(name, type, img);
   }
 }

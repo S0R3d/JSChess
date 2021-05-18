@@ -2,6 +2,10 @@
  * cSpell: disable
  */
 
+import Pawn from "./Pawn.js";
+
+console.log(new Pawn());
+
 const DIM = 8
 const $board = $('#board')[0]
 
