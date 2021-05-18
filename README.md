@@ -35,3 +35,7 @@
   >> Inserti img nell'oggetto
   >> Inserire onclick
   >> Aggiornare tutto il JS per gli obj
+
+>> Piece object.prototype come superclasse base
+>> i vari pezzi "derivano" dalla superclasse direttamente
+>> 
