@@ -2,7 +2,14 @@
  * cSpell: disable
  */
 
-import {Pawn, Tower, Knight, Bishop, Queen, King} from "./Pieces.js"
+import {
+    Pawn,
+    Tower,
+    Knight,
+    Bishop,
+    Queen,
+    King
+} from "./Pieces.js"
 
 
 const DIM = 8
@@ -33,21 +40,21 @@ const wPieces = [
 ]
 
 const whites = {
-    tower: new Tower('w','tower',''),
-    knight: new Knight('w','knight',''),
-    bishop: new Bishop('w','bishop',''),
-    queen: new Queen('w','queen',''),
-    king: new King('w','king',''),
-    pawn: new Pawn('w','pawn',''),
+    tower: new Tower('w', 'tower', '/img/w-tower.svg'),
+    knight: new Knight('w', 'knight', '/img/w-knight.svg'),
+    bishop: new Bishop('w', 'bishop', '/img/w-bishop.svg'),
+    queen: new Queen('w', 'queen', '/img/w-queen.svg'),
+    king: new King('w', 'king', '/img/w-king.svg'),
+    pawn: new Pawn('w', 'pawn', '/img/w-pawn.svg'),
 }
 
 const blacks = {
-    tower: new Tower('b','tower',''),
-    knight: new Knight('b','knight',''),
-    bishop: new Bishop('b','bishop',''),
-    queen: new Queen('b','queen',''),
-    king: new King('b','king',''),
-    pawn: new Pawn('b','pawn',''),
+    tower: new Tower('b', 'tower', '/img/b-tower.svg'),
+    knight: new Knight('b', 'knight', '/img/b-knight.svg'),
+    bishop: new Bishop('b', 'bishop', '/img/b-bishop.svg'),
+    queen: new Queen('b', 'queen', '/img/b-queen.svg'),
+    king: new King('b', 'king', '/img/b-king.svg'),
+    pawn: new Pawn('b', 'pawn', '/img/b-pawn.svg'),
 }
 
 console.log(whites);
@@ -57,11 +64,11 @@ const loadBoard = () => {
     for (let i = DIM; i > 0; i--) {
         let row = document.createElement('div')
         row.className = 'row ' + i
-        row.style.flexDirection = i%2 === 0 ? '' : 'row-reverse'
+        row.style.flexDirection = i % 2 === 0 ? '' : 'row-reverse'
         for (let j = 0; j < DIM; j++) {
             let square = document.createElement('div')
             square.className = 'col-sm'
-            square.style.backgroundColor = j%2 === 0 ? '#fff' : '#000'
+            square.style.backgroundColor = j % 2 === 0 ? '#fff' : '#000'
             row.appendChild(square)
         }
         $board.appendChild(row)
@@ -78,7 +85,7 @@ const addCoordinate = (params) => {
                 square.classList.add(String.fromCharCode(97 + j))
                 square = square.previousElementSibling;
             }
-        } else { 
+        } else {
             let squares = row.children
             for (let j = 0; j < DIM; j++) {
                 let square = squares[j]
@@ -86,6 +93,11 @@ const addCoordinate = (params) => {
             }
         }
     }
+}
+
+const laodClassPieces = () => {
+    const squares = document.querySelectorAll('.col-sm')
+
 }
 
 const loadPieces = () => {
@@ -110,12 +122,12 @@ const loadPieces = () => {
         img.src = bSrc
         img.style = 'padding-top: 8px;'
 
-        let img1 = imgs[i+56]
+        let img1 = imgs[i + 56]
         img1.src = wSrc
         img1.style = 'padding-top: 8px;'
 
-        imgs[i+8].src = bPawnSrc
-        imgs[i+56-8].src = wPawnSrc
+        imgs[i + 8].src = bPawnSrc
+        imgs[i + 56 - 8].src = wPawnSrc
     }
 
     // // Load pawn
@@ -130,7 +142,7 @@ const loadPieces = () => {
     // const squares = document.querySelectorAll('.col-sm')
     // for (let i = 0; i < squares.length; i++) {
     //     let square = squares[i]
-        
+
     // }
 }
 
@@ -204,7 +216,7 @@ const move = () => {
 
         // move(obj.target, coordinate)
 
-        console.log(coordinate.row+','+coordinate.col);
+        console.log(coordinate.row + ',' + coordinate.col);
 
         // ricorda colore, seleiziona casella (square) e metti giallo
         const squarePiece = piece.parentElement
@@ -222,12 +234,12 @@ const move = () => {
         const flag = checkMove(piece, coordinate, color, type)
         if (flag) {
             // continue, next click su una posizione in cui il pezzo si puo muovere
-            
+
         } else {
             squarePiece.style.backgroundColor = precBackgroundColor
             return
         }
-    })    
+    })
 
     // controllo interazione con altri pezzi
     // è un pedone infondo alla scacchiera?
@@ -240,10 +252,10 @@ const showStatus = (params) => {
     let $status = $('#container.status')
     let log = -1
     this.addEventListener('keyup', (e) => {
-        if(e.keyCode == 83 && log == 83) {
+        if (e.keyCode == 83 && log == 83) {
             $status.css('display', 'none')
             log = -1
-        } else if(e.keyCode == 83)  {
+        } else if (e.keyCode == 83) {
             $status.css('display', 'block')
             log = e.keyCode
         }
