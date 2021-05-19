@@ -4,20 +4,6 @@
 
 import {Pawn, Tower, Knight, Bishop, Queen, King} from "./Pieces.js"
 
-let pawn = new Pawn('pawn','b','/img/b-pawn.svg')
-let tower = new Tower('tower','w','/img/w-tower.svg')
-let knight = new Knight('kight','b','/img/b-knight.svg')
-let bishop = new Bishop('bishop','w','/img/w-bishop.svg')
-let queen = new Queen('queen','b','/img/b-queen.svg')
-let king = new King('king','w','/img/w-king.svg')
-
-console.log(pawn)
-console.log(tower)
-console.log(knight)
-console.log(bishop)
-console.log(queen)
-console.log(king)
-
 
 const DIM = 8
 const $board = $('#board')[0]
@@ -45,6 +31,27 @@ const wPieces = [
     '/img/w-tower.svg',
     '/img/w-pawn.svg',
 ]
+
+const whites = {
+    tower: new Tower('w','tower',''),
+    knight: new Knight('w','knight',''),
+    bishop: new Bishop('w','bishop',''),
+    queen: new Queen('w','queen',''),
+    king: new King('w','king',''),
+    pawn: new Pawn('w','pawn',''),
+}
+
+const blacks = {
+    tower: new Tower('b','tower',''),
+    knight: new Knight('b','knight',''),
+    bishop: new Bishop('b','bishop',''),
+    queen: new Queen('b','queen',''),
+    king: new King('b','king',''),
+    pawn: new Pawn('b','pawn',''),
+}
+
+console.log(whites);
+console.log(blacks);
 
 const loadBoard = () => {
     for (let i = DIM; i > 0; i--) {
@@ -82,29 +89,34 @@ const addCoordinate = (params) => {
 }
 
 const loadPieces = () => {
-    // const squares = document.querySelectorAll('.col-sm')
-    // for (let i = 0; i < squares.length; i++) {
-    //     let square = squares[i]
-    //     let img = document.createElement('img')
-    //     img.row = square.parentElement.classList[1]
-    //     img.col = square.classList[1]
-    //     square.appendChild(img)
-    // }
+    const squares = document.querySelectorAll('.col-sm')
+    for (let i = 0; i < squares.length; i++) {
+        let square = squares[i]
+        let img = document.createElement('img')
+        img.row = square.parentElement.classList[1]
+        img.col = square.classList[1]
+        square.appendChild(img)
+    }
 
-    // const imgs = document.querySelectorAll('img')
-    // // Load other Piecess
-    // for (let i = 0; i < DIM; i++) {
-    //     let bSrc = bPieces[i]
-    //     let wSrc = wPieces[i]
+    const imgs = document.querySelectorAll('img')
+    // Load other Piecess
+    for (let i = 0; i < DIM; i++) {
+        let bSrc = bPieces[i]
+        let wSrc = wPieces[i]
+        let bPawnSrc = bPieces[8]
+        let wPawnSrc = wPieces[8]
 
-    //     let img = imgs[i]
-    //     img.src = bSrc
-    //     img.style = 'padding-top: 8px;'
+        let img = imgs[i]
+        img.src = bSrc
+        img.style = 'padding-top: 8px;'
 
-    //     let img1 = imgs[i+56]
-    //     img1.src = wSrc
-    //     img1.style = 'padding-top: 8px;'
-    // }
+        let img1 = imgs[i+56]
+        img1.src = wSrc
+        img1.style = 'padding-top: 8px;'
+
+        imgs[i+8].src = bPawnSrc
+        imgs[i+56-8].src = wPawnSrc
+    }
 
     // // Load pawn
     // for (let i = 0; i < DIM; i++) {
@@ -115,11 +127,11 @@ const loadPieces = () => {
     //     imgs[i+56-8].src = wSrc
     // }
 
-    const squares = document.querySelectorAll('.col-sm')
-    for (let i = 0; i < squares.length; i++) {
-        let square = squares[i]
+    // const squares = document.querySelectorAll('.col-sm')
+    // for (let i = 0; i < squares.length; i++) {
+    //     let square = squares[i]
         
-    }
+    // }
 }
 
 const checkMove = (piece, coord, color, type) => {
@@ -242,7 +254,6 @@ const debug = () => {
     // console.log(document.querySelectorAll('.row'));
 }
 
-// Check README.me
 $(() => {
     loadBoard()
     addCoordinate()

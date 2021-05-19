@@ -19,14 +19,10 @@
 
 > Creare la board con display: grid, senza row con solo square(col) (Later)
 
-> Creare una Map per identificare dove sono posiizionati i pezzi ?
-
 > SOSTITUIRE TUTTI PER ADATTARE A PEZZI CON OBJECT IN JS
-  >> Object per ogni pezzo
   >> Inserti img nell'oggetto
   >> Inserire onclick
   >> Aggiornare tutto il JS per gli obj
 
 >> Piece object.prototype come superclasse base
 >> i vari pezzi "derivano" dalla superclasse direttamente
->> 
