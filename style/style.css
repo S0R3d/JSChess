@@ -1,61 +1,174 @@
-body { 
-    display: block;
-    margin: auto;
-    margin-top:10px;
+/* Variable */
+:root {
+    --nav-width: 135px;
+    --pos-top: 1;
+    --pos-left: 1;
+    --pos-bottom: 0;
 }
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* CSS Navbar */
+.nav-icon {
+    display: block;
+
+    position: fixed;
+    top: var(--pos-top);
+    left: var(--pos-left);
+    width: var(--nav-width);
+
+    font-size: 2rem;
+    text-align: center;
+    /* background-color: rgba(15, 209, 216, 0.705); */
+    border: 2.5px solid #000;
+    border-radius: 5px;
+    margin: 2px 0px 0px 4px;
+}
+
+.nav-icon span {
+    font-size: 2rem;
+    /* transition: all .30s ease-in-out;
+    opacity: 0; */
+}
+
+/* .nav-icon:hover span {
+    opacity: 1;
+} */
+
+.nav-toggler {
+    display: none;
+
+    position: fixed;
+    top: var(--pos-top);
+    left: var(--pos-left);
+    width: var(--nav-width);
+
+    font-size: 2.5rem;
+    text-align: center;
+    /* background-color: rgba(14, 179, 22, 0.671); */
+    border: 2.5px solid #000;
+    border-radius: 5px;
+}
+
+.nav-toggler span {
+    font-size: 2rem;
+    /* transition: all .30s ease-in-out;
+    opacity: 0; */
+}
+
+/* .nav-toggler:hover span {
+    opacity: 1;
+} */
+
+header {
+    display: none;
+
+    position: fixed;
+    top: 49;
+    left: var(--pos-left);
+    bottom: var(--pos-bottom);
+    width: var(--nav-width);
+
+    /* background-color: rgba(20, 14, 107, 0.596); */
+    border: 2.5px solid #000;
+    border-radius: 5px;
+}
+
+.header {
+    display: none;
+
+    position: fixed;
+    top: 49;
+    left: var(--pos-left);
+    bottom: var(--pos-bottom);
+
+    display: flex;
+    flex-direction: column;
+
+    /* background-color: rgba(160, 31, 31, 0.781); */
+}
+
+.header::-webkit-scrollbar {
+    display: none;
+}
+
+ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+li span {
+    font-size: 2rem;
+}
+
+ul li span, ul li span a {
+    text-decoration: none;
+    color: #000;
+}
+
+span:hover, ul li span a:hover {
+    /* color: rgb(255, 0, 0); */
+    cursor: pointer;
+}
+
+/* CSS Board */
 
 #board {
-    height: 800px;
-    width: 800px;
+    height: 700px;
+    width: 700px;
+    /* 700/8 = 87.5 per square*/
     display: flex;
     flex-wrap: wrap;
-    margin: auto;
+
+    margin-left: 150px;
+    margin-top: 2px;
+
     border: 1px solid #000;
 }
-  
+
+.alert {
+    display: none;
+
+    font-size: large;
+    color: red;
+}
+
+@media screen and (max-width: 854px) {
+    #board {
+        display: none;
+    }
+    .alert {
+        display: block;
+    }
+}
+@media screen and (max-height: 702px) {
+    #board {
+        display: none;
+    }
+    .alert {
+        display: block;
+    }
+}
+
 .row {
-    display: flex;
-    width: 800px;
-    height: 100px;
+    width: 700px;
 }
 
-.row:nth-child(2n) {
-    flex-direction: row-reverse;
-}
-  
-.square {
-    width: 100px;
-    height: 100px;
-    display: inline-block;
-    margin: 0px;
+.col-sm {
+    width: 87.25px;
+    height: 87.25px;
 }
 
-.square:nth-child(2n) {
-    background-color: #000;
-}
-.square:nth-child(2n+1){
-    background-color: #fff;
+.col-sm img {
+    /* padding-top: 8px; */
+    width: 100%;
 }
 
-/*! not work */
-body > #board > .row > .square:hover + #container.pieces { display: block; }
-
-.img {
-    display: flex;
-    height: 100px;
-    width: 100px;
-    margin: unset;
-}
-
-#invert-color { 
-    -webkit-filter: invert(100%);
-    filter: invert(100%);
-}
-
-#w-border { border: 1px solid #fff; }
-#b-border { border: 1px solid #000; }
-
-/*! --- CSS Common--- */
+/*! --- CSS view--- */
 #container {
     display: none;
     position: fixed;
@@ -73,7 +186,7 @@ body > #board > .row > .square:hover + #container.pieces { display: block; }
 #container h1 { color: black; }
 #container h2 { color: black }
 
-/*! --- CSS for view status --- */
+/*! --- CSS view status --- */
 .hover1 {
     display: flex;
     width: 80px;
@@ -105,7 +218,7 @@ body > #board > .row > .square:hover + #container.pieces { display: block; }
 
 .status h1 { margin-top: 28px; }
 
-/*! --- CSS for view object --- */
+/*! --- CSS  view object --- */
 .hover2 {
     display: flex;
     width: 80px;
