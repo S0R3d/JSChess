@@ -1,28 +1,28 @@
 # JSChess
 ## TO DO
 
-> Completare passaggio da app.js -> app1.js
+## Completare passaggio da app.js -> app1.js
 
-  >> Sistemare 'show pieces' quando 'hover'
+  * Sistemare 'show pieces' quando 'hover'
 
-> Modificare posizione 'div' status (Later)
+## Modificare posizione 'div' status (Later)
 
-> Aggiungere un overlay text per dire a chi sta la mossa
+## Aggiungere un overlay text per dire a chi sta la mossa
 
-> Completare sistema movimento/mangia
+## Completare sistema movimento/mangia
 
-  >> mostro mosse possibili
+  * mostro mosse possibili
 
-  >> controllo che si selezioni una mossa possibile
+  * controllo che si selezioni una mossa possibile
 
-  >> controllo se in fondo alla scacchiera
+  * controllo se in fondo alla scacchiera
 
-> Creare la board con display: grid, senza row con solo square(col) (Later)
+## Creare la board con display: grid, senza row con solo square(col)
 
-> SOSTITUIRE TUTTI PER ADATTARE A PEZZI CON OBJECT IN JS
-  >> Inserti img nell'oggetto
-  >> Inserire onclick
-  >> Aggiornare tutto il JS per gli obj
+## SOSTITUIRE TUTTI PER ADATTARE A PEZZI CON OBJECT IN JS
+  * Inserti img nell'oggetto
+  * Inserire onclick
+  * Aggiornare tutto il JS per gli obj
 
->> Piece object.prototype come superclasse base
->> i vari pezzi "derivano" dalla superclasse direttamente
+* Piece object.prototype come superclasse base
+* i vari pezzi "derivano" dalla superclasse direttamente
