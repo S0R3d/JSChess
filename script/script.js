@@ -233,22 +233,14 @@ const move = () => {
         //controllo coodiante
         const flag = checkMove(piece, coordinate, color, type)
         if (flag) {
-            // continue, next click su una posizione in cui il pezzo si puo muovere
 
         } else {
             squarePiece.style.backgroundColor = precBackgroundColor
-            return
         }
     })
-
-    // controllo interazione con altri pezzi
-    // è un pedone infondo alla scacchiera?
-    // puo mangiare?
-    // alla fine del movimento rimettere il colore corretto nella casella (square)
 }
 
 const showStatus = (params) => {
-    // 83 -> s
     let $status = $('#container.status')
     let log = -1
     this.addEventListener('keyup', (e) => {
@@ -263,7 +255,6 @@ const showStatus = (params) => {
 }
 
 const debug = () => {
-    // console.log(document.querySelectorAll('.row'));
 }
 
 $(() => {
