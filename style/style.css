@@ -168,6 +168,38 @@ span:hover, ul li span a:hover {
     width: 100%;
 }
 
+/* --- IMG Pulse class --- */
+.pulse {
+    animation: pulse 2s infinite;
+    animation-direction: alternate;
+    -webkit-animation-name: pulse;
+    animation-name: pulse;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+      -webkit-transform: scale(1);
+    }
+    50% {
+      -webkit-transform: scale(1.05);
+    }
+    100% {
+      -webkit-transform: scale(1);
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
 /*! --- CSS view--- */
 #container {
     display: none;
@@ -186,7 +218,7 @@ span:hover, ul li span a:hover {
 #container h1 { color: black; }
 #container h2 { color: black }
 
-/*! --- CSS view status --- */
+/* --- CSS view status --- */
 .hover1 {
     display: flex;
     width: 80px;

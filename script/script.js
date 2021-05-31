@@ -128,15 +128,13 @@ const loadPieces = () => {
 }
 /**
  *  Riceve il pezzo e le coordinate,
- *  ricorda di che colore è la casella selezionata
- *  colora di un colore (giallo) la casa corrispondente,
+ *  aggiungi classe PULSE in css per mostrare il pezzo selezionato,
  *  mostra le varie mosse possibili,
  *  retituisce la descrizione del pezzo selezionato (?),
  *
  */
 const beforMove = (piece, coordinate) => {
-   let storeColorSquare = piece.parentElement.style.backgroundColor
-   piece.parentElement.style.backgroundColor = 'yellow'
+    piece.classList.add('pulse')
 
     // mostra le varie mosse: utillizando metodi delle classi
     console.log('show');
@@ -148,11 +146,12 @@ const beforMove = (piece, coordinate) => {
 
 /**
  *  movere il pezzo usando metode delle classi,
- *  
- *  modificare colore della casa (???)
+ * 
+ *  rimuovere la classe PULSE un volta effettuata la mossa
  */
 const move = (piece, coordinate, color, type) => {
     console.log('move');
+    piece.classList.remove('pulse')
 }
 
 const showStatus = (params) => {
