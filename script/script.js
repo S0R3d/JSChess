@@ -57,9 +57,6 @@ const blacks = {
     pawn: new Pawn('b', 'pawn', '/img/b-pawn.svg'),
 }
 
-console.log(whites);
-console.log(blacks);
-
 const loadBoard = () => {
     for (let i = DIM; i > 0; i--) {
         let row = document.createElement('div')
@@ -129,13 +126,33 @@ const loadPieces = () => {
         imgs[i + 56 - 8].src = wPawnSrc
     }
 }
+/**
+ *  Riceve il pezzo e le coordinate,
+ *  ricorda di che colore è la casella selezionata
+ *  colora di un colore (giallo) la casa corrispondente,
+ *  mostra le varie mosse possibili,
+ *  retituisce la descrizione del pezzo selezionato (?),
+ *
+ */
+const beforMove = (piece, coordinate) => {
+   let storeColorSquare = piece.parentElement.style.backgroundColor
+   piece.parentElement.style.backgroundColor = 'yellow'
 
-const checkMove = () => {
-    
+    // mostra le varie mosse: utillizando metodi delle classi
+    console.log('show');
+
+    // retituisce i dettagli (colore, tipo) del pezzo selezionato
+    let whichPiece = piece.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+    return [whichPiece[0], whichPiece.slice(1, whichPiece.length)]
 }
 
-const move = () => {
-    
+/**
+ *  movere il pezzo usando metode delle classi,
+ *  
+ *  modificare colore della casa (???)
+ */
+const move = (piece, coordinate, color, type) => {
+    console.log('move');
 }
 
 const showStatus = (params) => {
@@ -159,11 +176,35 @@ $(() => {
     addCoordinate()
     loadPieces()
 
-    move()
+    let flagClick = true
+    const coordinate = {
+        row: 0,
+        col: 0,
+    }
+    
     $('img').on('click', obj => {
         // due possibilità:
         // 1 click selezione pezzo da muovere
         // 2 click dove muovere il pezzo
+
+        const piece = obj.target
+        coordinate.row = piece.row
+        coordinate.col = piece.col
+
+        console.log(piece);
+        console.log(coordinate.row + ',' + coordinate.col.toUpperCase());
+
+        let colorSelectedPiece
+        let typeSelectedPiece
+
+        if (flagClick) {
+            [colorSelectedPiece, typeSelectedPiece] = beforMove(piece, coordinate)
+            flagClick = false;
+        }
+        else {
+            move(piece, coordinate, colorSelectedPiece, typeSelectedPiece)
+            flagClick = true;
+        }
     })
 
 
