@@ -111,7 +111,6 @@ const loadPieces = () => {
     }
 
     const imgs = document.querySelectorAll('img')
-    // Load other Piecess
     for (let i = 0; i < DIM; i++) {
         let bSrc = bPieces[i]
         let wSrc = wPieces[i]
@@ -129,115 +128,14 @@ const loadPieces = () => {
         imgs[i + 8].src = bPawnSrc
         imgs[i + 56 - 8].src = wPawnSrc
     }
-
-    // // Load pawn
-    // for (let i = 0; i < DIM; i++) {
-    //     let bSrc = bPieces[8]
-    //     let wSrc = wPieces[8]
-
-    //     imgs[i+8].src = bSrc
-    //     imgs[i+56-8].src = wSrc
-    // }
-
-    // const squares = document.querySelectorAll('.col-sm')
-    // for (let i = 0; i < squares.length; i++) {
-    //     let square = squares[i]
-
-    // }
 }
 
-const checkMove = (piece, coord, color, type) => {
-    if (color === 'b') {
-        // black site - dall'alto verso il basso per i pedoni
-        // row8 -> row1
-        switch (type) {
-            case 'pawn':
-                console.log('bpawn')
-                break;
-            case 'tower':
-                console.log('btower')
-                break;
-            case 'knight':
-                console.log('bknight')
-                break;
-            case 'bishop':
-                console.log('bbishop')
-                break;
-            case 'king':
-                console.log('bking')
-                break;
-            case 'queen':
-                console.log('bqueen')
-                break;
-            default:
-                break;
-        }
-        return true
-    } else if (color === 'w') {
-        // white site - dal basso verso l'alto per i pedoni
-        // row1 -> row8
-        switch (type) {
-            case 'pawn':
-                console.log('wpawn')
-                break;
-            case 'tower':
-                console.log('wtower')
-                break;
-            case 'knight':
-                console.log('wknight')
-                break;
-            case 'bishop':
-                console.log('wbishop')
-                break;
-            case 'king':
-                console.log('wking')
-                break;
-            case 'queen':
-                console.log('wqueen')
-                break;
-            default:
-                break;
-        }
-        return true
-    } else return false
+const checkMove = () => {
+    
 }
 
 const move = () => {
-    let coordinate = {
-        row: 0,
-        col: 0,
-    }
-
-    $('img').on('click', (obj) => {
-        const piece = obj.target
-        console.log(piece);
-        coordinate.row = piece.row
-        coordinate.col = piece.col
-
-        // move(obj.target, coordinate)
-
-        console.log(coordinate.row + ',' + coordinate.col);
-
-        // ricorda colore, seleiziona casella (square) e metti giallo
-        const squarePiece = piece.parentElement
-        let precBackgroundColor = squarePiece.style.backgroundColor
-        squarePiece.style.backgroundColor = 'yellow'
-
-        // che pezzo è?
-        let whichPiece = piece.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-        let [color, type] = [whichPiece[0], whichPiece.slice(1, whichPiece.length)]
-        console.log(color)
-        console.log(type)
-
-        // mostro mosse possibili
-        //controllo coodiante
-        const flag = checkMove(piece, coordinate, color, type)
-        if (flag) {
-
-        } else {
-            squarePiece.style.backgroundColor = precBackgroundColor
-        }
-    })
+    
 }
 
 const showStatus = (params) => {
@@ -254,8 +152,7 @@ const showStatus = (params) => {
     })
 }
 
-const debug = () => {
-}
+const debug = () => {}
 
 $(() => {
     loadBoard()
@@ -263,19 +160,11 @@ $(() => {
     loadPieces()
 
     move()
-    // check coordinate when u click some pieces
-    // let coordinatePieceClicked = {
-    //     row: 0,
-    //     col: 0,
-    // }
-
-    // $('img').on('click', (obj) => {
-    //     console.log(obj.target);
-    //     coordinatePieceClicked.row = obj.target.row
-    //     coordinatePieceClicked.col = obj.target.col
-
-    //     move(obj.target, coordinatePieceClicked)
-    // })
+    $('img').on('click', obj => {
+        // due possibilità:
+        // 1 click selezione pezzo da muovere
+        // 2 click dove muovere il pezzo
+    })
 
 
     // showStatus()
