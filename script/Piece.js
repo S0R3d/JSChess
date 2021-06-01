@@ -77,4 +77,12 @@ export default class Piece {
       }
     }
   }
+
+  addPulse() {
+    this.inner.classList.add('pulse')
+  }
+
+  removePulse() {
+    this.inner.classList.remove('pulse')
+  }
 }

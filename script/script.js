@@ -40,43 +40,47 @@ const wPieces = [
 ]
 
 const whites = {
-    pawn1: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'a'),
-    pawn2: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'b'),
-    pawn3: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'c'),
-    pawn4: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'd'),
-    pawn5: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'e'),
-    pawn6: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'f'),
-    pawn7: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'g'),
-    pawn8: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'h'),
+    pawn1: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'a'),
+    pawn2: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'b'),
+    pawn3: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'c'),
+    pawn4: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'd'),
+    pawn5: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'e'),
+    pawn6: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'f'),
+    pawn7: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'g'),
+    pawn8: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'h'),
 
-    tower1: new Tower('w', 'tower', '/img/w-tower.svg', 1, 'a'),
-    knight1: new Knight('w', 'knight', '/img/w-knight.svg', 1, 'b'),
-    bishop1: new Bishop('w', 'bishop', '/img/w-bishop.svg', 1, 'c'),
-    queen: new Queen('w', 'queen', '/img/w-queen.svg', 1, 'd'),
-    king: new King('w', 'king', '/img/w-king.svg', 1, 'e'),
-    bishop2: new Bishop('w', 'bishop', '/img/w-bishop.svg', 1, 'f'),
-    knight2: new Knight('w', 'knight', '/img/w-knight.svg', 1, 'g'),
-    tower2: new Tower('w', 'tower', '/img/w-tower.svg', 1, 'h'),
-}   
+    tower1: new Tower('tower', 'w', '/img/w-tower.svg', 1, 'a'),
+    knight1: new Knight('knight', 'w', '/img/w-knight.svg', 1, 'b'),
+    bishop1: new Bishop('bishop', 'w', '/img/w-bishop.svg', 1, 'c'),
+    queen: new Queen('queen', 'w', '/img/w-queen.svg', 1, 'd'),
+    king: new King('king', 'w', '/img/w-king.svg', 1, 'e'),
+    bishop2: new Bishop('bishop', 'w', '/img/w-bishop.svg', 1, 'f'),
+    knight2: new Knight('knight', 'w', '/img/w-knight.svg', 1, 'g'),
+    tower2: new Tower('tower', 'w', '/img/w-tower.svg', 1, 'h'),
+}
 
 const blacks = {
-    pawn1: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'a'),
-    pawn2: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'b'),
-    pawn3: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'c'),
-    pawn4: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'd'),
-    pawn5: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'e'),
-    pawn6: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'f'),
-    pawn7: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'g'),
-    pawn8: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'h'),
+    pawn1: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'a'),
+    pawn2: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'b'),
+    pawn3: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'c'),
+    pawn4: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'd'),
+    pawn5: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'e'),
+    pawn6: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'f'),
+    pawn7: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'g'),
+    pawn8: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'h'),
 
-    tower1: new Tower('b', 'tower', '/img/b-tower.svg', 8, 'a'),
-    knight1: new Knight('b', 'knight', '/img/b-knight.svg', 8, 'b'),
-    bishop1: new Bishop('b', 'bishop', '/img/b-bishop.svg', 8, 'c'),
-    queen: new Queen('b', 'queen', '/img/b-queen.svg', 8, 'd'),
-    king: new King('b', 'king', '/img/b-king.svg', 8, 'e'),
-    bishop2: new Bishop('b', 'bishop', '/img/b-bishop.svg', 8, 'f'),
-    knight2: new Knight('b', 'knight', '/img/b-knight.svg', 8, 'g'),
-    tower2: new Tower('b', 'tower', '/img/b-tower.svg', 8, 'h'),
+    tower1: new Tower('tower', 'b', '/img/b-tower.svg', 8, 'a'),
+    knight1: new Knight('knight', 'b', '/img/b-knight.svg', 8, 'b'),
+    bishop1: new Bishop('bishop', 'b', '/img/b-bishop.svg', 8, 'c'),
+    queen: new Queen('queen', 'b', '/img/b-queen.svg', 8, 'd'),
+    king: new King('king', 'b', '/img/b-king.svg', 8, 'e'),
+    bishop2: new Bishop('bishop', 'b', '/img/b-bishop.svg', 8, 'f'),
+    knight2: new Knight('knight', 'b', '/img/b-knight.svg', 8, 'g'),
+    tower2: new Tower('tower', 'b', '/img/b-tower.svg', 8, 'h'),
+}
+
+const nextChar = c => {
+    return String.fromCharCode(c.charCodeAt() + 1)
 }
 
 const loadBoard = () => {
@@ -137,8 +141,12 @@ const loadPieces = () => {
  *  mostra le varie mosse possibili,
  *
  */
-const beforMove = () => {
+const beforMove = (piece) => {
     console.log('show');
+    piece.addPulse()
+    const squares = document.querySelectorAll('.col-sm')
+    // mostra le mosse possibili
+    piece.showMoveWhite(squares)
 }
 
 /**
@@ -146,8 +154,9 @@ const beforMove = () => {
  * 
  *  rimuovere la classe PULSE un volta effettuata la mossa (alla fine)
  */
-const move = () => {
+const move = (piece) => {
     console.log('move');
+    piece.removePulse()
 }
 
 const showStatus = (params) => {
@@ -185,22 +194,30 @@ $(() => {
             row: obj.target.row,
             col: obj.target.col,
         }
-        console.log(coordinate.row+coordinate.col);
+        console.log(coordinate.row + coordinate.col);
 
         let piece
         Object.values(whites).forEach(element => {
-            element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;  
+            element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
         })
         Object.values(blacks).forEach(element => {
-            element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;  
+            element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
         })
         console.log(piece);
-        
+
+        if (piece.type === 'b') {
+ 
+        } else if (piece.type === 'w') {
+
+        } else {
+            console.err('error');
+        }
+
         if (flagClick) {
-            beforMove()
+            beforMove(piece)
             flagClick = false
         } else {
-            move()
+            move(piece)
             flagClick = true
         }
     })
