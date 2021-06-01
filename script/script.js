@@ -40,21 +40,43 @@ const wPieces = [
 ]
 
 const whites = {
-    tower: new Tower('w', 'tower', '/img/w-tower.svg'),
-    knight: new Knight('w', 'knight', '/img/w-knight.svg'),
-    bishop: new Bishop('w', 'bishop', '/img/w-bishop.svg'),
-    queen: new Queen('w', 'queen', '/img/w-queen.svg'),
-    king: new King('w', 'king', '/img/w-king.svg'),
-    pawn: new Pawn('w', 'pawn', '/img/w-pawn.svg'),
-}
+    pawn1: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'a'),
+    pawn2: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'b'),
+    pawn3: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'c'),
+    pawn4: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'd'),
+    pawn5: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'e'),
+    pawn6: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'f'),
+    pawn7: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'g'),
+    pawn8: new Pawn('w', 'pawn', '/img/w-pawn.svg', 2, 'h'),
+
+    tower1: new Tower('w', 'tower', '/img/w-tower.svg', 1, 'a'),
+    knight1: new Knight('w', 'knight', '/img/w-knight.svg', 1, 'b'),
+    bishop1: new Bishop('w', 'bishop', '/img/w-bishop.svg', 1, 'c'),
+    queen: new Queen('w', 'queen', '/img/w-queen.svg', 1, 'd'),
+    king: new King('w', 'king', '/img/w-king.svg', 1, 'e'),
+    bishop2: new Bishop('w', 'bishop', '/img/w-bishop.svg', 1, 'f'),
+    knight2: new Knight('w', 'knight', '/img/w-knight.svg', 1, 'g'),
+    tower2: new Tower('w', 'tower', '/img/w-tower.svg', 1, 'h'),
+}   
 
 const blacks = {
-    tower: new Tower('b', 'tower', '/img/b-tower.svg'),
-    knight: new Knight('b', 'knight', '/img/b-knight.svg'),
-    bishop: new Bishop('b', 'bishop', '/img/b-bishop.svg'),
-    queen: new Queen('b', 'queen', '/img/b-queen.svg'),
-    king: new King('b', 'king', '/img/b-king.svg'),
-    pawn: new Pawn('b', 'pawn', '/img/b-pawn.svg'),
+    pawn1: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'a'),
+    pawn2: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'b'),
+    pawn3: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'c'),
+    pawn4: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'd'),
+    pawn5: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'e'),
+    pawn6: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'f'),
+    pawn7: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'g'),
+    pawn8: new Pawn('b', 'pawn', '/img/b-pawn.svg', 7, 'h'),
+
+    tower1: new Tower('b', 'tower', '/img/b-tower.svg', 8, 'a'),
+    knight1: new Knight('b', 'knight', '/img/b-knight.svg', 8, 'b'),
+    bishop1: new Bishop('b', 'bishop', '/img/b-bishop.svg', 8, 'c'),
+    queen: new Queen('b', 'queen', '/img/b-queen.svg', 8, 'd'),
+    king: new King('b', 'king', '/img/b-king.svg', 8, 'e'),
+    bishop2: new Bishop('b', 'bishop', '/img/b-bishop.svg', 8, 'f'),
+    knight2: new Knight('b', 'knight', '/img/b-knight.svg', 8, 'g'),
+    tower2: new Tower('b', 'tower', '/img/b-tower.svg', 8, 'h'),
 }
 
 const loadBoard = () => {
@@ -90,68 +112,42 @@ const addCoordinate = (params) => {
             }
         }
     }
-}
-
-const laodClassPieces = () => {
-    const squares = document.querySelectorAll('.col-sm')
-
+    let squares = document.querySelectorAll('.col-sm')
+    for (let i = 0; i < squares.length; i++) {
+        let square = squares[i]
+        square.row = square.parentElement.classList[1]
+        square.col = square.classList[1]
+    }
 }
 
 const loadPieces = () => {
     const squares = document.querySelectorAll('.col-sm')
-    for (let i = 0; i < squares.length; i++) {
-        let square = squares[i]
-        let img = document.createElement('img')
-        img.row = square.parentElement.classList[1]
-        img.col = square.classList[1]
-        square.appendChild(img)
-    }
 
-    const imgs = document.querySelectorAll('img')
-    for (let i = 0; i < DIM; i++) {
-        let bSrc = bPieces[i]
-        let wSrc = wPieces[i]
-        let bPawnSrc = bPieces[8]
-        let wPawnSrc = wPieces[8]
+    Object.values(whites).forEach(element => {
+        element.load(squares)
+    });
 
-        let img = imgs[i]
-        img.src = bSrc
-        img.style = 'padding-top: 8px;'
-
-        let img1 = imgs[i + 56]
-        img1.src = wSrc
-        img1.style = 'padding-top: 8px;'
-
-        imgs[i + 8].src = bPawnSrc
-        imgs[i + 56 - 8].src = wPawnSrc
-    }
+    Object.values(blacks).forEach(element => {
+        element.load(squares)
+    });
 }
 /**
- *  Riceve il pezzo e le coordinate,
- *  aggiungi classe PULSE in css per mostrare il pezzo selezionato,
+ *  Riceve il pezzo,
+ *  aggiungi classe PULSE (in css) per mostrare il pezzo selezionato,
  *  mostra le varie mosse possibili,
- *  retituisce la descrizione del pezzo selezionato (?),
  *
  */
-const beforMove = (piece, coordinate) => {
-    piece.classList.add('pulse')
-
-    // mostra le varie mosse: utillizando metodi delle classi
+const beforMove = () => {
     console.log('show');
-
-    // retituisce i dettagli (colore, tipo) del pezzo selezionato
-    let whichPiece = piece.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-    return [whichPiece[0], whichPiece.slice(1, whichPiece.length)]
 }
 
 /**
  *  movere il pezzo usando metode delle classi,
  * 
- *  rimuovere la classe PULSE un volta effettuata la mossa
+ *  rimuovere la classe PULSE un volta effettuata la mossa (alla fine)
  */
-const move = (piece, coordinate, color, type) => {
+const move = () => {
     console.log('move');
-    piece.classList.remove('pulse')
 }
 
 const showStatus = (params) => {
@@ -175,37 +171,39 @@ $(() => {
     addCoordinate()
     loadPieces()
 
+    /*
+        BUG: 'pulse': se premo pezzi diversi qualcosa va storto
+    */
     let flagClick = true
-    const coordinate = {
-        row: 0,
-        col: 0,
-    }
-    
+
     $('img').on('click', obj => {
         // due possibilità:
         // 1 click selezione pezzo da muovere
         // 2 click dove muovere il pezzo
 
-        const piece = obj.target
-        coordinate.row = piece.row
-        coordinate.col = piece.col
-
-        console.log(piece);
-        console.log(coordinate.row + ',' + coordinate.col.toUpperCase());
-
-        let colorSelectedPiece
-        let typeSelectedPiece
-
-        if (flagClick) {
-            [colorSelectedPiece, typeSelectedPiece] = beforMove(piece, coordinate)
-            flagClick = false;
+        const coordinate = {
+            row: obj.target.row,
+            col: obj.target.col,
         }
-        else {
-            move(piece, coordinate, colorSelectedPiece, typeSelectedPiece)
-            flagClick = true;
+        console.log(coordinate.row+coordinate.col);
+
+        let piece
+        Object.values(whites).forEach(element => {
+            element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;  
+        })
+        Object.values(blacks).forEach(element => {
+            element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;  
+        })
+        console.log(piece);
+        
+        if (flagClick) {
+            beforMove()
+            flagClick = false
+        } else {
+            move()
+            flagClick = true
         }
     })
-
 
     // showStatus()
     debug()

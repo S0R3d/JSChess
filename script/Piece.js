@@ -3,10 +3,13 @@
  */
 
 export default class Piece {
-  constructor(name, type, img) {
+  constructor(name, type, img, row, col) {
     this._name = name;
     this._type = type;
     this._img = img;
+    this._row = row;
+    this._col = col;
+    this._inner = document.createElement('img');
   }
 
   get name() {
@@ -21,21 +24,57 @@ export default class Piece {
     return this._img;
   }
 
+  get row() {
+    return this._row;
+  }
+
+  get col() {
+    return this._col;
+  }
+
   get fullName() {
     return this.type + this.name;
+  }
+
+  get inner() {
+    return this._inner;
   }
 
   set img(src) {
     this._img = src;
   }
 
-  draw(square) {
-    let img = document.createElement('img');
-    img.row = square.parentElement.classList[1];
-    img.col = square.classList[1];
-    img.src = this._img;
+  /**
+   * @param {{ row: any; col: any; }} coordinate
+   */
+  set coord(coordinate) {
+    this._row = coordinate.row;
+    this._col = coordinate.col;
+  }
+
+  loadImg(imgs) {
+    for (let i = 0; i < imgs.length; i++) {
+      if (imgs[i].row == this.row && imgs[i].col == this.col) {
+        let img = imgs[i]
+        this.draw(img)
+      }
+    }
+  }
+
+  draw(img) {
+    img.src = this.img;
     img.style = 'padding-top: 8px;'
-    square.appendChild(img);
-    console.log('done');
+  }
+
+  load(squares) {
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i].row == this.row && squares[i].col == this.col) {
+        let square = squares[i]
+        this.inner.row = this.row;
+        this.inner.col = this.col;
+        this.draw(this.inner)
+        square.appendChild(this.inner)
+      }
+    }
   }
 }
