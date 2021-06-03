@@ -51,7 +51,12 @@ export default class Piece {
     this._row = coordinate.row;
     this._col = coordinate.col;
   }
-
+  /**
+   * non in uso
+   *
+   * @param {*} imgs
+   * @memberof Piece
+   */
   loadImg(imgs) {
     for (let i = 0; i < imgs.length; i++) {
       if (imgs[i].row == this.row && imgs[i].col == this.col) {

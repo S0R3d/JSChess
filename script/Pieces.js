@@ -71,6 +71,23 @@ export class Pawn extends Piece {
       }
     }
   }
+  /**
+   *
+   * @param {*} squares
+   * @memberof Pawn
+   */
+  move(squares) {
+
+  }
+  /**
+   *
+   *
+   * @param {*} squares
+   * @memberof Pawn
+   */
+  eat(squares) {
+
+  }
 }
 
 export class Tower extends Piece {

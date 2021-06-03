@@ -14,6 +14,8 @@ import {
 
 const DIM = 8
 const $board = $('#board')[0]
+let CanIMove = false
+let turn
 
 const bPieces = [
     '/img/b-tower.svg',
@@ -41,7 +43,8 @@ const wPieces = [
 
 const whites = {
     pawn1: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'a'),
-    pawn2: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'b'),
+    // ???
+    pawn2: new Pawn('pawn', 'w', '/img/w-pawn.svg', 3, 'b'),
     pawn3: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'c'),
     pawn4: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'd'),
     pawn5: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'e'),
@@ -136,6 +139,63 @@ const loadPieces = () => {
     });
 }
 /**
+ * mi fa cacare ma funziona
+ * aggiona tutta la board
+*/
+const resetBoardColor = () => {
+    const squares = document.querySelectorAll('.col-sm')
+    for (let i = 0; i < squares.length; i++) {
+        let square = squares[i]
+        square.style.backgroundColor = i % 2 === 0 ? '#fff' : '#000'
+    }
+}
+
+const getPiece = obj => {
+    const coordinate = {
+        row: obj.row,
+        col: obj.col,
+    }
+    console.log(coordinate.row + coordinate.col);
+
+    let piece
+    Object.values(whites).forEach(element => {
+        element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
+    })
+    Object.values(blacks).forEach(element => {
+        element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
+    })
+
+    return piece
+}
+
+const clickOnImg = (piece, target) => {
+
+    if (!CanIMove) {
+        // show mosse
+        beforMove(piece)
+        console.log('mostra');
+        CanIMove = true;
+    } else {
+        // mosse gia mostrate, si puo mangiare
+        movePiece(piece, target)
+        console.log('si mangia');
+        CanIMove = false;
+    }
+    
+}
+
+const clickOnDiv = (piece, target) => {
+
+    if (CanIMove) {
+        // si puo muovere
+        movePiece(piece, target)
+        console.log('si muove');
+        CanIMove = false;
+    } else {
+        console.log('niente');
+    }
+}
+/**
  *  Riceve il pezzo,
  *  aggiungi classe PULSE (in css) per mostrare il pezzo selezionato,
  *  mostra le varie mosse possibili,
@@ -144,9 +204,15 @@ const loadPieces = () => {
 const beforMove = (piece) => {
     console.log('show');
     piece.addPulse()
+
     const squares = document.querySelectorAll('.col-sm')
-    // mostra le mosse possibili
-    piece.showMoveWhite(squares)
+    if (piece.type === 'b') {
+       piece.showMoveBlack(squares)
+    } else if (piece.type === 'w') {
+        piece.showMoveWhite(squares)
+    } else {
+        console.error('show err');
+    }
 }
 
 /**
@@ -154,8 +220,17 @@ const beforMove = (piece) => {
  * 
  *  rimuovere la classe PULSE un volta effettuata la mossa (alla fine)
  */
-const move = (piece) => {
+const movePiece = (piece, target) => {
     console.log('move');
+    const squares = document.querySelectorAll('.col-sm')
+
+    // muovi il pezzo
+    piece.coord = {row: target.row, col: target.col,}
+    piece.load(squares)
+
+    // reset colore case
+    resetBoardColor()
+
     piece.removePulse()
 }
 
@@ -183,44 +258,99 @@ $(() => {
     /*
         BUG: 'pulse': se premo pezzi diversi qualcosa va storto
     */
-    let flagClick = true
+    // let canIMove = false
 
-    $('img').on('click', obj => {
-        // due possibilità:
-        // 1 click selezione pezzo da muovere
-        // 2 click dove muovere il pezzo
+    // merge
+    let piece = {}, precPiece = {}
+    $('.col-sm').on('click', obj => {
+        console.log(obj.target);
 
-        const coordinate = {
-            row: obj.target.row,
-            col: obj.target.col,
-        }
-        console.log(coordinate.row + coordinate.col);
+        if (obj.target.tagName === 'IMG') {
+            console.log('img');
 
-        let piece
-        Object.values(whites).forEach(element => {
-            element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
-        })
-        Object.values(blacks).forEach(element => {
-            element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
-        })
-        console.log(piece);
+            piece = getPiece(obj.target)
+            if (piece === precPiece) {
+                console.log('solito');
+            } else {
+                clickOnImg(piece, obj.target)
+            }
+            precPiece = piece
+        } else if (obj.target.firstChild === null) {
+            console.log('div');
 
-        if (piece.type === 'b') {
- 
-        } else if (piece.type === 'w') {
+            if (precPiece !== null) {
+                clickOnDiv(precPiece, obj.target)
+            }
+        } else if (obj.target.firstChild.tagName === 'IMG') {
+            console.log('div - img');
 
+            piece = getPiece(obj.target)
+            if (piece === precPiece) {
+                console.log('solito');
+            } else {
+                clickOnImg(piece, obj.target)
+            }
+            precPiece = piece
         } else {
-            console.err('error');
-        }
-
-        if (flagClick) {
-            beforMove(piece)
-            flagClick = false
-        } else {
-            move(piece)
-            flagClick = true
+            console.err('other');
         }
     })
+
+    // $('img').on('click', obj => {
+    //     const coordinate = {
+    //         row: obj.target.row,
+    //         col: obj.target.col,
+    //     }
+    //     console.log(coordinate.row + coordinate.col);
+
+    //     let piece
+    //     Object.values(whites).forEach(element => {
+    //         element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
+    //     })
+    //     Object.values(blacks).forEach(element => {
+    //         element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
+    //     })
+
+
+    //     beforMove(piece)
+    //     flagClick = false;
+    //     // if (flagClick) {
+    //     //     beforMove(piece)
+    //     //     flagClick = false
+    //     // } else {
+    //     //     move(piece)
+    //     //     flagClick = true
+    //     // }
+    //     console.log('end click img');
+    // })
+
+    // $('.col-sm').on('click', obj => {
+    //     const coordinate = {
+    //         row: obj.target.row,
+    //         col: obj.target.col,
+    //     }
+    //     console.log(coordinate.row + coordinate.col);
+
+    //     let piece
+    //     Object.values(whites).forEach(element => {
+    //         element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
+    //     })
+    //     Object.values(blacks).forEach(element => {
+    //         element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
+    //     })
+
+
+    //     movePiece(piece)
+    //     flagClick = true;
+    //     // if (flagClick) {
+    //     //     console.log('true');
+    //     //     console.log(obj.target);    
+    //     // } else {
+    //     //     console.log('false');
+    //     //     console.log(obj.target);
+    //     // }
+    //     console.log('end click col');
+    // })
 
     // showStatus()
     debug()
