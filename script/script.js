@@ -15,7 +15,7 @@ import {
 const DIM = 8
 const $board = $('#board')[0]
 let CanIMove = false
-let turn
+let turn = 0
 
 const bPieces = [
     '/img/b-tower.svg',
@@ -43,8 +43,7 @@ const wPieces = [
 
 const whites = {
     pawn1: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'a'),
-    // ???
-    pawn2: new Pawn('pawn', 'w', '/img/w-pawn.svg', 3, 'b'),
+    pawn2: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'b'),
     pawn3: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'c'),
     pawn4: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'd'),
     pawn5: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'e'),
@@ -138,10 +137,7 @@ const loadPieces = () => {
         element.load(squares)
     });
 }
-/**
- * mi fa cacare ma funziona
- * aggiona tutta la board
-*/
+
 const resetBoardColor = () => {
     const squares = document.querySelectorAll('.col-sm')
     for (let i = 0; i < squares.length; i++) {
@@ -169,39 +165,30 @@ const getPiece = obj => {
 }
 
 const clickOnImg = (piece, target) => {
-
     if (!CanIMove) {
-        // show mosse
-        beforMove(piece)
-        console.log('mostra');
+        // mostra mosse
+        piece = getPiece(target)
+        showMove(piece)
         CanIMove = true;
     } else {
-        // mosse gia mostrate, si puo mangiare
-        movePiece(piece, target)
-        console.log('si mangia');
+        // mangia
+        eatPiece(piece, target)
         CanIMove = false;
     }
     
 }
 
 const clickOnDiv = (piece, target) => {
-
     if (CanIMove) {
-        // si puo muovere
+        // muove
         movePiece(piece, target)
-        console.log('si muove');
         CanIMove = false;
     } else {
-        console.log('niente');
+        console.error('ops!');
     }
 }
-/**
- *  Riceve il pezzo,
- *  aggiungi classe PULSE (in css) per mostrare il pezzo selezionato,
- *  mostra le varie mosse possibili,
- *
- */
-const beforMove = (piece) => {
+
+const showMove = (piece) => {
     console.log('show');
     piece.addPulse()
 
@@ -211,15 +198,10 @@ const beforMove = (piece) => {
     } else if (piece.type === 'w') {
         piece.showMoveWhite(squares)
     } else {
-        console.error('show err');
+        console.error('show');
     }
 }
 
-/**
- *  movere il pezzo usando metode delle classi,
- * 
- *  rimuovere la classe PULSE un volta effettuata la mossa (alla fine)
- */
 const movePiece = (piece, target) => {
     console.log('move');
     const squares = document.querySelectorAll('.col-sm')
@@ -228,10 +210,21 @@ const movePiece = (piece, target) => {
     piece.coord = {row: target.row, col: target.col,}
     piece.load(squares)
 
-    // reset colore case
     resetBoardColor()
-
     piece.removePulse()
+}
+
+const eatPiece = (prec, target) => {
+    console.log('eat');
+    const squares = document.querySelectorAll('.col-sm')
+
+    let ate = getPiece(target)
+    ate.delete(squares)
+    prec.coord = {row: target.row, col: target.col,}
+    prec.load(squares)
+
+    resetBoardColor()
+    prec.removePulse()
 }
 
 const showStatus = (params) => {
@@ -248,8 +241,6 @@ const showStatus = (params) => {
     })
 }
 
-const debug = () => {}
-
 $(() => {
     loadBoard()
     addCoordinate()
@@ -258,23 +249,21 @@ $(() => {
     /*
         BUG: 'pulse': se premo pezzi diversi qualcosa va storto
     */
-    // let canIMove = false
 
     // merge
-    let piece = {}, precPiece = {}
+    let precPiece = {}
     $('.col-sm').on('click', obj => {
         console.log(obj.target);
 
         if (obj.target.tagName === 'IMG') {
             console.log('img');
 
-            piece = getPiece(obj.target)
-            if (piece === precPiece) {
+            if (obj.target === precPiece.inner) {
                 console.log('solito');
             } else {
-                clickOnImg(piece, obj.target)
+                clickOnImg(precPiece, obj.target)
             }
-            precPiece = piece
+            precPiece = getPiece(obj.target)
         } else if (obj.target.firstChild === null) {
             console.log('div');
 
@@ -284,74 +273,16 @@ $(() => {
         } else if (obj.target.firstChild.tagName === 'IMG') {
             console.log('div - img');
 
-            piece = getPiece(obj.target)
-            if (piece === precPiece) {
+            if (obj.target.firstChild === precPiece.inner) {
                 console.log('solito');
             } else {
-                clickOnImg(piece, obj.target)
+                clickOnImg(precPiece, obj.target.firstChild)
             }
-            precPiece = piece
+            precPiece = getPiece(obj.target.firstChild)
         } else {
             console.err('other');
         }
     })
 
-    // $('img').on('click', obj => {
-    //     const coordinate = {
-    //         row: obj.target.row,
-    //         col: obj.target.col,
-    //     }
-    //     console.log(coordinate.row + coordinate.col);
-
-    //     let piece
-    //     Object.values(whites).forEach(element => {
-    //         element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
-    //     })
-    //     Object.values(blacks).forEach(element => {
-    //         element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
-    //     })
-
-
-    //     beforMove(piece)
-    //     flagClick = false;
-    //     // if (flagClick) {
-    //     //     beforMove(piece)
-    //     //     flagClick = false
-    //     // } else {
-    //     //     move(piece)
-    //     //     flagClick = true
-    //     // }
-    //     console.log('end click img');
-    // })
-
-    // $('.col-sm').on('click', obj => {
-    //     const coordinate = {
-    //         row: obj.target.row,
-    //         col: obj.target.col,
-    //     }
-    //     console.log(coordinate.row + coordinate.col);
-
-    //     let piece
-    //     Object.values(whites).forEach(element => {
-    //         element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
-    //     })
-    //     Object.values(blacks).forEach(element => {
-    //         element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
-    //     })
-
-
-    //     movePiece(piece)
-    //     flagClick = true;
-    //     // if (flagClick) {
-    //     //     console.log('true');
-    //     //     console.log(obj.target);    
-    //     // } else {
-    //     //     console.log('false');
-    //     //     console.log(obj.target);
-    //     // }
-    //     console.log('end click col');
-    // })
-
     // showStatus()
-    debug()
 })

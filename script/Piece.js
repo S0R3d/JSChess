@@ -7,6 +7,7 @@ export default class Piece {
     this._name = name;
     this._type = type;
     this._img = img;
+
     this._row = row;
     this._col = col;
     this._inner = document.createElement('img');
@@ -89,5 +90,16 @@ export default class Piece {
 
   removePulse() {
     this.inner.classList.remove('pulse')
+  }
+
+  delete(squares) {
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i].row == this.row && squares[i].col == this.col) {
+        let square = squares[i]
+        square.removeChild(this.inner)
+      }
+    }
+    this.coord = {row: 0, col: ''}
+    this._inner = {}
   }
 }
