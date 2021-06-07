@@ -27,5 +27,4 @@ squarePiece.style.backgroundColor = 'yellow'
 
 // che pezzo è?
 let whichPiece = piece.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-let [color, type] = [whichPiece[0], whichPiece.slice(1, whichPiece.length)]
-
+let [type, name] = [whichPiece[0], whichPiece.slice(1, whichPiece.length)]

@@ -11,38 +11,30 @@ import {
     King
 } from "./Pieces.js"
 
-
+// DIM: Dimensione dei lati della Scacchiera
 const DIM = 8
+// Board: elemento che contiene tutta la Scacchiera
 const $board = $('#board')[0]
+
+// CanIMove = true: puo muovere, gia mostrate le mosse possibili
+// CanIMove = false: mostrare le mosse possibili
 let CanIMove = false
-let turn = 0
-
-const bPieces = [
-    '/img/b-tower.svg',
-    '/img/b-knight.svg',
-    '/img/b-bishop.svg',
-    '/img/b-queen.svg',
-    '/img/b-king.svg',
-    '/img/b-bishop.svg',
-    '/img/b-knight.svg',
-    '/img/b-tower.svg',
-    '/img/b-pawn.svg',
-]
-
-const wPieces = [
-    '/img/w-tower.svg',
-    '/img/w-knight.svg',
-    '/img/w-bishop.svg',
-    '/img/w-king.svg',
-    '/img/w-queen.svg',
-    '/img/w-bishop.svg',
-    '/img/w-knight.svg',
-    '/img/w-tower.svg',
-    '/img/w-pawn.svg',
-]
+// nextTurn = true: sta al giocatore dopo
+// nextTurn = false: finchè è a false muove sempre o stesso giocatore
+let nextTurn = false
+// turn = 'w'/'b' : mostra di chi è il turno; Parte il Bianco
+let turn = 'w'
+String.prototype.swap = () => {
+    if (this === 'w') {
+        return 'b'
+    }
+    if (this === 'b') {
+        return 'w'
+    }
+}
 
 const whites = {
-    pawn1: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'a'),
+    pawn1: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'a'),    
     pawn2: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'b'),
     pawn3: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'c'),
     pawn4: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'd'),
@@ -147,18 +139,14 @@ const resetBoardColor = () => {
 }
 
 const getPiece = obj => {
-    const coordinate = {
-        row: obj.row,
-        col: obj.col,
-    }
-    console.log(coordinate.row + coordinate.col);
+    // console.log(obj.row + obj.col);
 
     let piece
     Object.values(whites).forEach(element => {
-        element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
+        element.row === obj.row && element.col === obj.col ? piece = element : undefined;
     })
     Object.values(blacks).forEach(element => {
-        element.row === coordinate.row && element.col === coordinate.col ? piece = element : undefined;
+        element.row === obj.row && element.col === obj.col ? piece = element : undefined;
     })
 
     return piece
@@ -169,20 +157,30 @@ const clickOnImg = (piece, target) => {
         // mostra mosse
         piece = getPiece(target)
         showMove(piece)
-        CanIMove = true;
     } else {
+        if (piece.row === target.row && piece.col === target.col) {
+            console.log('same');
+        }
         // mangia
         eatPiece(piece, target)
-        CanIMove = false;
+        if (!CanIMove) {
+            CanIMove = false
+        } else {
+            CanIMove = true
+        }
     }
-    
+
 }
 
 const clickOnDiv = (piece, target) => {
     if (CanIMove) {
         // muove
         movePiece(piece, target)
-        CanIMove = false;
+        if (!CanIMove) {
+            CanIMove = false
+        } else {
+            CanIMove = true
+        }
     } else {
         console.error('ops!');
     }
@@ -194,7 +192,7 @@ const showMove = (piece) => {
 
     const squares = document.querySelectorAll('.col-sm')
     if (piece.type === 'b') {
-       piece.showMoveBlack(squares)
+        piece.showMoveBlack(squares)
     } else if (piece.type === 'w') {
         piece.showMoveWhite(squares)
     } else {
@@ -206,25 +204,24 @@ const movePiece = (piece, target) => {
     console.log('move');
     const squares = document.querySelectorAll('.col-sm')
 
-    // muovi il pezzo
-    piece.coord = {row: target.row, col: target.col,}
-    piece.load(squares)
+    piece.move(squares, target) ? {turn: nextTurn = true, move: CanIMove = false} : CanIMove = true;
 
-    resetBoardColor()
-    piece.removePulse()
+    if (nextTurn && !CanIMove) {
+        resetBoardColor()
+        piece.removePulse()
+    }
 }
 
-const eatPiece = (prec, target) => {
+const eatPiece = (piece, target) => {
     console.log('eat');
     const squares = document.querySelectorAll('.col-sm')
 
-    let ate = getPiece(target)
-    ate.delete(squares)
-    prec.coord = {row: target.row, col: target.col,}
-    prec.load(squares)
+    piece.eat(squares, getPiece(target)) ? {turn: nextTurn = true, move: CanIMove = false} : CanIMove = true;
 
-    resetBoardColor()
-    prec.removePulse()
+    if (nextTurn && !CanIMove) {
+        resetBoardColor()
+        piece.removePulse()
+    }
 }
 
 const showStatus = (params) => {
@@ -251,36 +248,79 @@ $(() => {
     */
 
     // merge
-    let precPiece = {}
+    let MovePiece = {}
     $('.col-sm').on('click', obj => {
         console.log(obj.target);
+        console.log('nextTurn '+nextTurn);
+        console.log('CanIMove '+CanIMove);
+        console.log(turn);
 
         if (obj.target.tagName === 'IMG') {
             console.log('img');
 
-            if (obj.target === precPiece.inner) {
-                console.log('solito');
-            } else {
-                clickOnImg(precPiece, obj.target)
+            if (!nextTurn && !CanIMove && getPiece(obj.target).type !==  turn) {
+                console.error('not ur turn');
+                return;
             }
-            precPiece = getPiece(obj.target)
+            if (obj.target === MovePiece.inner && CanIMove) {
+                console.log('solito');
+                CanIMove = false
+                MovePiece.removePulse
+                resetBoardColor
+            } else {
+                clickOnImg(MovePiece, obj.target)
+            }
+            if (!nextTurn && !CanIMove) {
+                MovePiece = getPiece(obj.target)
+                CanIMove = true;
+            }
+            if (nextTurn) {
+                // switch side
+                nextTurn = false, CanIMove = false
+                if (turn === 'w') turn = 'b'
+                else if (turn === 'b') turn = 'w'
+                MovePiece = {}
+            }
         } else if (obj.target.firstChild === null) {
             console.log('div');
 
-            if (precPiece !== null) {
-                clickOnDiv(precPiece, obj.target)
+            if (MovePiece !== null) {
+                clickOnDiv(MovePiece, obj.target)
+            }
+            if (nextTurn) {
+                nextTurn = false, CanIMove = false
+                if (turn === 'w') turn = 'b'
+                else if (turn === 'b') turn = 'w'
+                MovePiece = {}
             }
         } else if (obj.target.firstChild.tagName === 'IMG') {
             console.log('div - img');
 
-            if (obj.target.firstChild === precPiece.inner) {
-                console.log('solito');
-            } else {
-                clickOnImg(precPiece, obj.target.firstChild)
+            if (!nextTurn && !CanIMove && getPiece(obj.target.firstChild).type !==  turn) {
+                console.error('not ur turn');
+                return;
             }
-            precPiece = getPiece(obj.target.firstChild)
+            if (obj.target.firstChild === MovePiece.inner) {
+                console.log('solito');
+                CanIMove = false
+                MovePiece.removePulse
+                resetBoardColor
+            } else {
+                clickOnImg(MovePiece, obj.target.firstChild)
+            }
+            if (!nextTurn && !CanIMove) {
+                MovePiece = getPiece(obj.target.firstChild)
+                CanIMove = true;
+            }
+            if (nextTurn) {
+                // switch side
+                nextTurn = false, CanIMove = false
+                if (turn === 'w') turn = 'b'
+                else if (turn === 'b') turn = 'w'
+                MovePiece = {}
+            }
         } else {
-            console.err('other');
+            console.err(obj.target);
         }
     })
 
