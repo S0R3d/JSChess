@@ -15,27 +15,23 @@ export class Pawn extends Piece {
 
   valid(target) {
     if (target.type === this.type) {
-      // mangia un pezzo dello stesso colore
-      // qualunque colore sia
       return false;
     } else {
       if (this.type === 'w' && target.row == +this.row + 1 && target.col === this.col) {
-        // controllo bianco per muovere
+        return true
+      } else if (this.row === 2 && this.type === 'w' && target.row == +this.row + 2 && target.col === this.col) {
         return true
       } else if (this.type === 'b' && target.row == +this.row - 1 && target.col === this.col) {
-        // controllo nero per muovere
+        return true
+      } else if (this.row === 7 && this.type === 'b' && target.row == +this.row - 2 && target.col === this.col) {
         return true
       } else if (this.type === 'w' && target.type === 'b' && target.row == +this.row + 1 && target.col === String.fromCharCode(this.col.charCodeAt() + 1)) {
-        // controllo bianco per mangiare a destra
         return true
       } else if (this.type === 'w' && target.type === 'b' && target.row == +this.row + 1 && target.col === String.fromCharCode(this.col.charCodeAt() - 1)) {
-        // controllo bianco per mangiare a sinistra
         return true
       } else if (this.type === 'b' && target.type === 'w' && target.row == +this.row - 1 && target.col === String.fromCharCode(this.col.charCodeAt() + 1)) {
-        // controllo nero per mangiare a destra
         return true
       } else if (this.type === 'b' && target.type === 'w' && target.row == +this.row - 1 && target.col === String.fromCharCode(this.col.charCodeAt() - 1)) {
-        // controllo nero per mangiare a sinistra
         return true
       } else {
         return false
@@ -43,17 +39,14 @@ export class Pawn extends Piece {
     }
   }
 
-  /**
-   *  Disegna la casa di rosso e mangia un pezzo;
-   *  disegna la casa di giallo dove si può muovere,
-   *  se si può muovere!
-   *
-   * @param {*} squares
-   * @memberof Pawn
-   */
   showMoveWhite(squares) {
     for (let i = 0; i < squares.length; i++) {
       if (squares[i].row == +this.row + 1 && squares[i].col === this.col) {
+        let square = squares[i]
+        if (square.firstChild === null) {
+          square.style.backgroundColor = 'yellow'
+        }
+      } else if (this.row === 2 && (squares[i].row == +this.row + 2 && squares[i].col === this.col)) {
         let square = squares[i]
         if (square.firstChild === null) {
           square.style.backgroundColor = 'yellow'
@@ -78,15 +71,15 @@ export class Pawn extends Piece {
       }
     }
   }
-  /**
-   *
-   *
-   * @param {*} squares
-   * @memberof Pawn
-   */
+
   showMoveBlack(squares) {
     for (let i = 0; i < squares.length; i++) {
       if (squares[i].row == +this.row - 1 && squares[i].col === this.col) {
+        let square = squares[i]
+        if (square.firstChild === null) {
+          square.style.backgroundColor = 'yellow'
+        }
+      } else if (this.row === 7 && (squares[i].row == +this.row - 2 && squares[i].col === this.col)) {
         let square = squares[i]
         if (square.firstChild === null) {
           square.style.backgroundColor = 'yellow'
@@ -110,11 +103,7 @@ export class Pawn extends Piece {
       }
     }
   }
-  /**
-   *
-   * @param {*} squares
-   * @memberof Pawn
-   */
+
   move(squares, target) {
     let coord = {
       row: target.row,
@@ -130,12 +119,7 @@ export class Pawn extends Piece {
       return false
     }
   }
-  /**
-   *
-   *
-   * @param {*} squares
-   * @memberof Pawn
-   */
+
   eat(squares, target) {
     let coord = {
       row: target.row,
@@ -158,12 +142,49 @@ export class Tower extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
   }
+
+  valid(target) {
+
+  }
   /**
-   * si puo movere per linee verticali e orizzonatali
-   * illimitatamente, e viene interrotto solo da un altro pezzo
    * 
-   * vert = si muove sui numeri
-   * orizz = si muove sulle lettere
+   * @param {*} squares
+   * @memberof Tower
+   */
+  showMoveWhite(squares) {
+    for (let i = 0; i < squares.length; i++) {
+      
+    }
+  }
+  /**
+   * 
+   * @param {*} squares
+   * @memberof Tower
+   */
+   showMoveBlack(squares) {
+    for (let i = 0; i < squares.length; i++) {
+
+    }
+  }
+
+  move() {
+
+  }
+
+  eat() {
+
+  }
+}
+
+export class Knight extends Piece {
+  constructor(name, type, img, row, col) {
+    super(name, type, img, row, col);
+  }
+  valid(target) {
+
+  }
+  /**
+   * 
    * @param {*} squares
    * @memberof Tower
    */
@@ -172,11 +193,23 @@ export class Tower extends Piece {
 
     }
   }
-}
+  /**
+   * 
+   * @param {*} squares
+   * @memberof Tower
+   */
+   showMoveBlack(squares) {
+    for (let i = 0; i < squares.length; i++) {
 
-export class Knight extends Piece {
-  constructor(name, type, img, row, col) {
-    super(name, type, img, row, col);
+    }
+  }
+
+  move() {
+
+  }
+
+  eat() {
+
   }
 }
 
@@ -184,16 +217,109 @@ export class Bishop extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
   }
+  valid(target) {
+
+  }
+  /**
+   * 
+   * @param {*} squares
+   * @memberof Tower
+   */
+  showMoveWhite(squares) {
+    for (let i = 0; i < squares.length; i++) {
+
+    }
+  }
+  /**
+   * 
+   * @param {*} squares
+   * @memberof Tower
+   */
+   showMoveBlack(squares) {
+    for (let i = 0; i < squares.length; i++) {
+
+    }
+  }
+
+  move() {
+
+  }
+
+  eat() {
+
+  }
 }
 
 export class Queen extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
   }
+  valid(target) {
+
+  }
+  /**
+   * 
+   * @param {*} squares
+   * @memberof Tower
+   */
+  showMoveWhite(squares) {
+    for (let i = 0; i < squares.length; i++) {
+
+    }
+  }
+  /**
+   * 
+   * @param {*} squares
+   * @memberof Tower
+   */
+   showMoveBlack(squares) {
+    for (let i = 0; i < squares.length; i++) {
+
+    }
+  }
+
+  move() {
+
+  }
+
+  eat() {
+
+  }
 }
 
 export class King extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
+  }
+  valid(target) {
+
+  }
+  /**
+   * 
+   * @param {*} squares
+   * @memberof Tower
+   */
+  showMoveWhite(squares) {
+    for (let i = 0; i < squares.length; i++) {
+
+    }
+  }
+  /**
+   * 
+   * @param {*} squares
+   * @memberof Tower
+   */
+   showMoveBlack(squares) {
+    for (let i = 0; i < squares.length; i++) {
+
+    }
+  }
+
+  move() {
+
+  }
+
+  eat() {
+
   }
 }
