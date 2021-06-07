@@ -11,9 +11,7 @@ import {
     King
 } from "./Pieces.js"
 
-// DIM: Dimensione dei lati della Scacchiera
 const DIM = 8
-// Board: elemento che contiene tutta la Scacchiera
 const $board = $('#board')[0]
 
 // CanIMove = true: puo muovere, gia mostrate le mosse possibili
@@ -24,14 +22,6 @@ let CanIMove = false
 let nextTurn = false
 // turn = 'w'/'b' : mostra di chi è il turno; Parte il Bianco
 let turn = 'w'
-String.prototype.swap = () => {
-    if (this === 'w') {
-        return 'b'
-    }
-    if (this === 'b') {
-        return 'w'
-    }
-}
 
 const whites = {
     pawn1: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'a'),    
@@ -140,7 +130,6 @@ const resetBoardColor = () => {
 
 const getPiece = obj => {
     // console.log(obj.row + obj.col);
-
     let piece
     Object.values(whites).forEach(element => {
         element.row === obj.row && element.col === obj.col ? piece = element : undefined;
@@ -154,14 +143,12 @@ const getPiece = obj => {
 
 const clickOnImg = (piece, target) => {
     if (!CanIMove) {
-        // mostra mosse
         piece = getPiece(target)
         showMove(piece)
     } else {
         if (piece.row === target.row && piece.col === target.col) {
             console.log('same');
         }
-        // mangia
         eatPiece(piece, target)
         if (!CanIMove) {
             CanIMove = false
@@ -174,7 +161,6 @@ const clickOnImg = (piece, target) => {
 
 const clickOnDiv = (piece, target) => {
     if (CanIMove) {
-        // muove
         movePiece(piece, target)
         if (!CanIMove) {
             CanIMove = false
@@ -275,7 +261,6 @@ $(() => {
                 CanIMove = true;
             }
             if (nextTurn) {
-                // switch side
                 nextTurn = false, CanIMove = false
                 if (turn === 'w') turn = 'b'
                 else if (turn === 'b') turn = 'w'
@@ -313,7 +298,6 @@ $(() => {
                 CanIMove = true;
             }
             if (nextTurn) {
-                // switch side
                 nextTurn = false, CanIMove = false
                 if (turn === 'w') turn = 'b'
                 else if (turn === 'b') turn = 'w'
