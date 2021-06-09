@@ -33,9 +33,7 @@ export class Pawn extends Piece {
         return true
       } else if (this.type === 'b' && target.type === 'w' && target.row == +this.row - 1 && target.col === String.fromCharCode(this.col.charCodeAt() - 1)) {
         return true
-      } else {
-        return false
-      }
+      } else return false
     }
   }
 
@@ -144,34 +142,144 @@ export class Tower extends Piece {
   }
 
   valid(target) {
-
+    console.log(target.row+target.col);
+    console.log(this.row+this.col);
+    if (target.type === this.type) {
+      return false
+    } else {
+      if (+target.row > this.row && target.col == this.col) return true
+      else if (+target.row < this.row && target.col == this.col) return true
+      else if (target.row == this.row && target.col > this.col) return true
+      else if (target.row == this.row && target.col < this.col) return true
+      else return false
+    }
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
+
   showMoveWhite(squares) {
+    let baseCoord = []
+
+    // based on C file
+    // let count = 0
+    // for (let i = 0; i < squares.length; i++) {
+    //   let square = squares[i]
+
+    //   if (+square.row > this.row && square.col == this.col) {
+    //     if (square.firstChild === null) {
+    //       square.style.backgroundColor = 'yellow'
+    //     } else {
+    //       square.style.backgroundColor = 'red'
+    //     }
+    //   } else if (+square.row < this.row && square.col == this.col) {
+    //     if (square.firstChild === null) {
+    //       square.style.backgroundColor = 'yellow'
+    //     } else {
+    //       square.style.backgroundColor = 'red'
+    //     }
+    //   } else if (square.row == this.row && square.col > this.col) {
+    //     if (square.firstChild === null) {
+    //       square.style.backgroundColor = 'yellow'
+    //     } else {
+    //       square.style.backgroundColor = 'red'
+    //     }
+    //   } else if (square.row == this.row && square.col < this.col) {
+    //     if (square.firstChild === null) {
+    //       square.style.backgroundColor = 'yellow'
+    //     } else {
+    //       square.style.backgroundColor = 'red'
+    //     }
+    //   }
+    // }
+
+
     for (let i = 0; i < squares.length; i++) {
-      
+      if ((squares[i].row == (+this.row + 1) && squares[i].col == this.col) ||
+        (squares[i].row == (+this.row - 1) && squares[i].col == this.col) ||
+        (squares[i].row == this.row && squares[i].col == String.fromCharCode(this.col.charCodeAt() + 1)) ||
+        (squares[i].row == this.row && squares[i].col == String.fromCharCode(this.col.charCodeAt() - 1))) {
+        baseCoord.push({
+          row: squares[i].row,
+          col: squares[i].col
+        })
+      }
+    }
+    console.log(baseCoord);
+
+    for (let i = 0; i < baseCoord.length; i++) {
+      if (baseCoord[i].row > this.row && baseCoord[i].col === this.col) {
+        for (let j = 0; j < 7; j++) {
+          for (let z = 0; z < squares.length; z++) {
+            if (+squares[z].row === +baseCoord[i].row + j && squares[z].col === baseCoord[i].col) {
+              if (squares[z].firstChild === null) {
+                squares[z].style.backgroundColor = 'yellow'
+              } else {
+                squares[z].style.backgroundColor = 'red'
+                j = 7
+              }
+            }
+          }
+        }
+      } else if (baseCoord[i].row < this.row && baseCoord[i].col === this.col) {
+        for (let j = 0; j < 7; j++) {
+          for (let z = 0; z < squares.length; z++) {
+            if (+squares[z].row === +baseCoord[i].row - j && squares[z].col === baseCoord[i].col) {
+              if (squares[z].firstChild === null) {
+                squares[z].style.backgroundColor = 'yellow'
+              } else {
+                squares[z].style.backgroundColor = 'red'
+                j = 7
+              }
+            }
+          }
+        }
+      } else if (baseCoord[i].col > this.col && baseCoord[i].row == this.row) {
+        for (let j = 0; j < 7; j++) {
+          for (let z = 0; z < squares.length; z++) {
+            if (squares[z].row == baseCoord[i].row && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() + j)) {
+              if (squares[z].firstChild === null) {
+                squares[z].style.backgroundColor = 'yellow'
+              } else {
+                squares[z].style.backgroundColor = 'red'
+                j = 7
+              }
+            }
+          }
+        }
+      } else if (baseCoord[i].col < this.col && baseCoord[i].row == this.row) {
+        for (let j = 0; j < 7; j++) {
+          for (let z = 0; z < squares.length; z++) {
+            if (squares[z].row == baseCoord[i].row && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() - j)) {
+              if (squares[z].firstChild === null) {
+                squares[z].style.backgroundColor = 'yellow'
+              } else {
+                squares[z].style.backgroundColor = 'red'
+                j = 7
+              }
+            }
+          }
+        }
+      }
     }
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
-   showMoveBlack(squares) {
-    for (let i = 0; i < squares.length; i++) {
 
+  showMoveBlack(squares) {
+    this.showMoveWhite(squares)
+  }
+
+  move(squares, target) {
+    if (this.valid(target)) {
+      this.coord = {
+        row: target.row,
+        col: target.col,
+      }
+      this.load(squares)
+      return true
+    } else {
+      console.error('not valid move');
+      return false
     }
   }
 
-  move() {
-
-  }
-
-  eat() {
+  eat(squares, target) {
 
   }
 }
@@ -183,25 +291,15 @@ export class Knight extends Piece {
   valid(target) {
 
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
+
   showMoveWhite(squares) {
     for (let i = 0; i < squares.length; i++) {
 
     }
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
-   showMoveBlack(squares) {
-    for (let i = 0; i < squares.length; i++) {
 
-    }
+  showMoveBlack(squares) {
+
   }
 
   move() {
@@ -220,25 +318,15 @@ export class Bishop extends Piece {
   valid(target) {
 
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
+
   showMoveWhite(squares) {
     for (let i = 0; i < squares.length; i++) {
 
     }
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
-   showMoveBlack(squares) {
-    for (let i = 0; i < squares.length; i++) {
 
-    }
+  showMoveBlack(squares) {
+
   }
 
   move() {
@@ -257,25 +345,15 @@ export class Queen extends Piece {
   valid(target) {
 
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
+
   showMoveWhite(squares) {
     for (let i = 0; i < squares.length; i++) {
 
     }
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
-   showMoveBlack(squares) {
-    for (let i = 0; i < squares.length; i++) {
 
-    }
+  showMoveBlack(squares) {
+
   }
 
   move() {
@@ -294,25 +372,15 @@ export class King extends Piece {
   valid(target) {
 
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
+
   showMoveWhite(squares) {
     for (let i = 0; i < squares.length; i++) {
 
     }
   }
-  /**
-   * 
-   * @param {*} squares
-   * @memberof Tower
-   */
-   showMoveBlack(squares) {
-    for (let i = 0; i < squares.length; i++) {
 
-    }
+  showMoveBlack(squares) {
+
   }
 
   move() {
