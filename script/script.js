@@ -33,10 +33,10 @@ const whites = {
     pawn7: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'g'),
     pawn8: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'h'),
 
-    tower1: new Tower('tower', 'w', '/img/w-tower.svg', 4, 'e'),
+    tower1: new Tower('tower', 'w', '/img/w-tower.svg', 1, 'a'),
     knight1: new Knight('knight', 'w', '/img/w-knight.svg', 1, 'b'),
     bishop1: new Bishop('bishop', 'w', '/img/w-bishop.svg', 1, 'c'),
-    queen: new Queen('queen', 'w', '/img/w-queen.svg', 3, 'c'),
+    queen: new Queen('queen', 'w', '/img/w-queen.svg', 1, 'd'),
     king: new King('king', 'w', '/img/w-king.svg', 1, 'e'),
     bishop2: new Bishop('bishop', 'w', '/img/w-bishop.svg', 1, 'f'),
     knight2: new Knight('knight', 'w', '/img/w-knight.svg', 1, 'g'),
@@ -53,7 +53,7 @@ const blacks = {
     pawn7: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'g'),
     pawn8: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'h'),
 
-    tower1: new Tower('tower', 'b', '/img/b-tower.svg', 6, 'b'),
+    tower1: new Tower('tower', 'b', '/img/b-tower.svg', 8, 'a'),
     knight1: new Knight('knight', 'b', '/img/b-knight.svg', 8, 'b'),
     bishop1: new Bishop('bishop', 'b', '/img/b-bishop.svg', 8, 'c'),
     queen: new Queen('queen', 'b', '/img/b-queen.svg', 8, 'd'),

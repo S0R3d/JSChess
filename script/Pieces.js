@@ -142,8 +142,6 @@ export class Tower extends Piece {
   }
 
   valid(target) {
-    console.log(target.row+target.col);
-    console.log(this.row+this.col);
     if (target.type === this.type) {
       return false
     } else {
@@ -157,40 +155,7 @@ export class Tower extends Piece {
 
   showMoveWhite(squares) {
     let baseCoord = []
-
-    // based on C file
-    // let count = 0
-    // for (let i = 0; i < squares.length; i++) {
-    //   let square = squares[i]
-
-    //   if (+square.row > this.row && square.col == this.col) {
-    //     if (square.firstChild === null) {
-    //       square.style.backgroundColor = 'yellow'
-    //     } else {
-    //       square.style.backgroundColor = 'red'
-    //     }
-    //   } else if (+square.row < this.row && square.col == this.col) {
-    //     if (square.firstChild === null) {
-    //       square.style.backgroundColor = 'yellow'
-    //     } else {
-    //       square.style.backgroundColor = 'red'
-    //     }
-    //   } else if (square.row == this.row && square.col > this.col) {
-    //     if (square.firstChild === null) {
-    //       square.style.backgroundColor = 'yellow'
-    //     } else {
-    //       square.style.backgroundColor = 'red'
-    //     }
-    //   } else if (square.row == this.row && square.col < this.col) {
-    //     if (square.firstChild === null) {
-    //       square.style.backgroundColor = 'yellow'
-    //     } else {
-    //       square.style.backgroundColor = 'red'
-    //     }
-    //   }
-    // }
-
-
+    console.log(squares);
     for (let i = 0; i < squares.length; i++) {
       if ((squares[i].row == (+this.row + 1) && squares[i].col == this.col) ||
         (squares[i].row == (+this.row - 1) && squares[i].col == this.col) ||
@@ -202,7 +167,6 @@ export class Tower extends Piece {
         })
       }
     }
-    console.log(baseCoord);
 
     for (let i = 0; i < baseCoord.length; i++) {
       if (baseCoord[i].row > this.row && baseCoord[i].col === this.col) {
@@ -212,8 +176,11 @@ export class Tower extends Piece {
               if (squares[z].firstChild === null) {
                 squares[z].style.backgroundColor = 'yellow'
               } else {
-                squares[z].style.backgroundColor = 'red'
-                j = 7
+                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+                if (imgUrl[0] !== this.type) {
+                  squares[z].style.backgroundColor = 'red'
+                  j = 7
+                } else j = 7
               }
             }
           }
@@ -225,8 +192,11 @@ export class Tower extends Piece {
               if (squares[z].firstChild === null) {
                 squares[z].style.backgroundColor = 'yellow'
               } else {
-                squares[z].style.backgroundColor = 'red'
-                j = 7
+                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+                if (imgUrl[0] !== this.type) {
+                  squares[z].style.backgroundColor = 'red'
+                  j = 7
+                } else j = 7
               }
             }
           }
@@ -238,8 +208,11 @@ export class Tower extends Piece {
               if (squares[z].firstChild === null) {
                 squares[z].style.backgroundColor = 'yellow'
               } else {
-                squares[z].style.backgroundColor = 'red'
-                j = 7
+                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+                if (imgUrl[0] !== this.type) {
+                  squares[z].style.backgroundColor = 'red'
+                  j = 7
+                } else j = 7
               }
             }
           }
@@ -251,8 +224,11 @@ export class Tower extends Piece {
               if (squares[z].firstChild === null) {
                 squares[z].style.backgroundColor = 'yellow'
               } else {
-                squares[z].style.backgroundColor = 'red'
-                j = 7
+                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+                if (imgUrl[0] !== this.type) {
+                  squares[z].style.backgroundColor = 'red'
+                  j = 7
+                } else j = 7
               }
             }
           }
@@ -280,6 +256,27 @@ export class Tower extends Piece {
   }
 
   eat(squares, target) {
+    if (this.valid(target)) {
+      this.coord = {
+        row: target.row,
+        col: target.col,
+      }
+      target.delete(squares)
+      this.load(squares)
+      return true
+    } else {
+      console.error('not valid eat');
+      return false
+    }
+  }
+  /**
+   * waiting king's sys
+   *
+   * @param {*} squares
+   * @param {*} target
+   * @memberof Tower
+   */
+  arrocco(squares, target) {
 
   }
 }
@@ -288,26 +285,140 @@ export class Knight extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
   }
-  valid(target) {
 
+  valid(target) {
+    if (target.type === this.type) {
+      return false
+    } else {
+      if ((target.row == (+this.row + 2) && target.col === String.fromCharCode(this.col.charCodeAt() + 1)) ||
+        (target.row == (+this.row + 2) && target.col === String.fromCharCode(this.col.charCodeAt() - 1))) return true
+      else if ((target.row == (+this.row - 2) && target.col === String.fromCharCode(this.col.charCodeAt() + 1)) ||
+        (target.row == (+this.row - 2) && target.col === String.fromCharCode(this.col.charCodeAt() - 1))) return true
+      else if ((target.row == (+this.row + 1) && target.col === String.fromCharCode(this.col.charCodeAt() + 2)) ||
+        (target.row == (+this.row - 1) && target.col === String.fromCharCode(this.col.charCodeAt() + 2))) return true
+      else if ((target.row == (+this.row + 1) && target.col === String.fromCharCode(this.col.charCodeAt() - 2)) ||
+        (target.row == (+this.row - 1) && target.col === String.fromCharCode(this.col.charCodeAt() - 2))) return true
+      else return false
+    }
   }
 
   showMoveWhite(squares) {
     for (let i = 0; i < squares.length; i++) {
-
+      if (squares[i].row == (+this.row + 2)) {
+        if (squares[i].col === String.fromCharCode(this.col.charCodeAt() + 1)) {
+          if (squares[i].firstChild === null) {
+            squares[i].style.backgroundColor = 'yellow'
+          } else {
+            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            if (imgUrl[0] !== this.type) {
+              squares[i].style.backgroundColor = 'red'
+            }
+          }
+        } else if (squares[i].col === String.fromCharCode(this.col.charCodeAt() - 1)) {
+          if (squares[i].firstChild === null) {
+            squares[i].style.backgroundColor = 'yellow'
+          } else {
+            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            if (imgUrl[0] !== this.type) {
+              squares[i].style.backgroundColor = 'red'
+            }
+          }
+        }
+      } else if (squares[i].row == (+this.row - 2)) {
+        if (squares[i].col === String.fromCharCode(this.col.charCodeAt() + 1)) {
+          if (squares[i].firstChild === null) {
+            squares[i].style.backgroundColor = 'yellow'
+          } else {
+            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            if (imgUrl[0] !== this.type) {
+              squares[i].style.backgroundColor = 'red'
+            }
+          }
+        } else if (squares[i].col === String.fromCharCode(this.col.charCodeAt() - 1)) {
+          if (squares[i].firstChild === null) {
+            squares[i].style.backgroundColor = 'yellow'
+          } else {
+            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            if (imgUrl[0] !== this.type) {
+              squares[i].style.backgroundColor = 'red'
+            }
+          }
+        }
+      } else if (squares[i].col === String.fromCharCode(this.col.charCodeAt() + 2)) {
+        if (squares[i].row == (+this.row + 1)) {
+          if (squares[i].firstChild === null) {
+            squares[i].style.backgroundColor = 'yellow'
+          } else {
+            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            if (imgUrl[0] !== this.type) {
+              squares[i].style.backgroundColor = 'red'
+            }
+          }
+        } else if (squares[i].row == (+this.row - 1)) {
+          if (squares[i].firstChild === null) {
+            squares[i].style.backgroundColor = 'yellow'
+          } else {
+            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            if (imgUrl[0] !== this.type) {
+              squares[i].style.backgroundColor = 'red'
+            }
+          }
+        }
+      } else if (squares[i].col === String.fromCharCode(this.col.charCodeAt() - 2)) {
+        if (squares[i].row == (+this.row + 1)) {
+          if (squares[i].firstChild === null) {
+            squares[i].style.backgroundColor = 'yellow'
+          } else {
+            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            if (imgUrl[0] !== this.type) {
+              squares[i].style.backgroundColor = 'red'
+            }
+          }
+        } else if (squares[i].row == (+this.row - 1)) {      
+          if (squares[i].firstChild === null) {
+            squares[i].style.backgroundColor = 'yellow'
+          } else {
+            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            if (imgUrl[0] !== this.type) {
+              squares[i].style.backgroundColor = 'red'
+            }
+          }
+        }
+      }
     }
   }
 
   showMoveBlack(squares) {
-
+    this.showMoveWhite(squares)
   }
 
-  move() {
-
+  move(squares, target) {
+    if (this.valid(target)) {
+      this.coord = {
+        row: target.row,
+        col: target.col,
+      }
+      this.load(squares)
+      return true
+    } else {
+      console.error('not valid move');
+      return false
+    }
   }
 
-  eat() {
-
+  eat(squares, target) {
+    if (this.valid(target)) {
+      this.coord = {
+        row: target.row,
+        col: target.col,
+      }
+      target.delete(squares)
+      this.load(squares)
+      return true
+    } else {
+      console.error('not valid eat');
+      return false
+    }
   }
 }
 
@@ -315,26 +426,131 @@ export class Bishop extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
   }
-  valid(target) {
 
+  valid(target) {
+    if (target.type === this.type) {
+      return false
+    } else {
+      if (Math.abs(target.row - this.row) == Math.abs(target.col.charCodeAt() - this.col.charCodeAt())) return true
+      else return false
+    }
   }
 
   showMoveWhite(squares) {
+    let baseCoord = []
     for (let i = 0; i < squares.length; i++) {
+      if ((squares[i].row == (+this.row + 1) && squares[i].col === String.fromCharCode(this.col.charCodeAt() + 1)) ||
+        (squares[i].row == (+this.row + 1) && squares[i].col === String.fromCharCode(this.col.charCodeAt() - 1)) ||
+        (squares[i].row == (+this.row - 1) && squares[i].col === String.fromCharCode(this.col.charCodeAt() + 1)) ||
+        (squares[i].row == (+this.row - 1) && squares[i].col === String.fromCharCode(this.col.charCodeAt() - 1))) {
+        baseCoord.push({
+          row: squares[i].row,
+          col: squares[i].col,
+        })
+      }
+    }
+    console.log(baseCoord);
 
+    for (let i = 0; i < baseCoord.length; i++) {
+      if (baseCoord[i].row > this.row && baseCoord[i].col < this.col) {
+        for (let j = 0; j < 7; j++) {
+          for (let z = 0; z < squares.length; z++) {
+            if (squares[z].row == (+baseCoord[i].row + j) && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() - j)) {
+              if (squares[z].firstChild === null) {
+                squares[z].style.backgroundColor = 'yellow'
+              } else {
+                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+                if (imgUrl[0] !== this.type) {
+                  squares[z].style.backgroundColor = 'red'
+                  j = 7
+                } else j = 7
+              }
+            }
+          }
+        }
+      } else if (baseCoord[i].row > this.row && baseCoord[i].col > this.col) {
+        for (let j = 0; j < 7; j++) {
+          for (let z = 0; z < squares.length; z++) {
+            if (squares[z].row == (+baseCoord[i].row + j) && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() + j)) {
+              if (squares[z].firstChild === null) {
+                squares[z].style.backgroundColor = 'yellow'
+              } else {
+                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+                if (imgUrl[0] !== this.type) {
+                  squares[z].style.backgroundColor = 'red'
+                  j = 7
+                } else j = 7
+              }
+            }
+          }
+        }
+      } else if (baseCoord[i].row < this.row && baseCoord[i].col < this.col) {
+        for (let j = 0; j < 7; j++) {
+          for (let z = 0; z < squares.length; z++) {
+            if (squares[z].row == (+baseCoord[i].row - j) && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() - j)) {
+              if (squares[z].firstChild === null) {
+                squares[z].style.backgroundColor = 'yellow'
+              } else {
+                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+                if (imgUrl[0] !== this.type) {
+                  squares[z].style.backgroundColor = 'red'
+                  j = 7
+                } else j = 7
+              }
+            }
+          }
+        }
+      } else if (baseCoord[i].row < this.row && baseCoord[i].col > this.col) {
+        for (let j = 0; j < 7; j++) {
+          for (let z = 0; z < squares.length; z++) {
+            if (squares[z].row == (+baseCoord[i].row - j) && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() + j)) {
+              if (squares[z].firstChild === null) {
+                squares[z].style.backgroundColor = 'yellow'
+              } else {
+                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+                if (imgUrl[0] !== this.type) {
+                  squares[z].style.backgroundColor = 'red'
+                  j = 7
+                } else j = 7
+              }
+            }
+          }
+        }
+      }
     }
   }
 
   showMoveBlack(squares) {
-
+    this.showMoveWhite(squares)
   }
 
-  move() {
-
+  move(squares, target) {
+    if (this.valid(target)) {
+      this.coord = {
+        row: target.row,
+        col: target.col,
+      }
+      this.load(squares)
+      return true
+    } else {
+      console.error('not valid move');
+      return false
+    }
   }
 
-  eat() {
-
+  eat(squares, target) {
+    if (this.valid(target)) {
+      this.coord = {
+        row: target.row,
+        col: target.col,
+      }
+      target.delete(squares)
+      this.load(squares)
+      return true
+    } else {
+      console.error('not valid eat');
+      return false
+    }
   }
 }
 
@@ -342,6 +558,7 @@ export class Queen extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
   }
+
   valid(target) {
 
   }
@@ -369,6 +586,7 @@ export class King extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
   }
+
   valid(target) {
 
   }
