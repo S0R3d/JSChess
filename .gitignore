@@ -1,5 +1,8 @@
 .vscode
 .vscode/setting.json
 
-.libraries
-.libraries/*
+libraries
+libraries/*
+libraries/bootstrap.min.css
+libraries/bootstrap.min.js
+libraries/jquery.slim.min.js
