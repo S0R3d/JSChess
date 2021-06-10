@@ -69,7 +69,6 @@ export default class Piece {
 
   draw(img) {
     img.src = this.img;
-    img.style = 'padding-top: 8px;'
   }
 
   load(squares) {

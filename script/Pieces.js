@@ -11,6 +11,7 @@ export class Pawn extends Piece {
 
   draw(img) {
     img.src = this.img;
+    img.style = 'padding-top: 4px'
   }
 
   valid(target) {
@@ -139,6 +140,11 @@ export class Pawn extends Piece {
 export class Tower extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
+  }
+
+  draw(img) {
+    img.src = this.img
+    img.style = 'padding-top: 9px;'
   }
 
   valid(target) {
@@ -286,6 +292,11 @@ export class Knight extends Piece {
     super(name, type, img, row, col);
   }
 
+  draw(img) {
+    img.src = this.img
+    img.style = 'padding-top: 13px;'
+  }
+
   valid(target) {
     if (target.type === this.type) {
       return false
@@ -427,6 +438,11 @@ export class Bishop extends Piece {
     super(name, type, img, row, col);
   }
 
+  draw(img) {
+    img.src = this.img
+    img.style = 'padding-top: 11px;'
+  }
+
   valid(target) {
     if (target.type === this.type) {
       return false
@@ -559,32 +575,61 @@ export class Queen extends Piece {
     super(name, type, img, row, col);
   }
 
+  draw(img) {
+    img.src = this.img
+    img.style = 'padding-top: 15px;'
+  }
+
   valid(target) {
 
   }
 
   showMoveWhite(squares) {
-    for (let i = 0; i < squares.length; i++) {
-
-    }
+    
   }
 
   showMoveBlack(squares) {
-
+    this.showMoveWhite(squares)
   }
 
-  move() {
-
+  move(squares, target) {
+    if (this.valid(target)) {
+      this.coord = {
+        row: target.row,
+        col: target.col,
+      }
+      this.load(squares)
+      return true
+    } else {
+      console.error('not valid move');
+      return false
+    }
   }
 
-  eat() {
-
+  eat(squares, target) {
+    if (this.valid(target)) {
+      this.coord = {
+        row: target.row,
+        col: target.col,
+      }
+      target.delete(squares)
+      this.load(squares)
+      return true
+    } else {
+      console.error('not valid eat');
+      return false
+    }
   }
 }
 
 export class King extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
+  }
+
+  draw(img) {
+    img.src = this.img
+    img.style = 'padding-top: 11px;'
   }
 
   valid(target) {
