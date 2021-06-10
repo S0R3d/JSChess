@@ -1,2 +1,5 @@
 .vscode
 .vscode/setting.json
+
+.libraries
+.libraries/*
