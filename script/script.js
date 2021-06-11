@@ -37,7 +37,7 @@ const whites = {
     knight1: new Knight('knight', 'w', '/img/w-knight.svg', 1, 'b'),
     bishop1: new Bishop('bishop', 'w', '/img/w-bishop.svg', 1, 'c'),
     queen: new Queen('queen', 'w', '/img/w-queen.svg', 1, 'd'),
-    king: new King('king', 'w', '/img/w-king.svg', 4, 'e'),
+    king: new King('king', 'w', '/img/w-king.svg', 1, 'e'),
     bishop2: new Bishop('bishop', 'w', '/img/w-bishop.svg', 1, 'f'),
     knight2: new Knight('knight', 'w', '/img/w-knight.svg', 1, 'g'),
     tower2: new Tower('tower', 'w', '/img/w-tower.svg', 1, 'h'),
@@ -57,14 +57,10 @@ const blacks = {
     knight1: new Knight('knight', 'b', '/img/b-knight.svg', 8, 'b'),
     bishop1: new Bishop('bishop', 'b', '/img/b-bishop.svg', 8, 'c'),
     queen: new Queen('queen', 'b', '/img/b-queen.svg', 8, 'd'),
-    king: new King('king', 'b', '/img/b-king.svg', 5, 'e'),
+    king: new King('king', 'b', '/img/b-king.svg', 8, 'e'),
     bishop2: new Bishop('bishop', 'b', '/img/b-bishop.svg', 8, 'f'),
     knight2: new Knight('knight', 'b', '/img/b-knight.svg', 8, 'g'),
     tower2: new Tower('tower', 'b', '/img/b-tower.svg', 8, 'h'),
-}
-
-const nextChar = c => {
-    return String.fromCharCode(c.charCodeAt() + 1)
 }
 
 const loadBoard = () => {
@@ -129,7 +125,6 @@ const resetBoardColor = () => {
 }
 
 const getPiece = obj => {
-    // console.log(obj.row + obj.col);
     let piece
     Object.values(whites).forEach(element => {
         element.row === obj.row && element.col === obj.col ? piece = element : undefined;

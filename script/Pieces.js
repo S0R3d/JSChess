@@ -609,7 +609,7 @@ export class Queen extends Piece {
                 squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
               } else {
                 let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl !== this.type) {
+                if (imgUrl[0] !== this.type) {
                   squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
                   j = 7
                 } else j = 7
@@ -625,7 +625,7 @@ export class Queen extends Piece {
                 squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
               } else {
                 let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl !== this.type) {
+                if (imgUrl[0] !== this.type) {
                   squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
                   j = 7
                 } else j = 7
@@ -641,7 +641,7 @@ export class Queen extends Piece {
                 squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
               } else {
                 let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl !== this.type) {
+                if (imgUrl[0] !== this.type) {
                   squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
                   j = 7
                 } else j = 7
@@ -657,7 +657,7 @@ export class Queen extends Piece {
                 squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
               } else {
                 let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl !== this.type) {
+                if (imgUrl[0] !== this.type) {
                   squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
                   j = 7
                 } else j = 7
@@ -673,7 +673,7 @@ export class Queen extends Piece {
                 squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
               } else {
                 let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl !== this.type) {
+                if (imgUrl[0] !== this.type) {
                   squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
                   j = 7
                 } else j = 7
@@ -689,7 +689,7 @@ export class Queen extends Piece {
                 squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
               } else {
                 let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl !== this.type) {
+                if (imgUrl[0] !== this.type) {
                   squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
                   j = 7
                 } else j = 7
@@ -705,7 +705,7 @@ export class Queen extends Piece {
                 squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
               } else {
                 let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl !== this.type) {
+                if (imgUrl[0] !== this.type) {
                   squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
                   j = 7
                 } else j = 7
@@ -721,7 +721,7 @@ export class Queen extends Piece {
                 squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
               } else {
                 let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl !== this.type) {
+                if (imgUrl[0] !== this.type) {
                   squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
                   j = 7
                 } else j = 7
@@ -800,7 +800,7 @@ export class King extends Piece {
           squares[i].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
         } else {
           let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl !== this.type) {
+          if (imgUrl[0] !== this.type) {
             squares[i].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           }
         }
@@ -809,7 +809,7 @@ export class King extends Piece {
           squares[i].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
         } else {
           let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl !== this.type) {
+          if (imgUrl[0] !== this.type) {
             squares[i].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           }
         }
@@ -818,7 +818,7 @@ export class King extends Piece {
           squares[i].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
         } else {
           let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl !== this.type) {
+          if (imgUrl[0] !== this.type) {
             squares[i].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           }
         }
@@ -827,7 +827,7 @@ export class King extends Piece {
           squares[i].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
         } else {
           let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl !== this.type) {
+          if (imgUrl[0] !== this.type) {
             squares[i].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           }
         }
@@ -836,7 +836,7 @@ export class King extends Piece {
           squares[i].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
         } else {
           let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl !== this.type) {
+          if (imgUrl[0] !== this.type) {
             squares[i].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           }
         }
@@ -845,7 +845,7 @@ export class King extends Piece {
           squares[i].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
         } else {
           let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl !== this.type) {
+          if (imgUrl[0] !== this.type) {
             squares[i].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           }
         }
@@ -854,7 +854,7 @@ export class King extends Piece {
           squares[i].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
         } else {
           let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl !== this.type) {
+          if (imgUrl[0] !== this.type) {
             squares[i].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           }
         }
@@ -863,7 +863,7 @@ export class King extends Piece {
           squares[i].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
         } else {
           let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl !== this.type) {
+          if (imgUrl[0] !== this.type) {
             squares[i].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           }
         }
