@@ -3,18 +3,12 @@
 
 ### To do list
 
-* Completare passaggio da app.js -> script.js
-
 * Sistemare 'show pieces' quando 'hover'
 
-* Modificare posizione 'div' status (Later)
+* Modificare posizione 'div' status
 
-* Aggiungere un overlay text per dire a chi sta la mossa
+* Aggiungere un overlay text per ricordare a chi sta muovere
 
-* Creare la board con display: grid, senza row con solo square(col)
-
-* Arrocco
-
-* Sistema re sotto scacco
-
-* Sistema scacco matto
+* ## Scacco 
+  * Arrocco
+  * Scacco matto

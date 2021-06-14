@@ -14,13 +14,8 @@ import {
 const DIM = 8
 const $board = $('#board')[0]
 
-// CanIMove = true: puo muovere, gia mostrate le mosse possibili
-// CanIMove = false: mostrare le mosse possibili
 let CanIMove = false
-// nextTurn = true: sta al giocatore dopo
-// nextTurn = false: finchè è a false muove sempre o stesso giocatore
 let nextTurn = false
-// turn = 'w'/'b' : mostra di chi è il turno; Parte il Bianco
 let turn = 'w'
 
 const whites = {

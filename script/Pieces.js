@@ -903,4 +903,8 @@ export class King extends Piece {
       return false
     }
   }
+
+  casteling() {
+    console.log('arrocco');
+  }
 }
