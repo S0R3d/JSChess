@@ -71,16 +71,11 @@ export default class Piece {
     img.src = this.img;
   }
 
-  load(squares) {
-    for (let i = 0; i < squares.length; i++) {
-      if (squares[i].row == this.row && squares[i].col == this.col) {
-        let square = squares[i]
-        this.inner.row = this.row;
-        this.inner.col = this.col;
-        this.draw(this.inner)
-        square.appendChild(this.inner)
-      }
-    }
+  load(mrx) {
+    this.inner.row = this.row
+    this.inner.col = this.col
+    this.draw(this.inner)
+    mrx[+this.row - 1][this.col.charCodeAt() - 97].appendChild(this.inner)
   }
 
   addPulse() {
@@ -91,14 +86,12 @@ export default class Piece {
     this.inner.classList.remove('pulse')
   }
 
-  delete(squares) {
-    for (let i = 0; i < squares.length; i++) {
-      if (squares[i].row == this.row && squares[i].col == this.col) {
-        let square = squares[i]
-        square.removeChild(this.inner)
-      }
+  delete(mrx) {
+    mrx[+this.row - 1][this.col.charCodeAt() - 97].removeChild(this.inner)
+    this.coord = {
+      row: 0,
+      col: ''
     }
-    this.coord = {row: 0, col: ''}
     this._inner = {}
   }
 }

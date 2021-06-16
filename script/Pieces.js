@@ -39,8 +39,22 @@ export class Pawn extends Piece {
   }
 
   showMoveWhite(squares) {
+    // Matrix Implem.
+    // if (mrx[this.row][this.col.charCodeAt() - 97].firstChild === null) {
+    //   mrx[this.row][this.col.charCodeAt() - 97].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+    // }
+    // if (this.row === 2 && (mrx[+this.row + 1][this.col.charCodeAt() - 97].firstChild === null)) {
+    //   mrx[+this.row + 1][this.col.charCodeAt() - 97].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+    // }
+    // if (mrx[this.row][(this.col.charCodeAt() - 97) + 1].firstChild !== null) {
+    //   mrx[this.row][(this.col.charCodeAt() - 97) + 1].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+    // }
+    // if (mrx[this.row][(this.col.charCodeAt() - 97) - 1].firstChild !== null) {
+    //   mrx[this.row][(this.col.charCodeAt() - 97) - 1].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+    // }
+
     for (let i = 0; i < squares.length; i++) {
-      if (squares[i].row == +this.row + 1 && squares[i].col === this.col) {
+      if (squares[i].row == +this.row + 1 && squares[i].col === this.col) { 
         let square = squares[i]
         if (square.firstChild === null) {
           square.style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
@@ -72,6 +86,20 @@ export class Pawn extends Piece {
   }
 
   showMoveBlack(squares) {
+    // Matrix Implem
+    // if (mrx[+this.row - 2][this.col.charCodeAt() - 97].firstChild === null) {
+    //   mrx[+this.row - 2][this.col.charCodeAt() - 97].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+    // }
+    // if (this.row === 7 && (mrx[+this.row - 3][this.col.charCodeAt() - 97].firstChild === null)) {
+    //   mrx[+this.row - 3][this.col.charCodeAt() - 97].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+    // }
+    // if (mrx[+this.row - 2][(this.col.charCodeAt() - 97) + 1].firstChild !== null) {
+    //   mrx[+this.row - 2][(this.col.charCodeAt() - 97) + 1].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+    // }
+    // if (mrx[+this.row - 2][(this.col.charCodeAt() - 97) - 1].firstChild !== null) {
+    //   mrx[+this.row - 2][(this.col.charCodeAt() - 97) - 1].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+    // }
+
     for (let i = 0; i < squares.length; i++) {
       if (squares[i].row == +this.row - 1 && squares[i].col === this.col) {
         let square = squares[i]
@@ -103,15 +131,15 @@ export class Pawn extends Piece {
     }
   }
 
-  move(squares, target) {
+  move(mrx, t) {
     let coord = {
-      row: target.row,
-      col: target.col
+      row: t.row,
+      col: t.col
     }
 
-    if (this.valid(target)) {
+    if (this.valid(t)) {
       this.coord = coord
-      this.load(squares)
+      this.load(mrx)
       return true
     } else {
       console.error('not valid move');
@@ -119,16 +147,15 @@ export class Pawn extends Piece {
     }
   }
 
-  eat(squares, target) {
+  eat(mrx, t) {
     let coord = {
-      row: target.row,
-      col: target.col
+      row: t.row,
+      col: t.col
     }
-
-    if (this.valid(target)) {
-      target.delete(squares)
+    if (this.valid(t)) {
+      t.delete(mrx)
       this.coord = coord
-      this.load(squares)
+      this.load(mrx)
       return true
     } else {
       console.error('not valid eat');
@@ -147,16 +174,22 @@ export class Tower extends Piece {
     img.style = 'padding-top: 9px;'
   }
 
-  valid(target) {
-    if (target.type === this.type) {
+  // posso scavalcare i pezzi
+  valid(b, t) {
+    if (t.type === this.type) {
       return false
     } else {
-      if (+target.row > this.row && target.col == this.col) return true
-      else if (+target.row < this.row && target.col == this.col) return true
-      else if (target.row == this.row && target.col > this.col) return true
-      else if (target.row == this.row && target.col < this.col) return true
-      else return false
+
     }
+    // if (target.type === this.type) {
+    //   return false
+    // } else {
+    //   if (+target.row > this.row && target.col == this.col) return true
+    //   else if (+target.row < this.row && target.col == this.col) return true
+    //   else if (target.row == this.row && target.col > this.col) return true
+    //   else if (target.row == this.row && target.col < this.col) return true
+    //   else return false
+    // }
   }
 
   showMoveWhite(squares) {
@@ -261,7 +294,7 @@ export class Tower extends Piece {
   }
 
   eat(squares, target) {
-    if (this.valid(target)) {
+    if (this.valid(squares, target)) {
       this.coord = {
         row: target.row,
         col: target.col,
@@ -432,6 +465,7 @@ export class Bishop extends Piece {
     img.style = 'padding-top: 11px;'
   }
 
+  // posso scavalcare i pezzi
   valid(target) {
     if (target.type === this.type) {
       return false
@@ -568,6 +602,7 @@ export class Queen extends Piece {
     img.style = 'padding-top: 15px;'
   }
 
+  // posso scavalcare i pezzi
   valid(target) {
     if (target.type === this.type) {
       return false
@@ -599,7 +634,7 @@ export class Queen extends Piece {
         })
       }
     }
-    
+
     for (let i = 0; i < baseCoord.length; i++) {
       if (baseCoord[i].row > this.row && baseCoord[i].col < this.col) {
         for (let j = 0; j < 7; j++) {
@@ -617,7 +652,7 @@ export class Queen extends Piece {
             }
           }
         }
-      } else if (baseCoord[i].row >  this.row && baseCoord[i].col === this.col) {
+      } else if (baseCoord[i].row > this.row && baseCoord[i].col === this.col) {
         for (let j = 0; j < 7; j++) {
           for (let z = 0; z < squares.length; z++) {
             if (squares[z].row == (+baseCoord[i].row + j) && squares[z].col === baseCoord[i].col) {

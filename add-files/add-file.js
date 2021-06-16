@@ -25,6 +25,6 @@ let precBackgroundColor = squarePiece.style.backgroundColor
 squarePiece.style.backgroundColor = 'yellow'
 
 
-// che pezzo è?
+// che pezzo è? Da usare quando si ha un 'div-col-square'
 let whichPiece = piece.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
 let [type, name] = [whichPiece[0], whichPiece.slice(1, whichPiece.length)]

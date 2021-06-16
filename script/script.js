@@ -19,7 +19,7 @@ let nextTurn = false
 let turn = 'w'
 
 const whites = {
-    pawn1: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'a'),    
+    pawn1: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'a'),
     pawn2: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'b'),
     pawn3: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'c'),
     pawn4: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'd'),
@@ -58,67 +58,6 @@ const blacks = {
     tower2: new Tower('tower', 'b', '/img/b-tower.svg', 8, 'h'),
 }
 
-const loadBoard = () => {
-    for (let i = DIM; i > 0; i--) {
-        let row = document.createElement('div')
-        row.className = 'row ' + i
-        row.style.flexDirection = i % 2 === 0 ? '' : 'row-reverse'
-        for (let j = 0; j < DIM; j++) {
-            let square = document.createElement('div')
-            square.className = 'col-sm'
-            square.style.backgroundColor = j % 2 === 0 ? '#fff' : '#000'
-            row.appendChild(square)
-        }
-        $board.appendChild(row)
-    }
-}
-
-const addCoordinate = (params) => {
-    const rows = document.querySelectorAll('.row')
-    for (let i = 0; i < DIM; i++) {
-        let row = rows[i]
-        if (row.style.flexDirection == 'row-reverse') {
-            let square = row.lastElementChild
-            for (let j = 0; j < DIM; j++) {
-                square.classList.add(String.fromCharCode(97 + j))
-                square = square.previousElementSibling;
-            }
-        } else {
-            let squares = row.children
-            for (let j = 0; j < DIM; j++) {
-                let square = squares[j]
-                square.classList.add(String.fromCharCode(97 + j))
-            }
-        }
-    }
-    let squares = document.querySelectorAll('.col-sm')
-    for (let i = 0; i < squares.length; i++) {
-        let square = squares[i]
-        square.row = square.parentElement.classList[1]
-        square.col = square.classList[1]
-    }
-}
-
-const loadPieces = () => {
-    const squares = document.querySelectorAll('.col-sm')
-
-    Object.values(whites).forEach(element => {
-        element.load(squares)
-    });
-
-    Object.values(blacks).forEach(element => {
-        element.load(squares)
-    });
-}
-
-const resetBoardColor = () => {
-    const squares = document.querySelectorAll('.col-sm')
-    for (let i = 0; i < squares.length; i++) {
-        let square = squares[i]
-        square.style.backgroundColor = i % 2 === 0 ? '#fff' : '#000'
-    }
-}
-
 const getPiece = obj => {
     let piece
     Object.values(whites).forEach(element => {
@@ -131,74 +70,177 @@ const getPiece = obj => {
     return piece
 }
 
-const clickOnImg = (piece, target) => {
+const arrayTo2DArray = (array, columns) => Array(Math.ceil(array.length / columns)).fill('').reduce((acc, cur, index) => {
+    return [...acc, [...array].splice(index * columns, columns).reverse()]
+}, [])
+
+// si può ottimizzare!?
+const arrayTo2DObject = (array, dim) => {
+    let obj = {}
+    for (let i = dim; i >= 1; i--) {
+        obj[i] = {}
+        for (let j = 1; j <= dim; j++) {
+            obj[i][String.fromCharCode(j + 96)] = array[j-1]
+        }
+        array.splice(0, dim)
+    }
+    return obj
+}
+
+const loadBoard = () => {
+    for (let i = DIM; i > 0; i--) {
+        let row = document.createElement('div')
+        row.className = 'row ' + i
+        for (let j = 0; j < DIM; j++) {
+            let square = document.createElement('div')
+            square.className = 'col-sm'
+            if (i % 2 === 0) {
+                square.style.backgroundColor = j % 2 === 0 ? '#fff' : '#000'
+            } else {
+                square.style.backgroundColor = j % 2 === 0 ? '#000' : '#fff'
+            }
+
+            row.appendChild(square)
+        }
+        $board.appendChild(row)
+    }
+}
+
+const addCoordinate = (params) => {
+    const rows = document.querySelectorAll('.row')
+    for (let i = 0; i < DIM; i++) {
+        let row = rows[i]
+        let squares = row.children
+        for (let j = 0; j < DIM; j++) {
+            let square = squares[j]
+            square.classList.add(String.fromCharCode(97 + j))
+        }
+    }
+    let squares = document.querySelectorAll('.col-sm')
+    for (let i = 0; i < squares.length; i++) {
+        let square = squares[i]
+        square.row = square.parentElement.classList[1]
+        square.col = square.classList[1]
+    }
+}
+
+const loadPieces = () => {
+    const mrx = arrayTo2DArray(Array.from($('.col-sm')).reverse(), 8)
+
+    Object.values(blacks).forEach(element => {
+        element.load(mrx)
+    });
+    Object.values(whites).forEach(element => {
+        element.load(mrx)
+    });
+}
+
+const resetBoardColor = () => {
+    const mrx = arrayTo2DArray(Array.from($('.col-sm')).reverse(), 8)
+
+    for (let i = 0; i < mrx.length; i++) {
+        for (let j = 0; j < mrx.length; j++) {
+            if (i % 2 === 0) mrx[i][j].style.backgroundColor = j % 2 === 0 ? '#000' : '#fff'
+            else mrx[i][j].style.backgroundColor = j % 2 === 0 ? '#fff' : '#000'
+        }
+    }
+}
+
+const clickOnImg = (p, t) => {
     if (!CanIMove) {
-        piece = getPiece(target)
-        showMove(piece)
+        p = getPiece(t)
+        showMove(p)
     } else {
-        if (piece.row === target.row && piece.col === target.col) {
-            console.log('same');
-        }
-        eatPiece(piece, target)
-        if (!CanIMove) {
-            CanIMove = false
-        } else {
-            CanIMove = true
-        }
+        if (p.row === t.row && p.col === t.col) console.log('same');
+        eatPiece(p, t)
+        if (!CanIMove) CanIMove = false
+        else CanIMove = true
     }
-
 }
 
-const clickOnDiv = (piece, target) => {
+const clickOnDiv = (p, t) => {
     if (CanIMove) {
-        movePiece(piece, target)
-        if (!CanIMove) {
-            CanIMove = false
-        } else {
-            CanIMove = true
-        }
-    } else {
-        console.error('ops!');
-    }
+        movePiece(p, t)
+        if (!CanIMove) CanIMove = false
+        else CanIMove = true
+    } else console.error('ops!');
 }
 
-const showMove = (piece) => {
+const showMove = (p) => {
     console.log('show');
-    piece.addPulse()
+    p.addPulse()
 
-    const squares = document.querySelectorAll('.col-sm')
-    if (piece.type === 'b') {
-        piece.showMoveBlack(squares)
-    } else if (piece.type === 'w') {
-        console.log(piece);
-        piece.showMoveWhite(squares)
-    } else {
-        console.error('show');
-    }
+    const s = $('.col-sm')
+    if (p.type === 'b') p.showMoveBlack(s)
+    else if (p.type === 'w') p.showMoveWhite(s)
+    else console.error('show');
 }
 
-const movePiece = (piece, target) => {
+const movePiece = (p, t) => {
     console.log('move');
-    const squares = document.querySelectorAll('.col-sm')
 
-    piece.move(squares, target) ? {turn: nextTurn = true, move: CanIMove = false} : CanIMove = true;
+    p.move(arrayTo2DArray(Array.from($('.col-sm')).reverse(), 8), t) ? {
+        turn: nextTurn = true,
+        move: CanIMove = false
+    } : CanIMove = true;
 
     if (nextTurn && !CanIMove) {
         resetBoardColor()
-        piece.removePulse()
+        p.removePulse()
     }
 }
 
-const eatPiece = (piece, target) => {
+const eatPiece = (p, t) => {
     console.log('eat');
-    const squares = document.querySelectorAll('.col-sm')
 
-    piece.eat(squares, getPiece(target)) ? {turn: nextTurn = true, move: CanIMove = false} : CanIMove = true;
+    p.eat(arrayTo2DArray(Array.from($('.col-sm')).reverse(), 8), getPiece(t)) ? {
+        turn: nextTurn = true,
+        move: CanIMove = false
+    } : CanIMove = true;
 
     if (nextTurn && !CanIMove) {
         resetBoardColor()
-        piece.removePulse()
+        p.removePulse()
     }
+}
+/**
+ * Trovare il re in base al turno corrente,
+ * Controllare se esiste un pezzo qualsiasi, del colore (type)
+ * diverso da quello del re sotto il controllo,
+ * 
+ *  
+ * se un re era sotto scacco alla fine del turno non deve piu esserlo
+ * senno è scacco matto
+ * 
+ * RETURN Boolean
+ */
+const isUnderCheck = () => {
+    console.log('is under check ?');
+    const squares = document.querySelectorAll('.col-sm')
+    let kingsCoord = []
+    // trovo la posizione dei due re
+    for (let i = 0; i < squares.length; i++) {
+        if (squares[i].firstChild !== null) {
+            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            let [type, ...name] = [imgUrl]
+            if (name === 'king') {
+                kingsCoord.push({
+                    type: type,
+                    row: squares[i].row,
+                    col: squares[i].col,
+                })
+            }
+        }
+    }
+    // controllo che nessun re sia sotto scacco
+    for (let i = 0; i < squares.length; i++) {
+        for (let j = 0; j < kingsCoord.length; j++) {
+            if (getPiece(squares[i]).valid(kingsCoord[j])) {
+                return true
+            }
+        }
+    }
+    return false
 }
 
 const showStatus = (params) => {
@@ -219,23 +261,25 @@ $(() => {
     loadBoard()
     addCoordinate()
     loadPieces()
+ 
+    let matrixOBJ = arrayTo2DObject(Array.from($('.col-sm')),8)
+    console.log(matrixOBJ);
 
     /*
         BUG: 'pulse': se premo pezzi diversi qualcosa va storto
     */
-
     // merge
     let MovePiece = {}
     $('.col-sm').on('click', obj => {
         console.log(obj.target);
-        console.log('nextTurn '+nextTurn);
-        console.log('CanIMove '+CanIMove);
+        console.log('nextTurn ' + nextTurn);
+        console.log('CanIMove ' + CanIMove);
         console.log(turn);
 
         if (obj.target.tagName === 'IMG') {
             console.log('img');
 
-            if (!nextTurn && !CanIMove && getPiece(obj.target).type !==  turn) {
+            if (!nextTurn && !CanIMove && getPiece(obj.target).type !== turn) {
                 console.error('not ur turn');
                 return;
             }
@@ -243,7 +287,7 @@ $(() => {
                 console.log('solito');
                 CanIMove = false
                 MovePiece.removePulse
-                resetBoardColor
+                resetBoardColor()
             } else {
                 clickOnImg(MovePiece, obj.target)
             }
@@ -251,6 +295,13 @@ $(() => {
                 MovePiece = getPiece(obj.target)
                 CanIMove = true;
             }
+
+            // if (!CanIMove && isUnderCheck()) {
+            //     console.log('check');
+            // } else {
+            //     console.error('not check');
+            // }
+
             if (nextTurn) {
                 nextTurn = false, CanIMove = false
                 if (turn === 'w') turn = 'b'
@@ -263,6 +314,13 @@ $(() => {
             if (MovePiece !== null) {
                 clickOnDiv(MovePiece, obj.target)
             }
+
+            // if (!CanIMove && isUnderCheck()) {
+            //     console.log('check');
+            // } else {
+            //     console.error('not check');
+            // }
+
             if (nextTurn) {
                 nextTurn = false, CanIMove = false
                 if (turn === 'w') turn = 'b'
@@ -272,7 +330,7 @@ $(() => {
         } else if (obj.target.firstChild.tagName === 'IMG') {
             console.log('div - img');
 
-            if (!nextTurn && !CanIMove && getPiece(obj.target.firstChild).type !==  turn) {
+            if (!nextTurn && !CanIMove && getPiece(obj.target.firstChild).type !== turn) {
                 console.error('not ur turn');
                 return;
             }
@@ -288,6 +346,13 @@ $(() => {
                 MovePiece = getPiece(obj.target.firstChild)
                 CanIMove = true;
             }
+
+            // if (!CanIMove && isUnderCheck()) {
+            //     console.log('check');
+            // } else {
+            //     console.error('not check');
+            // }
+
             if (nextTurn) {
                 nextTurn = false, CanIMove = false
                 if (turn === 'w') turn = 'b'
