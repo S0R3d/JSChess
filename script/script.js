@@ -80,7 +80,7 @@ const arrayTo2DObject = (array, dim) => {
     for (let i = dim; i >= 1; i--) {
         obj[i] = {}
         for (let j = 1; j <= dim; j++) {
-            obj[i][String.fromCharCode(j + 96)] = array[j-1]
+            obj[i][String.fromCharCode(j + 96)] = array[j - 1]
         }
         array.splice(0, dim)
     }
@@ -125,23 +125,30 @@ const addCoordinate = (params) => {
 }
 
 const loadPieces = () => {
-    const mrx = arrayTo2DArray(Array.from($('.col-sm')).reverse(), 8)
+    const mrx = arrayTo2DObject(Array.from($('.col-sm')), 8)
 
-    Object.values(blacks).forEach(element => {
+    Object.values(whites).forEach(element => {
         element.load(mrx)
     });
-    Object.values(whites).forEach(element => {
+    Object.values(blacks).forEach(element => {
         element.load(mrx)
     });
 }
 
 const resetBoardColor = () => {
-    const mrx = arrayTo2DArray(Array.from($('.col-sm')).reverse(), 8)
+    const mrx = arrayTo2DObject(Array.from($('.col-sm')), 8)
 
-    for (let i = 0; i < mrx.length; i++) {
-        for (let j = 0; j < mrx.length; j++) {
-            if (i % 2 === 0) mrx[i][j].style.backgroundColor = j % 2 === 0 ? '#000' : '#fff'
-            else mrx[i][j].style.backgroundColor = j % 2 === 0 ? '#fff' : '#000'
+    for (const key in mrx) {
+        if (Object.hasOwnProperty.call(mrx, key)) {
+            const obj = mrx[key];
+            for (const key2 in obj) {
+                if (Object.hasOwnProperty.call(obj, key2)) {
+                    const el = obj[key2];
+                    if (key % 2 === 0) {
+                        el.style.backgroundColor = ((key2.charCodeAt() - 97) % 2) === 0 ? '#fff' : '#000'
+                    } else el.style.backgroundColor = ((key2.charCodeAt() - 97) % 2) === 0 ? '#000' : '#fff'
+                }
+            }
         }
     }
 }
@@ -170,16 +177,16 @@ const showMove = (p) => {
     console.log('show');
     p.addPulse()
 
-    const s = $('.col-sm')
-    if (p.type === 'b') p.showMoveBlack(s)
-    else if (p.type === 'w') p.showMoveWhite(s)
+    const m = arrayTo2DObject(Array.from($('.col-sm')),8)
+    if (p.type === 'b') p.showMoveBlack(m)
+    else if (p.type === 'w') p.showMoveWhite(m)
     else console.error('show');
 }
 
 const movePiece = (p, t) => {
     console.log('move');
 
-    p.move(arrayTo2DArray(Array.from($('.col-sm')).reverse(), 8), t) ? {
+    p.move(arrayTo2DObject(Array.from($('.col-sm')), 8), t) ? {
         turn: nextTurn = true,
         move: CanIMove = false
     } : CanIMove = true;
@@ -193,7 +200,7 @@ const movePiece = (p, t) => {
 const eatPiece = (p, t) => {
     console.log('eat');
 
-    p.eat(arrayTo2DArray(Array.from($('.col-sm')).reverse(), 8), getPiece(t)) ? {
+    p.eat(arrayTo2DObject(Array.from($('.col-sm')), 8), getPiece(t)) ? {
         turn: nextTurn = true,
         move: CanIMove = false
     } : CanIMove = true;
@@ -261,8 +268,8 @@ $(() => {
     loadBoard()
     addCoordinate()
     loadPieces()
- 
-    let matrixOBJ = arrayTo2DObject(Array.from($('.col-sm')),8)
+
+    let matrixOBJ = arrayTo2DObject(Array.from($('.col-sm')), 8)
     console.log(matrixOBJ);
 
     /*

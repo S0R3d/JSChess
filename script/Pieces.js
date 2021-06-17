@@ -14,119 +14,72 @@ export class Pawn extends Piece {
     img.style = 'padding-top: 4px'
   }
 
-  valid(target) {
-    if (target.type === this.type) {
+  valid(t) {
+    if (t.type === this.type) {
       return false;
     } else {
-      if (this.type === 'w' && target.row == +this.row + 1 && target.col === this.col) {
+      if (this.type === 'w' && t.row == +this.row + 1 && t.col === this.col) {
         return true
-      } else if (this.row === 2 && this.type === 'w' && target.row == +this.row + 2 && target.col === this.col) {
+      } else if (this.row === 2 && this.type === 'w' && t.row == +this.row + 2 && t.col === this.col) {
         return true
-      } else if (this.type === 'b' && target.row == +this.row - 1 && target.col === this.col) {
+      } else if (this.type === 'b' && t.row == +this.row - 1 && t.col === this.col) {
         return true
-      } else if (this.row === 7 && this.type === 'b' && target.row == +this.row - 2 && target.col === this.col) {
+      } else if (this.row === 7 && this.type === 'b' && t.row == +this.row - 2 && t.col === this.col) {
         return true
-      } else if (this.type === 'w' && target.type === 'b' && target.row == +this.row + 1 && target.col === String.fromCharCode(this.col.charCodeAt() + 1)) {
+      } else if (this.type === 'w' && t.type === 'b' && t.row == +this.row + 1 && t.col === String.fromCharCode(this.col.charCodeAt() + 1)) {
         return true
-      } else if (this.type === 'w' && target.type === 'b' && target.row == +this.row + 1 && target.col === String.fromCharCode(this.col.charCodeAt() - 1)) {
+      } else if (this.type === 'w' && t.type === 'b' && t.row == +this.row + 1 && t.col === String.fromCharCode(this.col.charCodeAt() - 1)) {
         return true
-      } else if (this.type === 'b' && target.type === 'w' && target.row == +this.row - 1 && target.col === String.fromCharCode(this.col.charCodeAt() + 1)) {
+      } else if (this.type === 'b' && t.type === 'w' && t.row == +this.row - 1 && t.col === String.fromCharCode(this.col.charCodeAt() + 1)) {
         return true
-      } else if (this.type === 'b' && target.type === 'w' && target.row == +this.row - 1 && target.col === String.fromCharCode(this.col.charCodeAt() - 1)) {
+      } else if (this.type === 'b' && t.type === 'w' && t.row == +this.row - 1 && t.col === String.fromCharCode(this.col.charCodeAt() - 1)) {
         return true
       } else return false
     }
   }
 
-  showMoveWhite(squares) {
-    // Matrix Implem.
-    // if (mrx[this.row][this.col.charCodeAt() - 97].firstChild === null) {
-    //   mrx[this.row][this.col.charCodeAt() - 97].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-    // }
-    // if (this.row === 2 && (mrx[+this.row + 1][this.col.charCodeAt() - 97].firstChild === null)) {
-    //   mrx[+this.row + 1][this.col.charCodeAt() - 97].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-    // }
-    // if (mrx[this.row][(this.col.charCodeAt() - 97) + 1].firstChild !== null) {
-    //   mrx[this.row][(this.col.charCodeAt() - 97) + 1].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-    // }
-    // if (mrx[this.row][(this.col.charCodeAt() - 97) - 1].firstChild !== null) {
-    //   mrx[this.row][(this.col.charCodeAt() - 97) - 1].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-    // }
-
-    for (let i = 0; i < squares.length; i++) {
-      if (squares[i].row == +this.row + 1 && squares[i].col === this.col) { 
-        let square = squares[i]
-        if (square.firstChild === null) {
-          square.style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-        }
-      } else if (this.row === 2 && (squares[i].row == +this.row + 2 && squares[i].col === this.col)) {
-        let square = squares[i]
-        if (square.firstChild === null) {
-          square.style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-        }
-      } else if (squares[i].row == +this.row + 1 && squares[i].col === String.fromCharCode(this.col.charCodeAt() + 1)) {
-        let square = squares[i]
-        console.log(square);
-        if (square.firstChild !== null) {
-          let imgUrl = square.firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl[0] !== this.type) {
-            square.style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-          }
-        }
-      } else if (squares[i].row == +this.row + 1 && squares[i].col === String.fromCharCode(this.col.charCodeAt() - 1)) {
-        let square = squares[i]
-        if (square.firstChild !== null) {
-          let imgUrl = square.firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl[0] !== this.type) {
-            square.style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-          }
-        }
+  showMoveWhite(mrx) {
+    if (mrx[+this.row + 1][this.col]) {
+      if (mrx[+this.row + 1][this.col].firstChild === null) {
+        mrx[+this.row + 1][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      }
+    }
+    if (this.row === 2 && mrx[+this.row + 2][this.col]) {
+      if (mrx[+this.row + 2][this.col].firstChild === null) {
+        mrx[+this.row + 2][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      }
+    }
+    if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() + 1)]) {
+      if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild !== null) {
+        mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+      }
+    }
+    if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() - 1)]) {
+      if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild !== null) {
+        mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
       }
     }
   }
 
-  showMoveBlack(squares) {
-    // Matrix Implem
-    // if (mrx[+this.row - 2][this.col.charCodeAt() - 97].firstChild === null) {
-    //   mrx[+this.row - 2][this.col.charCodeAt() - 97].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-    // }
-    // if (this.row === 7 && (mrx[+this.row - 3][this.col.charCodeAt() - 97].firstChild === null)) {
-    //   mrx[+this.row - 3][this.col.charCodeAt() - 97].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-    // }
-    // if (mrx[+this.row - 2][(this.col.charCodeAt() - 97) + 1].firstChild !== null) {
-    //   mrx[+this.row - 2][(this.col.charCodeAt() - 97) + 1].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-    // }
-    // if (mrx[+this.row - 2][(this.col.charCodeAt() - 97) - 1].firstChild !== null) {
-    //   mrx[+this.row - 2][(this.col.charCodeAt() - 97) - 1].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-    // }
-
-    for (let i = 0; i < squares.length; i++) {
-      if (squares[i].row == +this.row - 1 && squares[i].col === this.col) {
-        let square = squares[i]
-        if (square.firstChild === null) {
-          square.style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-        }
-      } else if (this.row === 7 && (squares[i].row == +this.row - 2 && squares[i].col === this.col)) {
-        let square = squares[i]
-        if (square.firstChild === null) {
-          square.style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-        }
-      } else if (squares[i].row == +this.row - 1 && squares[i].col === String.fromCharCode(this.col.charCodeAt() + 1)) {
-        let square = squares[i]
-        if (square.firstChild !== null) {
-          let imgUrl = square.firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl[0] !== this.type) {
-            square.style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-          }
-        }
-      } else if (squares[i].row == +this.row - 1 && squares[i].col === String.fromCharCode(this.col.charCodeAt() - 1)) {
-        let square = squares[i]
-        if (square.firstChild !== null) {
-          let imgUrl = square.firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-          if (imgUrl[0] !== this.type) {
-            square.style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-          }
-        }
+  showMoveBlack(mrx) {
+    if (mrx[+this.row - 1][this.col]) {
+      if (mrx[+this.row - 1][this.col].firstChild === null) {
+        mrx[+this.row - 1][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      }
+    }
+    if (this.row === 7 && mrx[+this.row - 2][this.col]) {
+      if (mrx[+this.row - 2][this.col].firstChild === null) {
+        mrx[+this.row - 2][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      }
+    }
+    if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() + 1)]) {
+      if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild !== null) {
+        mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+      }
+    }
+    if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() - 1)]) {
+      if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild !== null) {
+        mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
       }
     }
   }
@@ -174,104 +127,110 @@ export class Tower extends Piece {
     img.style = 'padding-top: 9px;'
   }
 
-  // posso scavalcare i pezzi
-  valid(b, t) {
+  valid(m, t) {
     if (t.type === this.type) {
       return false
     } else {
-
+      if (+t.row > this.row && t.col == this.col) {
+        let i = 1
+        while (+this.row + i <= t.row) {
+          if (m[+this.row + i][this.col].firstChild !== null) {
+            return false
+          } else i++
+        }
+        return true
+      } else if (+t.row < this.row && t.col == this.col) {
+        let i = 1
+        while (+this.row - i >= t.row) {
+          if (m[+this.row - i][this.col].firstChild !== null) {
+            return false
+          } else i++
+        }
+        return true
+      } else if (t.row == this.row && t.col > this.col) {
+        let i = 1
+        while (String.fromCharCode(this.col.charCodeAt() + i) <= t.col) {
+          if (m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild !== null) {
+            return false
+          } else i++
+        }
+        return true
+      } else if (t.row == this.row && t.col < this.col) {
+        let i = 1
+        while (String.fromCharCode(this.col.charCodeAt() - i) >= t.col) {
+          if (m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild !== null) {
+            return false
+          } else i++
+        }
+        return true
+      } else return false
     }
-    // if (target.type === this.type) {
-    //   return false
-    // } else {
-    //   if (+target.row > this.row && target.col == this.col) return true
-    //   else if (+target.row < this.row && target.col == this.col) return true
-    //   else if (target.row == this.row && target.col > this.col) return true
-    //   else if (target.row == this.row && target.col < this.col) return true
-    //   else return false
-    // }
   }
 
-  showMoveWhite(squares) {
-    let baseCoord = []
-    for (let i = 0; i < squares.length; i++) {
-      if ((squares[i].row == (+this.row + 1) && squares[i].col == this.col) ||
-        (squares[i].row == (+this.row - 1) && squares[i].col == this.col) ||
-        (squares[i].row == this.row && squares[i].col == String.fromCharCode(this.col.charCodeAt() + 1)) ||
-        (squares[i].row == this.row && squares[i].col == String.fromCharCode(this.col.charCodeAt() - 1))) {
-        baseCoord.push({
-          row: squares[i].row,
-          col: squares[i].col
-        })
+  showMoveWhite(m) {
+    let i = 1
+    while (true) {
+      if (!Object.keys(m).includes(`${+this.row + i}`)) {
+        break
       }
+      if (m[+this.row + i][this.col].firstChild === null) {
+        m[+this.row + i][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[+this.row + i][this.col].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[+this.row + i][this.col].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
     }
-
-    for (let i = 0; i < baseCoord.length; i++) {
-      if (baseCoord[i].row > this.row && baseCoord[i].col === this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (+squares[z].row === +baseCoord[i].row + j && squares[z].col === baseCoord[i].col) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].row < this.row && baseCoord[i].col === this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (+squares[z].row === +baseCoord[i].row - j && squares[z].col === baseCoord[i].col) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].col > this.col && baseCoord[i].row == this.row) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == baseCoord[i].row && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() + j)) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].col < this.col && baseCoord[i].row == this.row) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == baseCoord[i].row && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() - j)) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
+    i = 1
+    while (true) {
+      if (!Object.keys(m).includes(`${+this.row - i}`)) {
+        break
       }
+      if (m[+this.row - i][this.col].firstChild === null) {
+        m[+this.row - i][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[+this.row - i][this.col].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[+this.row - i][this.col].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
+    }
+    i = 1
+    while (true) {
+      if (!Object.keys(m[this.row]).includes((String.fromCharCode(this.col.charCodeAt() + 1)))) {
+        break
+      }
+      if (m[this.row][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild === null) {
+        m[this.row][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[this.row][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
+    }
+    i = 1
+    while (true) {
+      if (!Object.keys(m[this.row]).includes((String.fromCharCode(this.col.charCodeAt() - 1)))) {
+        break
+      }
+      if (m[this.row][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild === null) {
+        m[this.row][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[this.row][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
     }
   }
 
@@ -279,13 +238,13 @@ export class Tower extends Piece {
     this.showMoveWhite(squares)
   }
 
-  move(squares, target) {
-    if (this.valid(target)) {
+  move(m, t) {
+    if (this.valid(m, t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      this.load(squares)
+      this.load(m)
       return true
     } else {
       console.error('not valid move');
@@ -293,14 +252,14 @@ export class Tower extends Piece {
     }
   }
 
-  eat(squares, target) {
-    if (this.valid(squares, target)) {
+  eat(m, t) {
+    if (this.valid(m, t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      target.delete(squares)
-      this.load(squares)
+      t.delete(m)
+      this.load(m)
       return true
     } else {
       console.error('not valid eat');
@@ -425,13 +384,13 @@ export class Knight extends Piece {
     this.showMoveWhite(squares)
   }
 
-  move(squares, target) {
-    if (this.valid(target)) {
+  move(m, t) {
+    if (this.valid(t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      this.load(squares)
+      this.load(m)
       return true
     } else {
       console.error('not valid move');
@@ -439,14 +398,14 @@ export class Knight extends Piece {
     }
   }
 
-  eat(squares, target) {
-    if (this.valid(target)) {
+  eat(m, t) {
+    if (this.valid(t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      target.delete(squares)
-      this.load(squares)
+      t.delete(m)
+      this.load(m)
       return true
     } else {
       console.error('not valid eat');
@@ -562,13 +521,13 @@ export class Bishop extends Piece {
     this.showMoveWhite(squares)
   }
 
-  move(squares, target) {
-    if (this.valid(target)) {
+  move(m, t) {
+    if (this.valid(t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      this.load(squares)
+      this.load(m)
       return true
     } else {
       console.error('not valid move');
@@ -576,14 +535,14 @@ export class Bishop extends Piece {
     }
   }
 
-  eat(squares, target) {
-    if (this.valid(target)) {
+  eat(m, t) {
+    if (this.valid(t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      target.delete(squares)
-      this.load(squares)
+      t.delete(m)
+      this.load(m)
       return true
     } else {
       console.error('not valid eat');
@@ -772,13 +731,13 @@ export class Queen extends Piece {
     this.showMoveWhite(squares)
   }
 
-  move(squares, target) {
-    if (this.valid(target)) {
+  move(m, t) {
+    if (this.valid(t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      this.load(squares)
+      this.load(m)
       return true
     } else {
       console.error('not valid move');
@@ -786,14 +745,14 @@ export class Queen extends Piece {
     }
   }
 
-  eat(squares, target) {
-    if (this.valid(target)) {
+  eat(m, t) {
+    if (this.valid(t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      target.delete(squares)
-      this.load(squares)
+      t.delete(m)
+      this.load(m)
       return true
     } else {
       console.error('not valid eat');
@@ -910,13 +869,13 @@ export class King extends Piece {
     this.showMoveWhite(squares)
   }
 
-  move(squares, target) {
-    if (this.valid(target)) {
+  move(m, t) {
+    if (this.valid(t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      this.load(squares)
+      this.load(m)
       return true
     } else {
       console.error('not valid move');
@@ -924,14 +883,14 @@ export class King extends Piece {
     }
   }
 
-  eat(squares, target) {
-    if (this.valid(target)) {
+  eat(m, t) {
+    if (this.valid(t)) {
       this.coord = {
-        row: target.row,
-        col: target.col,
+        row: t.row,
+        col: t.col,
       }
-      target.delete(squares)
-      this.load(squares)
+      t.delete(m)
+      this.load(m)
       return true
     } else {
       console.error('not valid eat');

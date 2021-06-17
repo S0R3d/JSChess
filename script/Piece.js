@@ -46,25 +46,11 @@ export default class Piece {
   }
 
   /**
-   * @param {{ row: any; col: any; }} coordinate
+   * @param {{ row: Number; col: String; }} coordinate
    */
   set coord(coordinate) {
     this._row = coordinate.row;
     this._col = coordinate.col;
-  }
-  /**
-   * non in uso
-   *
-   * @param {*} imgs
-   * @memberof Piece
-   */
-  loadImg(imgs) {
-    for (let i = 0; i < imgs.length; i++) {
-      if (imgs[i].row == this.row && imgs[i].col == this.col) {
-        let img = imgs[i]
-        this.draw(img)
-      }
-    }
   }
 
   draw(img) {
@@ -75,7 +61,7 @@ export default class Piece {
     this.inner.row = this.row
     this.inner.col = this.col
     this.draw(this.inner)
-    mrx[+this.row - 1][this.col.charCodeAt() - 97].appendChild(this.inner)
+    mrx[this.row][this.col].appendChild(this.inner)
   }
 
   addPulse() {
@@ -87,7 +73,7 @@ export default class Piece {
   }
 
   delete(mrx) {
-    mrx[+this.row - 1][this.col.charCodeAt() - 97].removeChild(this.inner)
+    mrx[this.row][this.col].removeChild(this.inner)
     this.coord = {
       row: 0,
       col: ''
