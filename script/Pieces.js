@@ -131,36 +131,48 @@ export class Tower extends Piece {
     if (t.type === this.type) {
       return false
     } else {
-      if (+t.row > this.row && t.col == this.col) {
+      if (t.row > this.row && t.col == this.col) {
         let i = 1
         while (+this.row + i <= t.row) {
-          if (m[+this.row + i][this.col].firstChild !== null) {
-            return false
-          } else i++
+          if (m[+this.row + i][this.col].firstChild === null) {
+            i++
+          } else if (m[+this.row + i][this.col].firstChild !== null) {
+            if (+this.row + i == t.row && this.col == t.col) return true
+            else return false
+          } else return false
         }
         return true
-      } else if (+t.row < this.row && t.col == this.col) {
+      } else if (t.row < this.row && t.col == this.col) {
         let i = 1
         while (+this.row - i >= t.row) {
-          if (m[+this.row - i][this.col].firstChild !== null) {
-            return false
-          } else i++
+          if (m[+this.row - i][this.col].firstChild === null) {
+            i++
+          } else if (m[+this.row - i][this.col].firstChild !== null) {
+            if (+this.row - i == t.row && this.col == t.col) return true
+            else return false
+          } else return false
         }
         return true
       } else if (t.row == this.row && t.col > this.col) {
         let i = 1
         while (String.fromCharCode(this.col.charCodeAt() + i) <= t.col) {
-          if (m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild !== null) {
-            return false
-          } else i++
+          if (m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild === null) {
+            i++
+          } else if (m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild !== null) {
+            if (this.row == t.row && String.fromCharCode(this.col.charCodeAt() + i) == t.col) return true
+            else return false
+          } else return false
         }
         return true
       } else if (t.row == this.row && t.col < this.col) {
         let i = 1
         while (String.fromCharCode(this.col.charCodeAt() - i) >= t.col) {
-          if (m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild !== null) {
-            return false
-          } else i++
+          if (m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild === null) {
+            i++
+          } else if (m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild !== null) {
+            if (this.row == t.row && String.fromCharCode(this.col.charCodeAt() - i) == t.col) return true
+            else return false
+          } else return false
         }
         return true
       } else return false
@@ -169,10 +181,8 @@ export class Tower extends Piece {
 
   showMoveWhite(m) {
     let i = 1
-    while (true) {
-      if (!Object.keys(m).includes(`${+this.row + i}`)) {
-        break
-      }
+
+    while (Object.keys(m).includes(`${+this.row + i}`)) {
       if (m[+this.row + i][this.col].firstChild === null) {
         m[+this.row + i][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
       } else {
@@ -185,10 +195,7 @@ export class Tower extends Piece {
       i++
     }
     i = 1
-    while (true) {
-      if (!Object.keys(m).includes(`${+this.row - i}`)) {
-        break
-      }
+    while (Object.keys(m).includes(`${+this.row - i}`)) {
       if (m[+this.row - i][this.col].firstChild === null) {
         m[+this.row - i][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
       } else {
@@ -201,32 +208,26 @@ export class Tower extends Piece {
       i++
     }
     i = 1
-    while (true) {
-      if (!Object.keys(m[this.row]).includes((String.fromCharCode(this.col.charCodeAt() + 1)))) {
-        break
-      }
-      if (m[this.row][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild === null) {
-        m[this.row][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+    while (Object.keys(m[this.row]).includes((String.fromCharCode(this.col.charCodeAt() + i)))) {
+      if (m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild === null) {
+        m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
       } else {
-        let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
         if (imgUrl[0] !== this.type) {
-          m[this.row][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           break
         } else break
       }
       i++
     }
     i = 1
-    while (true) {
-      if (!Object.keys(m[this.row]).includes((String.fromCharCode(this.col.charCodeAt() - 1)))) {
-        break
-      }
-      if (m[this.row][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild === null) {
-        m[this.row][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+    while (Object.keys(m[this.row]).includes((String.fromCharCode(this.col.charCodeAt() - i)))) {
+      if (m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild === null) {
+        m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
       } else {
-        let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
         if (imgUrl[0] !== this.type) {
-          m[this.row][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
           break
         } else break
       }
