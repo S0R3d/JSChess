@@ -598,178 +598,216 @@ export class Queen extends Piece {
     img.style = 'padding-top: 15px;'
   }
 
-  // posso scavalcare i pezzi
-  valid(target) {
-    if (target.type === this.type) {
+  valid(m, t) {
+    if (t.type === this.type) {
       return false
     } else {
-      if (Math.abs(target.row - this.row) == Math.abs(target.col.charCodeAt() - this.col.charCodeAt())) return true
-      else if (target.row > this.row && target.col === this.col) return true
-      else if (target.row == this.row && target.col > this.col) return true
-      else if (target.row < this.row && target.col === this.col) return true
-      else if (target.row == this.row && target.col < this.col) return true
-      else return false
+      if (t.row > this.row && t.col == this.col) {
+        let i = 1
+        while (+this.row + i <= t.row) {
+          if (m[+this.row + i][this.col].firstChild === null) {
+            i++
+          } else if (m[+this.row + i][this.col].firstChild !== null) {
+            if (+this.row + i == t.row && this.col == t.col) return true
+            else return false
+          } else return false
+        }
+        return true
+      } else if (t.row < this.row && t.col == this.col) {
+        let i = 1
+        while (+this.row - i >= t.row) {
+          if (m[+this.row - i][this.col].firstChild === null) {
+            i++
+          } else if (m[+this.row - i][this.col].firstChild !== null) {
+            if (+this.row - i == t.row && this.col == t.col) return true
+            else return false
+          } else return false
+        }
+        return true
+      } else if (t.row == this.row && t.col > this.col) {
+        let i = 1
+        while (String.fromCharCode(this.col.charCodeAt() + i) <= t.col) {
+          if (m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild === null) {
+            i++
+          } else if (m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild !== null) {
+            if (this.row == t.row && String.fromCharCode(this.col.charCodeAt() + i) == t.col) return true
+            else return false
+          } else return false
+        }
+        return true
+      } else if (t.row == this.row && t.col < this.col) {
+        let i = 1
+        while (String.fromCharCode(this.col.charCodeAt() - i) >= t.col) {
+          if (m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild === null) {
+            i++
+          } else if (m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild !== null) {
+            if (this.row == t.row && String.fromCharCode(this.col.charCodeAt() - i) == t.col) return true
+            else return false
+          } else return false
+        }
+        return true
+      } else if (+t.row > this.row && t.col > this.col && Math.abs(t.row - this.row) == Math.abs(t.col.charCodeAt() - this.col.charCodeAt())) {
+        let i = 1
+        while (+this.row + i <= +t.row && String.fromCharCode(this.col.charCodeAt() + i) <= t.col) {
+          if (m[+this.row + i][String.fromCharCode(this.col.charCodeAt() + i)].firstChild === null) {
+            i++
+          } else if (m[+this.row + i][String.fromCharCode(this.col.charCodeAt() + i)].firstChild !== null) {
+            if (+this.row + i === +t.row && String.fromCharCode(this.col.charCodeAt() + i) === t.col) return true
+            else return false
+          } else return false
+        }
+        return true
+      } else if (+t.row > this.row && t.col < this.col && Math.abs(t.row - this.row) == Math.abs(t.col.charCodeAt() - this.col.charCodeAt())) {
+        let i = 1
+        while (+this.row + i <= +t.row && String.fromCharCode(this.col.charCodeAt() - i) >= t.col) {
+          if (m[+this.row + i][String.fromCharCode(this.col.charCodeAt() - i)].firstChild === null) {
+            i++
+          } else if (m[+this.row + i][String.fromCharCode(this.col.charCodeAt() - i)].firstChild !== null) {
+            if (+this.row + i === +t.row && String.fromCharCode(this.col.charCodeAt() - i) === t.col) return true
+            else return false
+          } else return false
+        }
+        return true
+      } else if (+t.row < this.row && t.col < this.col && Math.abs(t.row - this.row) == Math.abs(t.col.charCodeAt() - this.col.charCodeAt())) {
+        let i = 1
+        while (+this.row - i >= +t.row && String.fromCharCode(this.col.charCodeAt() - i) >= t.col) {
+          if (m[+this.row - i][String.fromCharCode(this.col.charCodeAt() - i)].firstChild === null) {
+            i++
+          } else if (m[+this.row - i][String.fromCharCode(this.col.charCodeAt() - i)].firstChild !== null) {
+            if (+this.row - i === +t.row && String.fromCharCode(this.col.charCodeAt() - i) === t.col) return true
+            else return false
+          } else return false
+        }
+        return true
+      } else if (+t.row < this.row && t.col > this.col && Math.abs(t.row - this.row) == Math.abs(t.col.charCodeAt() - this.col.charCodeAt())) {
+        let i = 1
+        while (+this.row - i >= +t.row && String.fromCharCode(this.col.charCodeAt() + i) <= t.col) {
+          if (m[+this.row - i][String.fromCharCode(this.col.charCodeAt() + i)].firstChild === null) {
+            i++
+          } else if (m[+this.row - i][String.fromCharCode(this.col.charCodeAt() + i)].firstChild !== null) {
+            if (+this.row - i === +t.row && String.fromCharCode(this.col.charCodeAt() + i) === t.col) return true
+            else return false
+          } else return false
+        }
+        return true
+      } else return false
     }
   }
 
-  showMoveWhite(squares) {
-    let baseCoord = []
+  showMoveWhite(m) {
+    let i = 1
 
-    for (let i = 0; i < squares.length; i++) {
-      if ((squares[i].row == (+this.row + 1) && squares[i].col === String.fromCharCode(this.col.charCodeAt() - 1)) ||
-        (squares[i].row == (+this.row + 1) && squares[i].col === this.col) ||
-        (squares[i].row == (+this.row + 1) && squares[i].col === String.fromCharCode(this.col.charCodeAt() + 1)) ||
-        (squares[i].row == this.row && squares[i].col === String.fromCharCode(this.col.charCodeAt() + 1)) ||
-        (squares[i].row == (+this.row - 1) && squares[i].col === String.fromCharCode(this.col.charCodeAt() + 1)) ||
-        (squares[i].row == (+this.row - 1) && squares[i].col === this.col) ||
-        (squares[i].row == (+this.row - 1) && squares[i].col === String.fromCharCode(this.col.charCodeAt() - 1)) ||
-        (squares[i].row == this.row && squares[i].col === String.fromCharCode(this.col.charCodeAt() - 1))) {
-        baseCoord.push({
-          row: squares[i].row,
-          col: squares[i].col,
-        })
+    while (Object.keys(m).includes(`${+this.row + i}`)) {
+      if (m[+this.row + i][this.col].firstChild === null) {
+        m[+this.row + i][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[+this.row + i][this.col].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[+this.row + i][this.col].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
       }
+      i++
     }
-
-    for (let i = 0; i < baseCoord.length; i++) {
-      if (baseCoord[i].row > this.row && baseCoord[i].col < this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == (+baseCoord[i].row + j) && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() - j)) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].row > this.row && baseCoord[i].col === this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == (+baseCoord[i].row + j) && squares[z].col === baseCoord[i].col) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].row > this.row && baseCoord[i].col > this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == (+baseCoord[i].row + j) && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() + j)) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].row == this.row && baseCoord[i].col > this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == baseCoord[i].row && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() + j)) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].row < this.row && baseCoord[i].col > this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == (+baseCoord[i].row - j) && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() + j)) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].row < this.row && baseCoord[i].col === this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == (+baseCoord[i].row - j) && squares[z].col === baseCoord[i].col) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].row < this.row && baseCoord[i].col < this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == (+baseCoord[i].row - j) && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() - j)) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
-      } else if (baseCoord[i].row == this.row && baseCoord[i].col < this.col) {
-        for (let j = 0; j < 7; j++) {
-          for (let z = 0; z < squares.length; z++) {
-            if (squares[z].row == baseCoord[i].row && squares[z].col === String.fromCharCode(baseCoord[i].col.charCodeAt() - j)) {
-              if (squares[z].firstChild === null) {
-                squares[z].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-              } else {
-                let imgUrl = squares[z].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-                if (imgUrl[0] !== this.type) {
-                  squares[z].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
-                  j = 7
-                } else j = 7
-              }
-            }
-          }
-        }
+    i = 1
+    while (Object.keys(m).includes(`${+this.row - i}`)) {
+      if (m[+this.row - i][this.col].firstChild === null) {
+        m[+this.row - i][this.col].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[+this.row - i][this.col].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[+this.row - i][this.col].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
       }
+      i++
+    }
+    i = 1
+    while (Object.keys(m[this.row]).includes((String.fromCharCode(this.col.charCodeAt() + i)))) {
+      if (m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild === null) {
+        m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
+    }
+    i = 1
+    while (Object.keys(m[this.row]).includes((String.fromCharCode(this.col.charCodeAt() - i)))) {
+      if (m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild === null) {
+        m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
+    }
+    i = 1
+    while (Object.keys(m).includes(`${+this.row + i}`) && Object.keys(m[+this.row + i]).includes(String.fromCharCode(this.col.charCodeAt() + i))) {
+      if (m[+this.row + i][String.fromCharCode(this.col.charCodeAt() + i)].firstChild === null) {
+        m[+this.row + i][String.fromCharCode(this.col.charCodeAt() + i)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[+this.row + i][String.fromCharCode(this.col.charCodeAt() + i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[+this.row + i][String.fromCharCode(this.col.charCodeAt() + i)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
+    }
+    i = 1
+    while (Object.keys(m).includes(`${+this.row + i}`) && Object.keys(m[+this.row + i]).includes(String.fromCharCode(this.col.charCodeAt() - i))) {
+      if (m[+this.row + i][String.fromCharCode(this.col.charCodeAt() - i)].firstChild === null) {
+        m[+this.row + i][String.fromCharCode(this.col.charCodeAt() - i)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[+this.row + i][String.fromCharCode(this.col.charCodeAt() - i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[+this.row + i][String.fromCharCode(this.col.charCodeAt() - i)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
+    }
+    i = 1
+    while (Object.keys(m).includes(`${+this.row - i}`) && Object.keys(m[+this.row - i]).includes(String.fromCharCode(this.col.charCodeAt() - i))) {
+      if (m[+this.row - i][String.fromCharCode(this.col.charCodeAt() - i)].firstChild === null) {
+        m[+this.row - i][String.fromCharCode(this.col.charCodeAt() - i)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[+this.row - i][String.fromCharCode(this.col.charCodeAt() - i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[+this.row - i][String.fromCharCode(this.col.charCodeAt() - i)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
+    }
+    i = 1
+    while (Object.keys(m).includes(`${+this.row - i}`) && Object.keys(m[+this.row - i]).includes(String.fromCharCode(this.col.charCodeAt() + i))) {
+      if (m[+this.row - i][String.fromCharCode(this.col.charCodeAt() + i)].firstChild === null) {
+        m[+this.row - i][String.fromCharCode(this.col.charCodeAt() + i)].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+      } else {
+        let imgUrl = m[+this.row - i][String.fromCharCode(this.col.charCodeAt() + i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+        if (imgUrl[0] !== this.type) {
+          m[+this.row - i][String.fromCharCode(this.col.charCodeAt() + i)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+          break
+        } else break
+      }
+      i++
     }
   }
 
-  showMoveBlack(squares) {
-    this.showMoveWhite(squares)
+  showMoveBlack(m) {
+    this.showMoveWhite(m)
   }
 
   move(m, t) {
-    if (this.valid(t)) {
+    if (this.valid(m, t)) {
       this.coord = {
         row: t.row,
         col: t.col,
@@ -783,7 +821,7 @@ export class Queen extends Piece {
   }
 
   eat(m, t) {
-    if (this.valid(t)) {
+    if (this.valid(m, t)) {
       this.coord = {
         row: t.row,
         col: t.col,
