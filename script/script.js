@@ -269,8 +269,8 @@ $(() => {
     addCoordinate()
     loadPieces()
 
-    let matrixOBJ = arrayTo2DObject(Array.from($('.col-sm')), 8)
-    console.log(matrixOBJ);
+    let m = arrayTo2DObject(Array.from($('.col-sm')), 8)
+    console.log(m);
 
     /*
         BUG: 'pulse': se premo pezzi diversi qualcosa va storto

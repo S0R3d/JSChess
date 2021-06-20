@@ -89,7 +89,6 @@ export class Pawn extends Piece {
       row: t.row,
       col: t.col
     }
-
     if (this.valid(t)) {
       this.coord = coord
       this.load(mrx)
@@ -120,6 +119,18 @@ export class Pawn extends Piece {
 export class Tower extends Piece {
   constructor(name, type, img, row, col) {
     super(name, type, img, row, col);
+    this._isMoved = false
+  }
+
+  get isMoved() {
+    return this._isMoved
+  }
+
+  /**
+   * @param {Boolean} i
+   */
+  set moved(i) {
+    this._isMoved = true
   }
 
   draw(img) {
@@ -246,6 +257,7 @@ export class Tower extends Piece {
         col: t.col,
       }
       this.load(m)
+      if (!this.isMoved) this.moved = true
       return true
     } else {
       console.error('not valid move');
@@ -261,6 +273,7 @@ export class Tower extends Piece {
       }
       t.delete(m)
       this.load(m)
+      if (!this.isMoved) this.moved = true
       return true
     } else {
       console.error('not valid eat');
@@ -861,8 +874,6 @@ export class King extends Piece {
   valid(m, t) {
     if (t.type === this.type || t.name === this.name) {
       return false
-    } else if (t.type === this.type && t.name === 'tower') {
-      return this.casteling(m, t)
     } else {
       if (t.row == (+this.row + 1) && t.col === String.fromCharCode(this.col.charCodeAt() - 1)) return true
       else if (t.row == (+this.row + 1) && t.col === this.col) return true
@@ -970,6 +981,7 @@ export class King extends Piece {
         col: t.col,
       }
       this.load(m)
+      if (!this.isMoved) this.moved = true
       return true
     } else {
       console.error('not valid move');
@@ -978,13 +990,16 @@ export class King extends Piece {
   }
 
   eat(m, t) {
-    if (this.valid(m, t)) {
+    if (t.type === this.type && t.name === 'tower') {
+      return this.casteling(m, t)
+    } else if (this.valid(m, t)) {
       this.coord = {
         row: t.row,
         col: t.col,
       }
       t.delete(m)
       this.load(m)
+      if (!this.isMoved) this.moved = true
       return true
     } else {
       console.error('not valid eat');
@@ -992,12 +1007,59 @@ export class King extends Piece {
     }
   }
 
+  // Arrocco senza controllo di scacco durante il movimento del re
   casteling(m, t) {
     if (this.isMoved) {
       return false
     } else {
-      console.log('arrocco');
-      return true
+      console.log('arrocco...');
+      if (t.col > this.col) {
+        let i = 1
+        while (Object.keys(m[this.row]).includes(String.fromCharCode(this.col.charCodeAt() + i))) {
+          if (m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild === null) {
+            i++
+          } else {
+            let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() + i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            let [type, name] = [imgUrl[0], imgUrl.slice(1, imgUrl.length)]
+            if (type === this.type && name === 'tower') {
+              t.coord = {
+                row: this.row,
+                col: String.fromCharCode(this.col.charCodeAt() + 1),
+              }
+              this.coord = {
+                row: this.row,
+                col: String.fromCharCode(this.col.charCodeAt() + 2),
+              }
+              t.load(m)
+              this.load(m)
+              return true
+            } else return false
+          }
+        }
+      } else if (t.col < this.col) {
+        let i = 1
+        while (Object.keys(m[this.row]).includes(String.fromCharCode(this.col.charCodeAt() - i))) {
+          if (m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild === null) {
+            i++
+          } else {
+            let imgUrl = m[this.row][String.fromCharCode(this.col.charCodeAt() - i)].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
+            let [type, name] = [imgUrl[0], imgUrl.slice(1, imgUrl.length)]
+            if (type === this.type && name === 'tower') {
+              t.coord = {
+                row: this.row,
+                col: String.fromCharCode(this.col.charCodeAt() - 1),
+              }
+              this.coord = {
+                row: this.row,
+                col: String.fromCharCode(this.col.charCodeAt() - 2),
+              }
+              t.load(m)
+              this.load(m)
+              return true
+            } else return false
+          }
+        }
+      }
     }
   }
 }
