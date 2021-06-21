@@ -61,12 +61,11 @@ const blacks = {
 const getPiece = obj => {
     let piece
     Object.values(whites).forEach(element => {
-        element.row === obj.row && element.col === obj.col ? piece = element : undefined;
+        element.row == obj.row && element.col === obj.col ? piece = element : undefined;
     })
     Object.values(blacks).forEach(element => {
-        element.row === obj.row && element.col === obj.col ? piece = element : undefined;
+        element.row == obj.row && element.col === obj.col ? piece = element : undefined;
     })
-
     return piece
 }
 
@@ -79,9 +78,8 @@ const arrayTo2DObject = (array, dim) => {
     let obj = {}
     for (let i = dim; i >= 1; i--) {
         obj[i] = {}
-        for (let j = 1; j <= dim; j++) {
+        for (let j = 1; j <= dim; j++)
             obj[i][String.fromCharCode(j + 96)] = array[j - 1]
-        }
         array.splice(0, dim)
     }
     return obj
@@ -94,12 +92,8 @@ const loadBoard = () => {
         for (let j = 0; j < DIM; j++) {
             let square = document.createElement('div')
             square.className = 'col-sm'
-            if (i % 2 === 0) {
-                square.style.backgroundColor = j % 2 === 0 ? '#fff' : '#000'
-            } else {
-                square.style.backgroundColor = j % 2 === 0 ? '#000' : '#fff'
-            }
-
+            if (i % 2 === 0) square.style.backgroundColor = j % 2 === 0 ? '#fff' : '#000'
+            else square.style.backgroundColor = j % 2 === 0 ? '#000' : '#fff'
             row.appendChild(square)
         }
         $board.appendChild(row)
@@ -144,9 +138,8 @@ const resetBoardColor = () => {
             for (const key2 in obj) {
                 if (Object.hasOwnProperty.call(obj, key2)) {
                     const el = obj[key2];
-                    if (key % 2 === 0) {
-                        el.style.backgroundColor = ((key2.charCodeAt() - 97) % 2) === 0 ? '#fff' : '#000'
-                    } else el.style.backgroundColor = ((key2.charCodeAt() - 97) % 2) === 0 ? '#000' : '#fff'
+                    if (key % 2 === 0) el.style.backgroundColor = ((key2.charCodeAt() - 97) % 2) === 0 ? '#fff' : '#000'
+                    else el.style.backgroundColor = ((key2.charCodeAt() - 97) % 2) === 0 ? '#000' : '#fff'
                 }
             }
         }
@@ -177,7 +170,7 @@ const showMove = (p) => {
     console.log('show');
     p.addPulse()
 
-    const m = arrayTo2DObject(Array.from($('.col-sm')),8)
+    const m = arrayTo2DObject(Array.from($('.col-sm')), 8)
     if (p.type === 'b') p.showMoveBlack(m)
     else if (p.type === 'w') p.showMoveWhite(m)
     else console.error('show');
@@ -219,35 +212,34 @@ const eatPiece = (p, t) => {
  * se un re era sotto scacco alla fine del turno non deve piu esserlo
  * senno è scacco matto
  * 
- * RETURN Boolean
+ * @returns Boolean
  */
 const isUnderCheck = () => {
     console.log('is under check ?');
-    const squares = document.querySelectorAll('.col-sm')
-    let kingsCoord = []
-    // trovo la posizione dei due re
-    for (let i = 0; i < squares.length; i++) {
-        if (squares[i].firstChild !== null) {
-            let imgUrl = squares[i].firstChild.attributes.src.value.replace(/^\/?/, "").replace(/img\/|.svg/gi, "").replace('-', '')
-            let [type, ...name] = [imgUrl]
-            if (name === 'king') {
-                kingsCoord.push({
-                    type: type,
-                    row: squares[i].row,
-                    col: squares[i].col,
-                })
+    const m = arrayTo2DObject(Array.from($('.col-sm')), 8)
+    const kings = []
+    // find kings
+    for (const i in m) {
+        if (Object.hasOwnProperty.call(m, i)) {
+            const rows = m[i];
+            for (const j in rows) {
+                if (Object.hasOwnProperty.call(rows, j)) {
+                    const item = rows[j];
+                    if (item.name === 'king') kings.push(item)
+                }
             }
         }
     }
-    // controllo che nessun re sia sotto scacco
-    for (let i = 0; i < squares.length; i++) {
-        for (let j = 0; j < kingsCoord.length; j++) {
-            if (getPiece(squares[i]).valid(kingsCoord[j])) {
-                return true
-            }
-        }
-    }
-    return false
+    // return kings.some(king => {
+    //     Object.values(m).every(el => {
+    //         Object.values(el).every(it => {
+    //             const p = getPiece(king)
+    //             const t = getPiece(it)
+    //             return p && t ? p.valid(m, t) : false
+    //         })
+    //     })
+    // })
+
 }
 
 const showStatus = (params) => {
@@ -275,85 +267,29 @@ $(() => {
     /*
         BUG: 'pulse': se premo pezzi diversi qualcosa va storto
     */
-    // merge
+
+    // si puo ottimizzare usando solo ClickOnDiv con obj.currentTarget
     let MovePiece = {}
     $('.col-sm').on('click', obj => {
+        console.log(obj);
+        console.log(obj.currentTarget);
         console.log(obj.target);
-        console.log('nextTurn ' + nextTurn);
-        console.log('CanIMove ' + CanIMove);
-        console.log(turn);
+        console.log('nextTurn: ' + nextTurn);
+        console.log('CanIMove: ' + CanIMove);
+        console.log('turn: ' + turn);
 
-        if (obj.target.tagName === 'IMG') {
-            console.log('img');
-
-            if (!nextTurn && !CanIMove && getPiece(obj.target).type !== turn) {
-                console.error('not ur turn');
-                return;
-            }
-            if (obj.target === MovePiece.inner && CanIMove) {
-                console.log('solito');
-                CanIMove = false
-                MovePiece.removePulse
-                resetBoardColor()
-            } else {
-                clickOnImg(MovePiece, obj.target)
-            }
-            if (!nextTurn && !CanIMove) {
-                MovePiece = getPiece(obj.target)
-                CanIMove = true;
-            }
-
-            // if (!CanIMove && isUnderCheck()) {
-            //     console.log('check');
-            // } else {
-            //     console.error('not check');
-            // }
-
-            if (nextTurn) {
-                nextTurn = false, CanIMove = false
-                if (turn === 'w') turn = 'b'
-                else if (turn === 'b') turn = 'w'
-                MovePiece = {}
-            }
-        } else if (obj.target.firstChild === null) {
-            console.log('div');
+        if (obj.currentTarget.firstChild === null) {
+            console.log('move - div');
 
             if (MovePiece !== null) {
                 clickOnDiv(MovePiece, obj.target)
             }
 
-            // if (!CanIMove && isUnderCheck()) {
-            //     console.log('check');
-            // } else {
-            //     console.error('not check');
-            // }
-
-            if (nextTurn) {
-                nextTurn = false, CanIMove = false
-                if (turn === 'w') turn = 'b'
-                else if (turn === 'b') turn = 'w'
-                MovePiece = {}
-            }
-        } else if (obj.target.firstChild.tagName === 'IMG') {
-            console.log('div - img');
-
-            if (!nextTurn && !CanIMove && getPiece(obj.target.firstChild).type !== turn) {
-                console.error('not ur turn');
-                return;
-            }
-            if (obj.target.firstChild === MovePiece.inner) {
-                console.log('solito');
-                CanIMove = false
-                MovePiece.removePulse
-                resetBoardColor
+            if (isUnderCheck()) {
+                console.log('check');
             } else {
-                clickOnImg(MovePiece, obj.target.firstChild)
+                console.log('cazzo2');
             }
-            if (!nextTurn && !CanIMove) {
-                MovePiece = getPiece(obj.target.firstChild)
-                CanIMove = true;
-            }
-
             // if (!CanIMove && isUnderCheck()) {
             //     console.log('check');
             // } else {
@@ -367,8 +303,146 @@ $(() => {
                 MovePiece = {}
             }
         } else {
-            console.err(obj.target);
+            console.log('show,eat - img');
+
+            if (!nextTurn && !CanIMove && obj.currentTarget.type !== turn) {
+            // if (!nextTurn && !CanIMove && getPiece(obj.target).type !== turn) {
+                console.error('not ur turn');
+                return;
+            }
+            if (obj.target === MovePiece.inner && CanIMove) {
+                console.log('solito');
+                CanIMove = false
+                MovePiece.removePulse()
+                resetBoardColor()
+            } else {
+                clickOnImg(MovePiece, obj.target)
+                if (!nextTurn && !CanIMove) {
+                    MovePiece = getPiece(obj.target)
+                    CanIMove = true;
+                }
+            }
+
+            if (isUnderCheck()) {
+                console.log('check');
+            } else {
+                console.log('cazzo1');
+            }
+            // if (!CanIMove && isUnderCheck()) {
+            //     console.log('check');
+            // } else {
+            //     console.error('not check');
+            // }
+
+            if (nextTurn) {
+                nextTurn = false, CanIMove = false
+                if (turn === 'w') turn = 'b'
+                else if (turn === 'b') turn = 'w'
+                MovePiece = {}
+            }
         }
+
+        // if (obj.target.tagName === 'IMG') {
+        //     console.log('img');
+
+        //     if (!nextTurn && !CanIMove && getPiece(obj.target).type !== turn) {
+        //         console.error('not ur turn');
+        //         return;
+        //     }
+        //     if (obj.target === MovePiece.inner && CanIMove) {
+        //         console.log('solito');
+        //         CanIMove = false
+        //         MovePiece.removePulse()
+        //         resetBoardColor()
+        //     } else {
+        //         clickOnImg(MovePiece, obj.target)
+        //         if (!nextTurn && !CanIMove) {
+        //             MovePiece = getPiece(obj.target)
+        //             CanIMove = true;
+        //         }
+        //     }
+
+        //     if (isUnderCheck()) {
+        //         console.log('check');
+        //     } else {
+        //         console.log('cazzo1');
+        //     }
+        //     // if (!CanIMove && isUnderCheck()) {
+        //     //     console.log('check');
+        //     // } else {
+        //     //     console.error('not check');
+        //     // }
+
+        //     if (nextTurn) {
+        //         nextTurn = false, CanIMove = false
+        //         if (turn === 'w') turn = 'b'
+        //         else if (turn === 'b') turn = 'w'
+        //         MovePiece = {}
+        //     }
+        // } else if (obj.target.firstChild === null) {
+        //     console.log('div');
+
+        //     if (MovePiece !== null) {
+        //         clickOnDiv(MovePiece, obj.target)
+        //     }
+
+        //     if (isUnderCheck()) {
+        //         console.log('check');
+        //     } else {
+        //         console.log('cazzo2');
+        //     }
+        //     // if (!CanIMove && isUnderCheck()) {
+        //     //     console.log('check');
+        //     // } else {
+        //     //     console.error('not check');
+        //     // }
+
+        //     if (nextTurn) {
+        //         nextTurn = false, CanIMove = false
+        //         if (turn === 'w') turn = 'b'
+        //         else if (turn === 'b') turn = 'w'
+        //         MovePiece = {}
+        //     }
+        // } else if (obj.target.firstChild.tagName === 'IMG') {
+        //     console.log('div - img');
+
+        //     if (!nextTurn && !CanIMove && getPiece(obj.target.firstChild).type !== turn) {
+        //         console.error('not ur turn');
+        //         return;
+        //     }
+        //     if (obj.target.firstChild === MovePiece.inner) {
+        //         console.log('solito');
+        //         CanIMove = false
+        //         MovePiece.removePulse()
+        //         resetBoardColor()
+        //     } else {
+        //         clickOnImg(MovePiece, obj.target.firstChild)
+        //         if (!nextTurn && !CanIMove) {
+        //             MovePiece = getPiece(obj.target.firstChild)
+        //             CanIMove = true;
+        //         }
+        //     }
+
+        //     if (isUnderCheck()) {
+        //         console.log('check');
+        //     } else {
+        //         console.log('cazzo3');
+        //     }
+        //     // if (!CanIMove && isUnderCheck()) {
+        //     //     console.log('check');
+        //     // } else {
+        //     //     console.error('not check');
+        //     // }
+
+        //     if (nextTurn) {
+        //         nextTurn = false, CanIMove = false
+        //         if (turn === 'w') turn = 'b'
+        //         else if (turn === 'b') turn = 'w'
+        //         MovePiece = {}
+        //     }
+        // } else {
+        //     console.err(obj.target);
+        // }
     })
 
     // showStatus()

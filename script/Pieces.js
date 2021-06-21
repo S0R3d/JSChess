@@ -14,7 +14,14 @@ export class Pawn extends Piece {
     img.style = 'padding-top: 4px'
   }
 
-  valid(t) {
+  /**
+   *
+   *
+   * @param {Piece} t
+   * @returns
+   * @memberof Pawn
+   */
+  valid(m, t) {
     if (t.type === this.type) {
       return false;
     } else {
@@ -89,7 +96,7 @@ export class Pawn extends Piece {
       row: t.row,
       col: t.col
     }
-    if (this.valid(t)) {
+    if (this.valid(mrx, t)) {
       this.coord = coord
       this.load(mrx)
       return true
@@ -104,7 +111,7 @@ export class Pawn extends Piece {
       row: t.row,
       col: t.col
     }
-    if (this.valid(t)) {
+    if (this.valid(mrx, t)) {
       t.delete(mrx)
       this.coord = coord
       this.load(mrx)
@@ -138,6 +145,14 @@ export class Tower extends Piece {
     img.style = 'padding-top: 9px;'
   }
 
+  /**
+   *
+   *
+   * @param {object} m
+   * @param {Piece} t
+   * @returns
+   * @memberof Tower
+   */
   valid(m, t) {
     if (t.type === this.type) {
       return false
@@ -292,7 +307,14 @@ export class Knight extends Piece {
     img.style = 'padding-top: 13px;'
   }
 
-  valid(t) {
+  /**
+   *
+   *
+   * @param {Piece} t
+   * @returns
+   * @memberof Knight
+   */
+  valid(m, t) {
     if (t.type === this.type) {
       return false
     } else {
@@ -420,7 +442,7 @@ export class Knight extends Piece {
   }
 
   move(m, t) {
-    if (this.valid(t)) {
+    if (this.valid(m, t)) {
       this.coord = {
         row: t.row,
         col: t.col,
@@ -434,7 +456,7 @@ export class Knight extends Piece {
   }
 
   eat(m, t) {
-    if (this.valid(t)) {
+    if (this.valid(m, t)) {
       this.coord = {
         row: t.row,
         col: t.col,
@@ -459,6 +481,14 @@ export class Bishop extends Piece {
     img.style = 'padding-top: 11px;'
   }
 
+  /**
+   *
+   *
+   * @param {object} m
+   * @param {Piece} t
+   * @returns
+   * @memberof Bishop
+   */
   valid(m, t) {
     if (t.type === this.type) {
       return false
@@ -611,6 +641,14 @@ export class Queen extends Piece {
     img.style = 'padding-top: 15px;'
   }
 
+  /**
+   *
+   *
+   * @param {object} m
+   * @param {Piece} t
+   * @returns
+   * @memberof Queen
+   */
   valid(m, t) {
     if (t.type === this.type) {
       return false
@@ -871,6 +909,14 @@ export class King extends Piece {
     img.style = 'padding-top: 11px;'
   }
 
+  /**
+   *
+   *
+   * @param {object} m
+   * @param {Piece} t
+   * @returns
+   * @memberof King
+   */
   valid(m, t) {
     if (t.type === this.type || t.name === this.name) {
       return false
