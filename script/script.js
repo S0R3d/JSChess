@@ -225,21 +225,27 @@ const isUnderCheck = () => {
             for (const j in rows) {
                 if (Object.hasOwnProperty.call(rows, j)) {
                     const item = rows[j];
-                    if (item.name === 'king') kings.push(item)
+                    if (item.firstChild !== null) if (item.firstChild.name === 'king') kings.push(item)
                 }
             }
         }
     }
-    // return kings.some(king => {
-    //     Object.values(m).every(el => {
-    //         Object.values(el).every(it => {
-    //             const p = getPiece(king)
-    //             const t = getPiece(it)
-    //             return p && t ? p.valid(m, t) : false
-    //         })
-    //     })
-    // })
+    console.log(kings);
 
+    // non fa
+    return Object.values(m).map(el => Object.values(el).some(item => { 
+        if (item.firstChild !== null) {
+            if (item.firstChild.name === 'king') {
+                return kings.forEach(king => {
+                    return getPiece(item.firstChild).valid(m, getPiece(king))
+                })
+            }
+        }
+    })).some(el => el === true)
+    // return Object.values(m).map(el => Object.values(el).some(item => { 
+    //     if (item.firstChild !== null) return item.firstChild.name === 'king' && getPiece(item.firstChild).valid(m, )
+    // })).some(el => el === true)
+   
 }
 
 const showStatus = (params) => {
@@ -268,7 +274,6 @@ $(() => {
         BUG: 'pulse': se premo pezzi diversi qualcosa va storto
     */
 
-    // si puo ottimizzare usando solo ClickOnDiv con obj.currentTarget
     let MovePiece = {}
     $('.col-sm').on('click', obj => {
         console.log(obj);
@@ -305,7 +310,7 @@ $(() => {
         } else {
             console.log('show,eat - img');
 
-            if (!nextTurn && !CanIMove && obj.currentTarget.type !== turn) {
+            if (!nextTurn && !CanIMove && obj.currentTarget.firstChild.type !== turn) {
             // if (!nextTurn && !CanIMove && getPiece(obj.target).type !== turn) {
                 console.error('not ur turn');
                 return;

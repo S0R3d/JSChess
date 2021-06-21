@@ -60,10 +60,10 @@ export default class Piece {
   load(mrx) {
     this.inner.row = this.row
     this.inner.col = this.col
+    this.inner.type = this.type
+    this.inner.name = this.name
     this.draw(this.inner)
     mrx[this.row][this.col].appendChild(this.inner)
-    this.inner.parentElement.name = this._name
-    this.inner.parentElement.type = this._type
   }
 
   addPulse() {
