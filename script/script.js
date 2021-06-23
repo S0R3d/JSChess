@@ -232,20 +232,22 @@ const isUnderCheck = () => {
     }
     console.log(kings);
 
-    // non fa
-    return Object.values(m).map(el => Object.values(el).some(item => { 
+    // !!!!!! alfieri - undefined quando controllo su re opposto !!!!!!
+    let rt = Object.values(m).map(el => Object.values(el).map(item => { 
         if (item.firstChild !== null) {
-            if (item.firstChild.name === 'king') {
-                return kings.forEach(king => {
-                    return getPiece(item.firstChild).valid(m, getPiece(king))
+            if (item.firstChild.name !== 'king') {
+                return kings.map(king => {
+                    let a = getPiece(item.firstChild).valid(m, getPiece(king.firstChild))
+                    return (a != undefined) ? a : false
                 })
-            }
-        }
-    })).some(el => el === true)
-    // return Object.values(m).map(el => Object.values(el).some(item => { 
-    //     if (item.firstChild !== null) return item.firstChild.name === 'king' && getPiece(item.firstChild).valid(m, )
-    // })).some(el => el === true)
-   
+            } else return [false, false]
+        } else return [false]
+    }).some(el => {
+        let app = el.some(el1 => el1 === true)
+        return app
+    })).some(el2 => el2 === true)
+    // console.log('rt: ', rt)
+    return rt
 }
 
 const showStatus = (params) => {
@@ -279,9 +281,9 @@ $(() => {
         console.log(obj);
         console.log(obj.currentTarget);
         console.log(obj.target);
-        console.log('nextTurn: ' + nextTurn);
-        console.log('CanIMove: ' + CanIMove);
-        console.log('turn: ' + turn);
+        console.log('nextTurn: ', nextTurn);
+        console.log('CanIMove: ', CanIMove);
+        console.log('turn: ', turn);
 
         if (obj.currentTarget.firstChild === null) {
             console.log('move - div');
@@ -346,108 +348,6 @@ $(() => {
                 MovePiece = {}
             }
         }
-
-        // if (obj.target.tagName === 'IMG') {
-        //     console.log('img');
-
-        //     if (!nextTurn && !CanIMove && getPiece(obj.target).type !== turn) {
-        //         console.error('not ur turn');
-        //         return;
-        //     }
-        //     if (obj.target === MovePiece.inner && CanIMove) {
-        //         console.log('solito');
-        //         CanIMove = false
-        //         MovePiece.removePulse()
-        //         resetBoardColor()
-        //     } else {
-        //         clickOnImg(MovePiece, obj.target)
-        //         if (!nextTurn && !CanIMove) {
-        //             MovePiece = getPiece(obj.target)
-        //             CanIMove = true;
-        //         }
-        //     }
-
-        //     if (isUnderCheck()) {
-        //         console.log('check');
-        //     } else {
-        //         console.log('cazzo1');
-        //     }
-        //     // if (!CanIMove && isUnderCheck()) {
-        //     //     console.log('check');
-        //     // } else {
-        //     //     console.error('not check');
-        //     // }
-
-        //     if (nextTurn) {
-        //         nextTurn = false, CanIMove = false
-        //         if (turn === 'w') turn = 'b'
-        //         else if (turn === 'b') turn = 'w'
-        //         MovePiece = {}
-        //     }
-        // } else if (obj.target.firstChild === null) {
-        //     console.log('div');
-
-        //     if (MovePiece !== null) {
-        //         clickOnDiv(MovePiece, obj.target)
-        //     }
-
-        //     if (isUnderCheck()) {
-        //         console.log('check');
-        //     } else {
-        //         console.log('cazzo2');
-        //     }
-        //     // if (!CanIMove && isUnderCheck()) {
-        //     //     console.log('check');
-        //     // } else {
-        //     //     console.error('not check');
-        //     // }
-
-        //     if (nextTurn) {
-        //         nextTurn = false, CanIMove = false
-        //         if (turn === 'w') turn = 'b'
-        //         else if (turn === 'b') turn = 'w'
-        //         MovePiece = {}
-        //     }
-        // } else if (obj.target.firstChild.tagName === 'IMG') {
-        //     console.log('div - img');
-
-        //     if (!nextTurn && !CanIMove && getPiece(obj.target.firstChild).type !== turn) {
-        //         console.error('not ur turn');
-        //         return;
-        //     }
-        //     if (obj.target.firstChild === MovePiece.inner) {
-        //         console.log('solito');
-        //         CanIMove = false
-        //         MovePiece.removePulse()
-        //         resetBoardColor()
-        //     } else {
-        //         clickOnImg(MovePiece, obj.target.firstChild)
-        //         if (!nextTurn && !CanIMove) {
-        //             MovePiece = getPiece(obj.target.firstChild)
-        //             CanIMove = true;
-        //         }
-        //     }
-
-        //     if (isUnderCheck()) {
-        //         console.log('check');
-        //     } else {
-        //         console.log('cazzo3');
-        //     }
-        //     // if (!CanIMove && isUnderCheck()) {
-        //     //     console.log('check');
-        //     // } else {
-        //     //     console.error('not check');
-        //     // }
-
-        //     if (nextTurn) {
-        //         nextTurn = false, CanIMove = false
-        //         if (turn === 'w') turn = 'b'
-        //         else if (turn === 'b') turn = 'w'
-        //         MovePiece = {}
-        //     }
-        // } else {
-        //     console.err(obj.target);
-        // }
     })
 
     // showStatus()
