@@ -6,3 +6,4 @@ libraries/*
 libraries/bootstrap.min.css
 libraries/bootstrap.min.js
 libraries/jquery.slim.min.js
+bs-config.json
