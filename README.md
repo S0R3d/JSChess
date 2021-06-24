@@ -10,5 +10,4 @@
 * Aggiungere un overlay text per ricordare a chi sta muovere
 
 * ## Scacco 
-  * Arrocco
   * Scacco matto
