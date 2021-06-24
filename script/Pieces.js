@@ -58,12 +58,12 @@ export class Pawn extends Piece {
     }
     if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() + 1)]) {
       if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild !== null) {
-        mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+        if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild.type !== this.type) mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
       }
     }
     if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() - 1)]) {
       if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild !== null) {
-        mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+        if (mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild.type !== this.type) mrx[+this.row + 1][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
       }
     }
   }
@@ -81,12 +81,12 @@ export class Pawn extends Piece {
     }
     if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() + 1)]) {
       if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild !== null) {
-        mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+        if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() + 1)].firstChild.type !== this.type) mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() + 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
       }
     }
     if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() - 1)]) {
       if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild !== null) {
-        mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
+        if (mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() - 1)].firstChild.type !== this.type) mrx[+this.row - 1][String.fromCharCode(this.col.charCodeAt() - 1)].style.backgroundColor = 'rgba(255, 0, 0, 0.6)'
       }
     }
   }
