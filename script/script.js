@@ -23,7 +23,7 @@ const whites = {
     pawn2: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'b'),
     pawn3: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'c'),
     pawn4: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'd'),
-    pawn5: new Pawn('pawn', 'w', '/img/w-pawn.svg', 3, 'e'),
+    pawn5: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'e'),
     pawn6: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'f'),
     pawn7: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'g'),
     pawn8: new Pawn('pawn', 'w', '/img/w-pawn.svg', 2, 'h'),
@@ -42,7 +42,7 @@ const blacks = {
     pawn1: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'a'),
     pawn2: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'b'),
     pawn3: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'c'),
-    pawn4: new Pawn('pawn', 'b', '/img/b-pawn.svg', 6, 'd'),
+    pawn4: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'd'),
     pawn5: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'e'),
     pawn6: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'f'),
     pawn7: new Pawn('pawn', 'b', '/img/b-pawn.svg', 7, 'g'),
@@ -58,6 +58,13 @@ const blacks = {
     tower2: new Tower('tower', 'b', '/img/b-tower.svg', 8, 'h'),
 }
 
+/**
+ * Funzione che converte un HTMLElement o un Object,
+ * in un Piece della sotto-classe corretta;
+ * 
+ * @param {{}} obj Object
+ * @returns Object | undefined
+ */
 const getPiece = obj => {
     let piece
     Object.values(whites).forEach(element => {
@@ -69,11 +76,30 @@ const getPiece = obj => {
     return piece
 }
 
+/**
+ * Funzione che converte un array a 1 dimensione (1D),
+ * in un array a 2 dimensioni (2D);
+ * Suddividendo i valori secondo la dimenione (dim) 
+ * passata come paramentro
+ * 
+ * @param {[]} array Array
+ * @param {number} dim Number -- dim > 0
+ * @returns Array
+ */
 const arrayTo2DArray = (array, columns) => Array(Math.ceil(array.length / columns)).fill('').reduce((acc, cur, index) => {
     return [...acc, [...array].splice(index * columns, columns).reverse()]
 }, [])
 
-// si può ottimizzare!?
+/**
+ * Funzione che converte un array a 1 dimensione (1D),
+ * in un oggetto a 2 dimensioni (2D);
+ * Suddividendo i valori secondo la dimenione (dim) 
+ * passata come paramentro
+ * 
+ * @param {[]} array Array
+ * @param {number} dim Number -- dim > 0
+ * @returns Object
+ */
 const arrayTo2DObject = (array, dim) => {
     let obj = {}
     for (let i = dim; i >= 1; i--) {
@@ -129,6 +155,12 @@ const loadPieces = () => {
     });
 }
 
+/**
+ * Funzione per far tornare i colori delle case della board
+ * come all' origine.
+ * 
+ * @returns Void
+ */
 const resetBoardColor = () => {
     const mrx = arrayTo2DObject(Array.from($('.col-sm')), 8)
 
@@ -204,9 +236,9 @@ const eatPiece = (p, t) => {
     }
 }
 /**
- * Return true, se un qualunque pezzo sulla scacchiera,
+ * Ritorna TRUE, se un qualunque pezzo sulla scacchiera
  * mette sotto scacco uno dei due re;
- * altrimenti Return false
+ * altrimenti ritorna FALSE
  * 
  * @returns Boolean
  */
@@ -225,7 +257,6 @@ const someoneChecks = () => {
         }
     }
 
-    // !!!!!! alfieri - undefined quando controllo su re opposto !!!!!!
     let rt = Object.values(m).map(el => Object.values(el).map(item => { 
         if (item.firstChild !== null) {
             if (item.firstChild.name !== 'king') {
@@ -243,11 +274,12 @@ const someoneChecks = () => {
 }
 
 /**
- * Controlla se il pezzo passato come paramentro
- * metter in scacco il re del tipo (type) opposto
+ * Ritorna TRUE, se il pezzo P mette sotto scacco
+ * il re del tipo (type) opposto,
+ * altrimenti ritorna FALSE
  * 
  * Passare come parametro un Piece, non un HTMLElement
- * @param {Piece} p
+ * @param {Piece} p Piece -- not HTMLElement
  * @returns Boolean
  */
 const thisPieceGetCheck = (p) => {
@@ -268,15 +300,16 @@ const thisPieceGetCheck = (p) => {
             }
         }
     }
-    console.log('king:', king);
     return p.valid(m, getPiece(king.firstChild))
 }
 
 /**
- * Controllo se con la mossa che vorrei fare il re resta in scacco
+ * Ritorna TRUE, se dopo aver fatto la mossa richiesta
+ * un re non è più sotto scacco,
+ * altrimenti ritorna FALSE
  * 
- * @param {Piece} p
- * @param {object} t
+ * @param {Piece} p Piece
+ * @param {{}} t Object 
  * @returns Boolean
  */
 const checkThenThisMove = (p, t) => {
@@ -297,6 +330,14 @@ const checkThenThisMove = (p, t) => {
     }
 }
 
+/**
+ * ! DA MIGLIORARE !
+ * Ritorna TRUE, se dopo aver cercato i re presenti sulla board
+ * ne trova un numero diverso da 2,
+ * altrimenti ritorna FALSE
+ * 
+ * @returns Boolean
+ */
 const checkMate = () => {
     const m = arrayTo2DObject(Array.from($('.col-sm')), 8)
     const kings = []
@@ -346,72 +387,45 @@ $(() => {
         console.log('CanIMove: ', CanIMove);
         console.log('turn: ', turn);
 
-        // TRIGGER: quando si preme un pezzo dopo che un pezzo ha messo un re in scacco
         if (someoneChecks()) {
             console.warn(`KING ${turn === 'b' ? 'Black' : 'White'} UNDER CHECK!`);
-            // deve fare una mossa che permetta al re di non essere piu sotto scacco,
-            //  altrimenti è scacco matto
-
-            
-
-            // test mossa porposta
-            // show gia fatto MovePiece non piu nullo
+        
             if (CanIMove) {
-                // NOME VARIBILI PER CAPIRCI QUALCOSA
                 const {
-                    row: rowPezzoCorrente,
-                    col: colPezzoCorrente,
-                    inner: imgPezzeCorrente,
+                    row,
+                    col,
+                    inner,
                 } = PieceToMove
-                let posizioneDoveVorrebbeAndare = obj.currentTarget
-                console.log('t: ', posizioneDoveVorrebbeAndare)
+                let pos = obj.currentTarget
+                console.log('t: ', pos)
 
-                // seleziona il solito per deselezionarlo
-                if (posizioneDoveVorrebbeAndare.target === imgPezzeCorrente && CanIMove) {
+                if (posizioneDoveVorrebbeAndare.target === inner && CanIMove) {
                     console.log('solito - reset');
                     CanIMove = false
                     MovePiece.removePulse()
                     resetBoardColor()
                 }
-                // controllo se con la mossa che vorrei fare il re resta in scacco
-                else if (checkThenThisMove(PieceToMove, posizioneDoveVorrebbeAndare)) {
-                    // controllo se puo muovere ma se c'è un pezzo mangio ed elimino dopo
+                else if (checkThenThisMove(PieceToMove, pos)) {
                     console.log('check avoided');
-                    // se la mossa va bene: finisco come al solito
                     nextTurn = true, CanIMove = false
                     resetBoardColor()
                     PieceToMove.removePulse()
                 } else {
-                    // se la mossa non va bene devo reimpostare tutto come prima del controllo
                     console.error('not valid move to avoid check');
                     const mrxNow = arrayTo2DObject(Array.from($('.col-sm')),8)
                     PieceToMove.coord = {
-                        row: rowPezzoCorrente,
-                        col: colPezzoCorrente
+                        row: row,
+                        col: col
                     }
                     PieceToMove.load(mrxNow)
                     CanIMove = false
                     resetBoardColor()
                     PieceToMove.removePulse()
                 }
-
-                // se passa il test del , posso veramente
-                // muovere il pezzo come di base,
-                // altrimenti rimuovo pulse, resetto board e canimove a false,
-                // ma rimane scacco cosi puo scegliere un altro pezzo.
-            }
-            // premo una casella senza un pezzo, senza una img
-            // else if (obj.currentTarget.firstChild === null) {
-            //     console.log('move - div');
-    
-            //     if (MovePiece !== null) {
-            //         clickOnDiv(MovePiece, obj.target)
-            //     }
-            // } 
-            else {
+            } else {
                 console.log('show - img');
     
-                if (!nextTurn && !CanIMove && obj.currentTarget.firstChild.type !== turn) {
+                if (!nextTurn && !CanIMove && ( obj.currentTarget.firstChild !== null ? obj.currentTarget.firstChild.type !== turn : false )) {
                     console.error('not ur turn');
                     return;
                 }
@@ -429,16 +443,6 @@ $(() => {
                 }
             }
 
-            // 1: mostro solo le mosse che rimuovono lo scacco
-            // 2: abilito il click su pezzi che possono rimuovere lo scacco,
-            //  o mangiando il pezzo che fa scacco o posizionando nel mezzo tra pezzo e re
-
-            // 3: come capisco che è scacco matto ?
-            // 3.1: non ci sono pezzi che possono mangiare per rimuoevere lo scacco
-            // 3.2: non ci sono pezzi che possono posizionarsi tra pezzo e re
-
-
-            // FINE: si torna al normale flusso
             if (nextTurn && checkMate()) {
                 console.error(`CHECHMATE WIN: ${turn === 'b' ? 'BLACK' : 'WHITE'}`);
                 $('*').off('click')
@@ -458,7 +462,6 @@ $(() => {
             }
 
             if (someoneChecks()) {
-                // console.warn('check');
                 console.warn(`KING ${turn === 'b' ? 'White' : 'Black'} UNDER CHECK!`);
             } else {
                 console.log('not check');
