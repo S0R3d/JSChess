@@ -1,3 +1,5 @@
+.DS_Store
+
 .vscode
 .vscode/setting.json
 
@@ -7,3 +9,4 @@ libraries/bootstrap.min.css
 libraries/bootstrap.min.js
 libraries/jquery.slim.min.js
 bs-config.json
+
